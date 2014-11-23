@@ -64,7 +64,7 @@ public class EventDetailsPanel extends Table {
 
                 if(playingEvent != null){
                     if(displayedEvent.isMatchPosition()){
-                        position = playingEvent.getPosition();
+                        position = playingEvent.getMusic().getPosition();
                     }
                     playingEvent.getMusic().stop();
                 }
@@ -75,7 +75,7 @@ public class EventDetailsPanel extends Table {
                 if(displayedEvent.isMatchPosition()){
 
                     Gdx.app.log("EventDetailsPanel", "Set position:" + position);
-                    planner.getPlayingEvent().setPosition(position);
+                    planner.getPlayingEvent().getMusic().setPosition(position);
                 }
 
             }
