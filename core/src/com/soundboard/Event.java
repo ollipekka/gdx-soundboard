@@ -77,4 +77,7 @@ public class Event {
         position += dt;
     }
 
+    public void dispose() {
+        music.dispose();
+    }
 }

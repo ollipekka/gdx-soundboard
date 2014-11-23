@@ -24,6 +24,7 @@ public class SoundBoard implements ApplicationListener {
 
     InfoPanel infoPanel;
 
+    EventListPanel eventListPanel;
     EventDetailsPanel eventDetailsPanel;
 
     public SoundBoard() {
@@ -45,11 +46,11 @@ public class SoundBoard implements ApplicationListener {
 
         content.add(infoPanel).colspan(2).center().fillX().expandX().row();
 
-        Table actionsPanel = new ActionsPanel(skin);
+        Table actionsPanel = new ActionsPanel(skin, this);
         content.add(actionsPanel).colspan(2).expandX().fillX().row();
 
 
-        Table eventListPanel = new EventListPanel(skin, this);
+        eventListPanel = new EventListPanel(skin, this);
         content.add(eventListPanel).minWidth(240).expandY().fillY();
         Gdx.input.setInputProcessor(stage);
 
@@ -113,5 +114,21 @@ public class SoundBoard implements ApplicationListener {
 
     public void setPlayingEvent(Event playingEvent) {
         this.playingEvent = playingEvent;
+    }
+
+    public void stop(){
+        if(playingEvent != null) {
+            playingEvent.getMusic().stop();
+        }
+    }
+
+    public void clear(){
+        this.stop();
+
+        playingEvent = null;
+
+        eventListPanel.clearEvents();
+
+        showEvent(null);
     }
 }

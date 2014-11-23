@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 
 public class EventListPanel extends Table {
 
@@ -57,5 +58,15 @@ public class EventListPanel extends Table {
 
     public void addEvent(Event event) {
         this.eventList.getItems().add(event);
+    }
+
+    public void clearEvents(){
+        Array<Event> items = eventList.getItems();
+        for(int i = 0; i < items.size; i++){
+            Event event = items.get(i);
+            event.dispose();
+        }
+
+        items.clear();
     }
 }
