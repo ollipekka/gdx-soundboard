@@ -68,6 +68,9 @@ public class SoundBoard implements ApplicationListener {
     @Override
     public void render() {
 
+        if(playingEvent != null){
+            playingEvent.update(Gdx.graphics.getRawDeltaTime());
+        }
 
         infoPanel.show(playingEvent);
 

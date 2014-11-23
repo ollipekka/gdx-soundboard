@@ -11,6 +11,9 @@ public class Event {
 
     private final Music music;
 
+    private boolean looping = false;
+
+    private float position = 0;
 
     public Event(final String name, final FileHandle fileHandle) {
         this.name = name;
@@ -20,6 +23,10 @@ public class Event {
             @Override
             public void onCompletion(Music music) {
                 Gdx.app.log("SoundBoard", "Event complete " + name);
+                position = 0;
+                if(looping){
+                    music.play();
+                }
             }
         });
     }
@@ -44,9 +51,30 @@ public class Event {
         return music;
     }
 
+    public boolean isLooping() {
+        return looping;
+    }
+
+    public void setLooping(boolean looping) {
+        this.looping = looping;
+    }
+
+    public float getPosition() {
+        return position;
+    }
+
+    public void setPosition(float position) {
+        this.position = position;
+        music.setPosition(position);
+    }
+
     @Override
     public String toString() {
         return name + " (" + fileHandle.name() + ")";
+    }
+
+    public void update(float dt){
+        position += dt;
     }
 
 }

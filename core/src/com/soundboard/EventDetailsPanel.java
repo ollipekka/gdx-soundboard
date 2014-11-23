@@ -36,7 +36,7 @@ public class EventDetailsPanel extends Table {
         looping.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent evt, Actor actor) {
-                displayedEvent.getMusic().setLooping(looping.isChecked());
+                displayedEvent.setLooping(looping.isChecked());
             }
         });
 
@@ -64,7 +64,7 @@ public class EventDetailsPanel extends Table {
 
                 if(playingEvent != null){
                     if(displayedEvent.isMatchPosition()){
-                        position = playingEvent.getMusic().getPosition();
+                        position = playingEvent.getPosition();
                     }
                     playingEvent.getMusic().stop();
                 }
@@ -75,7 +75,7 @@ public class EventDetailsPanel extends Table {
                 if(displayedEvent.isMatchPosition()){
 
                     Gdx.app.log("EventDetailsPanel", "Set position:" + position);
-                    planner.getPlayingEvent().getMusic().setPosition(position);
+                    planner.getPlayingEvent().setPosition(position);
                 }
 
             }
@@ -93,7 +93,7 @@ public class EventDetailsPanel extends Table {
             this.displayedEvent = event;
             this.eventName.setText(event.getName());
             this.clipName.setText(event.getFileHandle().name());
-            this.looping.setChecked(event.getMusic().isLooping());
+            this.looping.setChecked(event.isLooping());
             this.matchPosition.setChecked(event.isMatchPosition());
         }
 
