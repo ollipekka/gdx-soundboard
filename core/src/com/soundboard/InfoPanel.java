@@ -24,7 +24,7 @@ public class InfoPanel extends Table {
             nowPlaying.setText("Paused");
         } else {
 
-            String twoDecimalForm = twoDForm.format(event.getMusic().getPosition());
+            String twoDecimalForm = twoDForm.format(event.getPosition());
 
             nowPlaying.setText("Now playing: " + event.toString() + " " + twoDecimalForm);
         }

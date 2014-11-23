@@ -69,6 +69,9 @@ public class SoundBoard implements ApplicationListener {
     public void render() {
 
 
+        if(playingEvent != null) {
+            playingEvent.update(Gdx.graphics.getRawDeltaTime());
+        }
         infoPanel.show(playingEvent);
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
