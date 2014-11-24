@@ -8,6 +8,11 @@ public class Play implements Effect {
     }
 
     @Override
+    public void stop() {
+
+    }
+
+    @Override
     public void update(float dt) {
 
     }

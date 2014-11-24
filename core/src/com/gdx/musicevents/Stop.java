@@ -7,6 +7,11 @@ public class Stop implements Effect {
     }
 
     @Override
+    public void stop() {
+
+    }
+
+    @Override
     public void update(float dt) {
 
     }

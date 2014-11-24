@@ -6,13 +6,18 @@ public class FadeOut extends VolumeEffect {
     }
 
     @Override
+    public void start() {
+    }
+
+    @Override
+    public void stop() {
+        event.getMusic().stop();
+        event.getMusic().setVolume(originalVolume);
+    }
+
+
+    @Override
     protected void volumeFunc(float originalVolume, float totalTime, float elapsedTime) {
         event.getMusic().setVolume(originalVolume * (totalTime - elapsedTime) / totalTime);
-
-        if(isDone()){
-            event.getMusic().stop();
-            event.getMusic().setVolume(originalVolume);
-        }
-
     }
 }

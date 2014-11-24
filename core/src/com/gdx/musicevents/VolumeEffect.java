@@ -1,5 +1,7 @@
 package com.gdx.musicevents;
 
+import com.badlogic.gdx.math.MathUtils;
+
 public abstract class VolumeEffect implements Effect {
 
 
@@ -22,9 +24,20 @@ public abstract class VolumeEffect implements Effect {
         started = true;
     }
 
+    public abstract void start();
+
+
     public void update(float dt) {
-        volumeFunc(originalVolume, totalTime, elapsedTime);
+        if(MathUtils.isZero(elapsedTime)){
+            start();
+        }
         elapsedTime += dt;
+
+        if(isDone()){
+            stop();
+        } else {
+            volumeFunc(originalVolume, totalTime, elapsedTime);
+        }
     }
 
     public boolean isDone(){

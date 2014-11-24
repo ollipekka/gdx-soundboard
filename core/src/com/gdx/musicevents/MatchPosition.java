@@ -13,6 +13,7 @@ public class MatchPosition implements Effect {
 
     public MatchPosition(){}
 
+    @Override
     public void start(MusicEvent newEvent, MusicEvent oldEvent){
         this.newEvent = newEvent;
         this.oldEvent = oldEvent;
@@ -20,6 +21,10 @@ public class MatchPosition implements Effect {
         started = true;
     }
 
+    @Override
+    public void stop() {
+
+    }
 
     @Override
     public void update(float dt) {
