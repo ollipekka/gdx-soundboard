@@ -1,10 +1,10 @@
-package com.soundboard;
+package com.gdx.musicevents;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 
-public class Event {
+public class MusicEvent {
     private final String name;
     private final FileHandle fileHandle;
     private boolean matchPosition;
@@ -15,7 +15,10 @@ public class Event {
 
     private float position = 0;
 
-    public Event(final String name, final FileHandle fileHandle) {
+    Effect transitionIn = new Play();
+    Effect transitionOut = new Stop();
+
+    public MusicEvent(final String name, final FileHandle fileHandle) {
         this.name = name;
         this.fileHandle = fileHandle;
         music = Gdx.audio.newMusic(fileHandle);
@@ -78,6 +81,26 @@ public class Event {
     }
 
     public void dispose() {
+        if(music.isPlaying()){
+            music.stop();
+        }
+
         music.dispose();
+    }
+
+    public Effect getTransitionIn() {
+        return transitionIn;
+    }
+
+    public void setTransitionIn(Effect transitionIn) {
+        this.transitionIn = transitionIn;
+    }
+
+    public Effect getTransitionOut() {
+        return transitionOut;
+    }
+
+    public void setTransitionOut(Effect transitionOut) {
+        this.transitionOut = transitionOut;
     }
 }

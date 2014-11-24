@@ -1,8 +1,9 @@
-package com.soundboard;
+package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.gdx.musicevents.MusicEvent;
 
 import java.text.DecimalFormat;
 
@@ -19,14 +20,14 @@ public class InfoPanel extends Table {
     }
 
 
-    public void show(Event event){
-        if(event == null){
+    public void show(MusicEvent musicEvent){
+        if(musicEvent == null){
             nowPlaying.setText("Paused");
         } else {
 
-            String twoDecimalForm = twoDForm.format(event.getMusic().getPosition());
+            String twoDecimalForm = twoDForm.format(musicEvent.getMusic().getPosition());
 
-            nowPlaying.setText("Now playing: " + event.toString() + " " + twoDecimalForm);
+            nowPlaying.setText("Now playing: " + musicEvent.toString() + " " + twoDecimalForm);
         }
     }
 

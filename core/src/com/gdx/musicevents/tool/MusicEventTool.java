@@ -1,4 +1,4 @@
-package com.soundboard;
+package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -7,12 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.MusicEventManager;
 
-public class SoundBoard implements ApplicationListener {
+public class MusicEventTool implements ApplicationListener {
 
-
-    Event playingEvent;
-    Event shownEvent;
+    MusicEvent shownMusicEvent;
 
 
     Skin skin;
@@ -27,7 +27,11 @@ public class SoundBoard implements ApplicationListener {
     EventListPanel eventListPanel;
     EventDetailsPanel eventDetailsPanel;
 
-    public SoundBoard() {
+
+    MusicEventManager eventManager = new MusicEventManager();
+
+
+    public MusicEventTool() {
     }
 
     @Override
@@ -46,7 +50,7 @@ public class SoundBoard implements ApplicationListener {
 
         content.add(infoPanel).colspan(2).center().fillX().expandX().row();
 
-        Table actionsPanel = new ActionsPanel(skin, this);
+        Table actionsPanel = new ActionsPanel(skin, eventManager);
         content.add(actionsPanel).colspan(2).expandX().fillX().row();
 
 
@@ -56,9 +60,6 @@ public class SoundBoard implements ApplicationListener {
 
         eventDetailsPanel = new EventDetailsPanel(skin, this);
         content.add(eventDetailsPanel).minWidth(540).fill().expand();
-
-
-        showEvent(null);
     }
 
     @Override
@@ -69,11 +70,9 @@ public class SoundBoard implements ApplicationListener {
     @Override
     public void render() {
 
-        if(playingEvent != null){
-            playingEvent.update(Gdx.graphics.getRawDeltaTime());
-        }
+        eventManager.update(Gdx.graphics.getRawDeltaTime());
 
-        infoPanel.show(playingEvent);
+        infoPanel.show(eventManager.getCurrentEvent());
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
@@ -103,32 +102,9 @@ public class SoundBoard implements ApplicationListener {
         return stage;
     }
 
-    public void showEvent(Event event) {
-        this.shownEvent = event;
-        eventDetailsPanel.show(event);
+    public void showEvent(MusicEvent musicEvent) {
+        this.shownMusicEvent = musicEvent;
+        eventDetailsPanel.show(musicEvent);
     }
 
-    public Event getPlayingEvent() {
-        return playingEvent;
-    }
-
-    public void setPlayingEvent(Event playingEvent) {
-        this.playingEvent = playingEvent;
-    }
-
-    public void stop(){
-        if(playingEvent != null) {
-            playingEvent.getMusic().stop();
-        }
-    }
-
-    public void clear(){
-        this.stop();
-
-        playingEvent = null;
-
-        eventListPanel.clearEvents();
-
-        showEvent(null);
-    }
 }

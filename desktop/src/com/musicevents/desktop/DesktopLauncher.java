@@ -1,8 +1,8 @@
-package com.soundboard.desktop;
+package com.musicevents.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.soundboard.SoundBoard;
+import com.gdx.musicevents.tool.MusicEventTool;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -10,6 +10,6 @@ public class DesktopLauncher {
         config.width = 800;
         config.height = 480;
         config.title = "Soundboard for libgdx";
-		new LwjglApplication(new SoundBoard(), config);
+		new LwjglApplication(new MusicEventTool(), config);
 	}
 }

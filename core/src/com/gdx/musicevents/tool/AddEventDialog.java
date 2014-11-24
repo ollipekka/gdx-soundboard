@@ -1,22 +1,33 @@
-package com.soundboard;
+package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.MusicEventManager;
 
 public class AddEventDialog extends Dialog {
     FileHandle file;
+
+
+    MusicEventManager eventManager;
+    final Skin skin;
+    final Stage stage;
+
     final TextField eventName;
 
     final Label fileName;
-    private final EventListPanel eventList;
 
 
-    public AddEventDialog(final Skin skin, final EventListPanel eventList) {
+    public AddEventDialog(final Stage stage, final Skin skin, final MusicEventManager eventManager) {
 
         super("Add Event", skin);
-        this.eventList = eventList;
+        this.stage = stage;
+        this.skin = skin;
+        this.eventManager = eventManager;
+
 
         Table content = this.getContentTable();
 
@@ -31,7 +42,7 @@ public class AddEventDialog extends Dialog {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 BrowseFilesDialog dialog = new BrowseFilesDialog(skin, AddEventDialog.this);
-                dialog.show(eventList.planner.getStage());
+                dialog.show(stage);
             }
         });
 
@@ -51,28 +62,28 @@ public class AddEventDialog extends Dialog {
     protected void result(Object object) {
         boolean result = (Boolean)object;
 
-        if(file == null){
-            cancel();
-            Scene2dUtils.showAlert("Error", "You must select a file.", eventList.skin, eventList.planner.getStage());
-            return;
-        }
+        if(result) {
+            if (file == null) {
+                cancel();
+                Scene2dUtils.showAlert("Error", "You must select a file.", skin, stage);
+                return;
+            }
 
-        if(!file.exists()){
-            cancel();
+            if (!file.exists()) {
+                cancel();
 
-            Scene2dUtils.showAlert("Error", "The file that you selecte doesn't exist.", eventList.skin, eventList.planner.getStage());
-            return;
-        }
+                Scene2dUtils.showAlert("Error", "The file that you selecte doesn't exist.", skin, stage);
+                return;
+            }
 
-        if(eventName.getText() == null || eventName.getText().length() == 0){
-            cancel();
+            if (eventName.getText() == null || eventName.getText().length() == 0) {
+                cancel();
 
-            Scene2dUtils.showAlert("Error", "You must provide a name.", eventList.skin, eventList.planner.getStage());
-            return;
-        }
+                Scene2dUtils.showAlert("Error", "You must provide a name.", skin, stage);
+                return;
+            }
 
-        if(result){
-            eventList.addEvent(new Event(eventName.getText(), file));
+            eventManager.add(new MusicEvent(eventName.getText(), file));
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.soundboard;
+package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
