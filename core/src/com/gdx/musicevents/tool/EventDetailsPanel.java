@@ -3,19 +3,21 @@ package com.gdx.musicevents.tool;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.gdx.musicevents.*;
+import com.gdx.musicevents.Effect;
+import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.MusicEventListener;
+import com.gdx.musicevents.MusicEventManager;
 
 public class EventDetailsPanel extends Table {
 
     private final Skin skin;
-    private final Label eventName;
-    private final Label clipName;
-    private final Label clipLength;
+    private final Label eventInfo;
     private final CheckBox looping;
+    /*
     private final CheckBox matchPosition;
     private final CheckBox fadeIn;
     private final CheckBox fadeOut;
-
+*/
     private final Button play;
 
     MusicEvent displayedMusicEvent;
@@ -24,6 +26,12 @@ public class EventDetailsPanel extends Table {
     public EventDetailsPanel(Skin skin, final MusicEventTool planner) {
         super(skin);
         this.skin = skin;
+        /*
+        Pixmap pm1 = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        pm1.setColor(Color.DARK_GRAY);
+        pm1.fill();
+
+        setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(pm1))));*/
 
         final MusicEventManager manager = planner.eventManager;
 
@@ -41,12 +49,13 @@ public class EventDetailsPanel extends Table {
             }
         });
 
-        this.defaults().center().pad(10);
+        this.defaults().top().left().pad(10);
 
         Table infoPanel = new Table(skin);
-        eventName = Scene2dUtils.addLabel("Event name", infoPanel, skin);
-        clipName = Scene2dUtils.addLabel("Clip name", infoPanel, skin);
-        clipLength = Scene2dUtils.addLabel("Clip length", infoPanel, skin);
+        infoPanel.pad(2).top().left();
+        infoPanel.defaults().fillX().expandX();
+        eventInfo = new Label("", skin);
+        infoPanel.add(eventInfo);
 
         looping = new CheckBox("Looping", skin);
 
@@ -58,25 +67,29 @@ public class EventDetailsPanel extends Table {
             }
         });
 
-        infoPanel.add(looping).colspan(2).left().row();
-
-
+        infoPanel.add(looping).left().row();
 
         play = new TextButton("Play", skin);
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent evt, Actor actor) {
-
                 manager.play(displayedMusicEvent.getName());
-
             }
         });
-        infoPanel.add(play).fillX().colspan(2);
+        infoPanel.add(play).colspan(2).pad(5).center();
 
-        this.add(infoPanel);
+        this.add(infoPanel).colspan(2).fillX().expandX().row();
 
-        Table transitionPanel = new Table(skin);
-        transitionPanel.add("Transition start").row();
+
+        TransitionInPanel transitionInPanel = new TransitionInPanel(skin);
+
+        this.add(transitionInPanel).fill().expand();
+
+        TransitionOutPanel transitionOutPanel = new TransitionOutPanel(skin);
+        this.add(transitionOutPanel).fill().expand();
+
+
+/*
 
         matchPosition = new CheckBox("Match position", skin);
 
@@ -121,9 +134,10 @@ public class EventDetailsPanel extends Table {
         });
 
         transitionPanel.add(fadeOut).left().row();
+        this.add(transitionPanel).fill().expand();
 
+*/
 
-        this.add(transitionPanel);
 
         this.setVisible(false);
 
@@ -133,15 +147,15 @@ public class EventDetailsPanel extends Table {
     public void show(MusicEvent musicEvent) {
         this.setVisible(true);
         this.displayedMusicEvent = musicEvent;
-        this.eventName.setText(musicEvent.getName());
-        this.clipName.setText(musicEvent.getFileHandle().name());
+        this.eventInfo.setText(musicEvent.toString());
         this.looping.setChecked(musicEvent.isLooping());
 
         Effect transitionIn = displayedMusicEvent.getTransitionIn();
-        fadeIn.setChecked(transitionIn instanceof FadeIn);
+
+        /*fadeIn.setChecked(transitionIn instanceof FadeIn);
         matchPosition.setChecked(transitionIn instanceof MatchPosition);
         Effect transitionOut = displayedMusicEvent.getTransitionOut();
         fadeOut.setChecked(transitionOut instanceof FadeOut);
-
+*/
     }
 }

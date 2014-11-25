@@ -53,13 +53,13 @@ public class MusicEventTool implements ApplicationListener {
         Table actionsPanel = new ActionsPanel(skin, eventManager);
         content.add(actionsPanel).colspan(2).expandX().fillX().row();
 
-
         eventListPanel = new EventListPanel(skin, this);
         content.add(eventListPanel).minWidth(240).expandY().fillY();
-        Gdx.input.setInputProcessor(stage);
 
         eventDetailsPanel = new EventDetailsPanel(skin, this);
         content.add(eventDetailsPanel).minWidth(540).fill().expand();
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
