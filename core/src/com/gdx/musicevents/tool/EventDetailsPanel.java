@@ -3,10 +3,11 @@ package com.gdx.musicevents.tool;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.gdx.musicevents.Effect;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventListener;
 import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.tool.transitions.TransitionInPanel;
+import com.gdx.musicevents.tool.transitions.TransitionOutPanel;
 
 public class EventDetailsPanel extends Table {
 
@@ -21,6 +22,9 @@ public class EventDetailsPanel extends Table {
     private final Button play;
 
     MusicEvent displayedMusicEvent;
+
+    final TransitionInPanel transitionInPanel;
+    final TransitionOutPanel transitionOutPanel;
 
 
     public EventDetailsPanel(Skin skin, final MusicEventTool planner) {
@@ -38,11 +42,15 @@ public class EventDetailsPanel extends Table {
         manager.addListener(new MusicEventListener() {
             @Override
             public void eventAdded(MusicEvent event) {
-
+                transitionInPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
+                transitionOutPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
             }
 
             @Override
             public void eventRemoved(MusicEvent event) {
+
+                transitionInPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
+                transitionOutPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
                 if(event == displayedMusicEvent){
                     EventDetailsPanel.this.setVisible(false);
                 }
@@ -81,13 +89,11 @@ public class EventDetailsPanel extends Table {
         this.add(infoPanel).colspan(2).fillX().expandX().row();
 
 
-        TransitionInPanel transitionInPanel = new TransitionInPanel(skin);
-
+        transitionInPanel = new TransitionInPanel(skin, planner.getStage(), planner.eventManager);
         this.add(transitionInPanel).fill().expand();
 
-        TransitionOutPanel transitionOutPanel = new TransitionOutPanel(skin);
+        transitionOutPanel = new TransitionOutPanel(skin, planner.getStage(), planner.eventManager);
         this.add(transitionOutPanel).fill().expand();
-
 
 /*
 
@@ -150,12 +156,12 @@ public class EventDetailsPanel extends Table {
         this.eventInfo.setText(musicEvent.toString());
         this.looping.setChecked(musicEvent.isLooping());
 
-        Effect transitionIn = displayedMusicEvent.getTransitionIn();
+        this.transitionInPanel.setMusicEvent(displayedMusicEvent);
+        this.transitionOutPanel.setMusicEvent(displayedMusicEvent);
 
-        /*fadeIn.setChecked(transitionIn instanceof FadeIn);
-        matchPosition.setChecked(transitionIn instanceof MatchPosition);
-        Effect transitionOut = displayedMusicEvent.getTransitionOut();
-        fadeOut.setChecked(transitionOut instanceof FadeOut);
-*/
+
+
+
+
     }
 }

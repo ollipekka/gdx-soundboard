@@ -32,12 +32,9 @@ public class MusicEventManager {
 
 
     public void handleTransition(MusicEvent currentEvent, MusicEvent oldEvent){
-        currentEvent.getTransitionIn().start(currentEvent, oldEvent);
-        this.transitions.add(currentEvent.getTransitionIn());
-
+        transitions.add(currentEvent.startTransition(oldEvent));
         if(oldEvent != null) {
-            oldEvent.getTransitionOut().start(oldEvent, currentEvent);
-            this.transitions.add(oldEvent.getTransitionOut());
+            transitions.add(oldEvent.endTransition(currentEvent));
         }
     }
 
@@ -128,5 +125,10 @@ public class MusicEventManager {
 
     public void removeListener(MusicEventListener listener){
         this.listeners.removeValue(listener, true);
+    }
+
+
+    public Array<MusicEvent> getEvents(){
+        return events.values().toArray();
     }
 }

@@ -3,6 +3,7 @@ package com.gdx.musicevents;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public class MusicEvent {
     private final String name;
@@ -15,8 +16,8 @@ public class MusicEvent {
 
     private float position = 0;
 
-    Effect transitionIn = new Play();
-    Effect transitionOut = new Stop();
+    private final ObjectMap<String, Effect> inTransitions = new ObjectMap<String, Effect>();
+    private final ObjectMap<String, Effect> outTransitions = new ObjectMap<String, Effect>();
 
     public MusicEvent(final String name, final FileHandle fileHandle) {
         this.name = name;
@@ -40,14 +41,6 @@ public class MusicEvent {
 
     public FileHandle getFileHandle() {
         return fileHandle;
-    }
-
-    public boolean isMatchPosition() {
-        return matchPosition;
-    }
-
-    public void setMatchPosition(boolean matchPosition) {
-        this.matchPosition = matchPosition;
     }
 
     public Music getMusic() {
@@ -88,19 +81,61 @@ public class MusicEvent {
         music.dispose();
     }
 
-    public Effect getTransitionIn() {
-        return transitionIn;
+    public Effect endTransition(MusicEvent event){
+        Effect effect = outTransitions.get(event.getName());
+
+        if(effect == null){
+            effect = new Stop();
+        }
+
+        effect.start(this, event);
+        return effect;
+
     }
 
-    public void setTransitionIn(Effect transitionIn) {
-        this.transitionIn = transitionIn;
+    public Effect startTransition(MusicEvent event) {
+
+        Effect effect;
+        if (event == null) {
+            effect = new Play();
+        } else {
+
+            effect = inTransitions.get(event.getName());
+
+            if (effect == null) {
+                effect = new Play();
+            }
+        }
+
+        effect.start(this, event);
+
+        return effect;
+
     }
 
-    public Effect getTransitionOut() {
-        return transitionOut;
+
+    public ObjectMap<String, Effect> getInTransitions() {
+        return inTransitions;
     }
 
-    public void setTransitionOut(Effect transitionOut) {
-        this.transitionOut = transitionOut;
+    public ObjectMap<String, Effect> getOutTransitions() {
+        return outTransitions;
+    }
+
+
+    public void addInTransition(String eventName, Effect effect) {
+        this.inTransitions.put(eventName, effect);
+    }
+
+    public void removeInTransition(String name) {
+        this.inTransitions.remove(name);
+
+    }    public void addOutTransition(String eventName, Effect effect) {
+        this.outTransitions.put(eventName, effect);
+    }
+
+    public void removeOutTransition(String name) {
+        this.outTransitions.remove(name);
+
     }
 }

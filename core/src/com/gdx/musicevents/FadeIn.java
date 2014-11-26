@@ -1,12 +1,19 @@
 package com.gdx.musicevents;
 
+import com.badlogic.gdx.Gdx;
+
 public class FadeIn extends VolumeEffect {
-    public FadeIn(float totalTime) {
+
+    final float offset;
+
+    public FadeIn(float offset, float totalTime) {
         super(totalTime);
+        this.offset = offset;
     }
 
     @Override
     public void start() {
+        Gdx.app.log("FadeIn", "Start");
         event.getMusic().play();
 
     }

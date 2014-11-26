@@ -19,6 +19,8 @@ public class MatchPosition implements Effect {
         this.oldEvent = oldEvent;
 
         started = true;
+
+        Gdx.app.log("MatchPosition", "Start");
     }
 
     @Override
@@ -29,21 +31,13 @@ public class MatchPosition implements Effect {
     @Override
     public void update(float dt) {
         if(started) {
-            float position = 0;
-
             if (oldEvent != null) {
-                if (newEvent.isMatchPosition()) {
-                    position = newEvent.getPosition();
-                }
-                oldEvent.getMusic().stop();
-            }
-
-            if (newEvent.isMatchPosition()) {
+                float position = oldEvent.getPosition();
                 Gdx.app.log("EventDetailsPanel", "Set position:" + position);
                 newEvent.setPosition(position);
             }
-            newEvent.getMusic().play();
 
+            newEvent.getMusic().play();
             done = true;
         }
     }

@@ -2,10 +2,12 @@ package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
@@ -37,6 +39,12 @@ public class MusicEventTool implements ApplicationListener {
     @Override
     public void create() {
         skin = new Skin(Gdx.files.classpath("uiskin.json"));
+
+        TextButton.TextButtonStyle buttonStyle = skin.get(TextButton.TextButtonStyle.class);
+        buttonStyle.disabled = skin.newDrawable("default-round", Color.DARK_GRAY);
+        buttonStyle.disabledFontColor = Color.GRAY;
+
+
         stage = new Stage(new ScreenViewport());
 
         content = new Table(skin);

@@ -17,6 +17,8 @@ public class EventListPanel extends Table {
     final MusicEventManager manager;
     final List<MusicEvent> eventList;
 
+    final TextButton remove;
+
 
     public EventListPanel(final Skin skin, final MusicEventTool planner) {
         super(skin);
@@ -32,13 +34,15 @@ public class EventListPanel extends Table {
         manager.addListener(new MusicEventListener(){
 
             @Override
-            public void eventAdded(MusicEvent event) {
+            public void eventAdded(MusicEvent event) {;
                 eventList.getItems().add(event);
+                remove.setDisabled(eventList.getItems().size == 0);
             }
 
             @Override
             public void eventRemoved(MusicEvent event) {
                 eventList.getItems().removeValue(event, true);
+                remove.setDisabled(eventList.getItems().size == 0);
 
             }
         });
@@ -51,6 +55,7 @@ public class EventListPanel extends Table {
                     MusicEvent selected = eventList.getSelected();
                     planner.showEvent(selected);
                 }
+
             }
         });
 
@@ -68,15 +73,17 @@ public class EventListPanel extends Table {
         });
 
         this.add(add);
-        TextButton remove = new TextButton("Remove", skin);
-        remove.addListener(new ClickListener(){
+        remove = new TextButton("Remove", skin);
+        remove.addListener(new ChangeListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void changed(ChangeEvent event, Actor actor) {
                 manager.remove(eventList.getSelected());
             }
         });
 
         this.add(remove);
+
+        remove.setDisabled(eventList.getItems().size == 0);
 
 
     }
