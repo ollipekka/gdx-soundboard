@@ -3,6 +3,9 @@ package com.gdx.musicevents;
 import com.badlogic.gdx.Gdx;
 
 public class Stop implements Effect {
+
+    public Stop(){}
+
     @Override
     public void start(MusicEvent newEvent, MusicEvent oldEvent) {
 

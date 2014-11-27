@@ -3,6 +3,8 @@ package com.gdx.musicevents;
 import com.badlogic.gdx.Gdx;
 
 public class Play implements Effect {
+
+    public Play(){}
     @Override
     public void start(MusicEvent newEvent, MusicEvent oldEvent) {
         String message = "Start new: " + newEvent.getName();

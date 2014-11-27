@@ -7,21 +7,25 @@ import com.badlogic.gdx.utils.ObjectMap;
 
 public class MusicEvent {
     private final String name;
-    private final FileHandle fileHandle;
-    private boolean matchPosition;
-
-    private final Music music;
-
-    private boolean looping = false;
-
-    private float position = 0;
-
+    private final String fileName;
+    private boolean looping;
     private final ObjectMap<String, Effect> inTransitions = new ObjectMap<String, Effect>();
     private final ObjectMap<String, Effect> outTransitions = new ObjectMap<String, Effect>();
 
+    private transient FileHandle fileHandle;
+    private transient Music music;
+    private transient float position = 0;
+
+
+    public MusicEvent(){
+        name = null;
+        fileName = null;
+    }
     public MusicEvent(final String name, final FileHandle fileHandle) {
         this.name = name;
+        this.fileName = fileHandle.path();
         this.fileHandle = fileHandle;
+        this.looping = false;
         music = Gdx.audio.newMusic(fileHandle);
         music.setOnCompletionListener(new Music.OnCompletionListener() {
             @Override
@@ -133,7 +137,8 @@ public class MusicEvent {
     public void removeInTransition(String name) {
         this.inTransitions.remove(name);
 
-    }    public void addOutTransition(String eventName, Effect effect) {
+    }
+    public void addOutTransition(String eventName, Effect effect) {
         this.outTransitions.put(eventName, effect);
     }
 
@@ -141,4 +146,10 @@ public class MusicEvent {
         this.outTransitions.remove(name);
 
     }
+
+    public void init(){
+        this.fileHandle = Gdx.files.internal(this.fileName);
+        this.music = Gdx.audio.newMusic(this.fileHandle);
+    }
+
 }

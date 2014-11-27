@@ -12,6 +12,7 @@ public abstract class VolumeEffect implements Effect {
     protected float offset = 0;
     boolean started = false;
 
+
     public VolumeEffect(float offset, float totalTime) {
         this.offset = offset;
         this.totalTime = totalTime;

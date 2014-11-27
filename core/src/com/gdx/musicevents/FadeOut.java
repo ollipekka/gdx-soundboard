@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 
 public class FadeOut extends VolumeEffect {
 
+    public FadeOut(){
+        super(0, 0);
+    }
+
     public FadeOut(float offset, float totalTime) {
         super(offset, totalTime);
     }

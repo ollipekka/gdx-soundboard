@@ -1,9 +1,20 @@
 package com.gdx.musicevents;
 
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.*;
 
 public class MusicEventManager {
+
+
+    private static class Container {
+        Array<MusicEvent> events;
+
+        public Container(){}
+        private Container(Array<MusicEvent> events) {
+            this.events = events;
+        }
+    }
 
     private final ObjectMap<String, MusicEvent> events = new ObjectMap<String, MusicEvent>();
 
@@ -95,11 +106,30 @@ public class MusicEventManager {
     }
 
     public void save(String fileName){
+        FileHandle musicFile = new FileHandle(fileName);
+        Json json = new Json(JsonWriter.OutputType.json);
+
+        Container container = new Container(getEvents());
+
+
+
+        musicFile.writeString(json.prettyPrint(container), false);
 
 
     }
 
     public void load(String fileName){
+
+        Json json = new Json(JsonWriter.OutputType.json);
+
+        FileHandle musicFile = Gdx.files.internal(fileName);
+        Container container = json.fromJson(Container.class, musicFile.readString());
+        for(int i = 0; i < container.events.size; i++){
+            MusicEvent event = container.events.get(i);
+            event.init();
+            add(event);
+        }
+
 
     }
 
@@ -137,4 +167,34 @@ public class MusicEventManager {
     public Array<MusicEvent> getEvents(){
         return events.values().toArray();
     }
+
+
+
+/*
+
+    public void createSerializer(){
+        Json json = new Json();
+        json.setSerializer(MusicEvent.class, new Json.Serializer<MusicEvent>() {
+            public void write (Json json, MusicEvent event, Class knownType) {
+                json.writeObjectStart();
+                json.writeValue("name", event.getName());
+                json.writeObjectEnd();
+            }
+
+            public MusicEvent read (Json json, JsonValue jsonData, Class type) {
+
+                String name = jsonData.child.name();
+
+                MusicEvent event = new MusicEvent(name, );
+                event.setName(jsonData.child().name());
+                event.setNumber(jsonData.child().asString());
+                return number;
+            }
+        });
+        json.setElementType(Person.class, "numbers", PhoneNumber.class);
+        String text = json.prettyPrint(person);
+        System.out.println(text);
+        Person person2 = json.fromJson(Person.class, text);
+    }
+*/
 }
