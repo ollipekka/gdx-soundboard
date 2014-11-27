@@ -74,14 +74,20 @@ public class MusicEventManager {
     public void remove(String eventName){
         MusicEvent event = this.events.remove(eventName);
         if(event != null) {
-            for (int i = 0; i < listeners.size; i++) {
-                MusicEventListener observer = listeners.get(i);
-                observer.eventRemoved(event);
+
+            for(ObjectMap.Entry<String, MusicEvent> entry : this.events){
+                entry.value.removeInTransition(eventName);
+                entry.value.removeOutTransition(eventName);
             }
+
             event.dispose();
 
             if(currentEvent == event){
                 currentEvent = null;
+            }
+            for (int i = 0; i < listeners.size; i++) {
+                MusicEventListener observer = listeners.get(i);
+                observer.eventRemoved(event);
             }
         }
 

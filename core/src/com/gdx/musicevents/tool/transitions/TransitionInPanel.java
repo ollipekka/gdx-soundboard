@@ -26,7 +26,7 @@ public class TransitionInPanel extends Table {
         inTransitions.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                remove.setDisabled(inTransitions.getItems().size == 0 && inTransitions.getSelectedIndex() != -1);
+                remove.setDisabled(inTransitions.getItems().size == 0 || inTransitions.getSelected() == null);
             }
         });
         add = new TextButton("Add", skin);
@@ -67,7 +67,7 @@ public class TransitionInPanel extends Table {
         for(ObjectMap.Entry<String, Effect> entry : effects){
             inTransitions.getItems().add(new EffectDecorator(entry.key, entry.value));
         }
-        remove.setDisabled(effects.size == 0);
+        remove.setDisabled(effects.size == 0 || inTransitions.getSelected() == null);
     }
 
     public Button getAddButton() {

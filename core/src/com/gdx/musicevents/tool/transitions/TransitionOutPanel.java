@@ -25,7 +25,7 @@ public class TransitionOutPanel extends Table {
         outTransitions.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                remove.setDisabled(outTransitions.getItems().size == 0 && outTransitions.getSelectedIndex() != -1);
+                remove.setDisabled(outTransitions.getItems().size == 0 || outTransitions.getSelected() == null);
             }
         });
         this.add(new ScrollPane(outTransitions)).colspan(2).fill().expand().row();
@@ -66,7 +66,7 @@ public class TransitionOutPanel extends Table {
         for(ObjectMap.Entry<String, Effect> entry : effects){
             outTransitions.getItems().add(new EffectDecorator(entry.key, entry.value));
         }
-        remove.setDisabled(effects.size == 0);
+        remove.setDisabled(effects.size == 0 || outTransitions.getSelected() == null);
     }
 
     public Button getAddButton() {
