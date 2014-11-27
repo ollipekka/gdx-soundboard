@@ -9,9 +9,11 @@ public abstract class VolumeEffect implements Effect {
     protected float originalVolume;
     protected final float totalTime;
     protected float elapsedTime = 0;
+    protected float offset = 0;
     boolean started = false;
 
-    public VolumeEffect(float totalTime) {
+    public VolumeEffect(float offset, float totalTime) {
+        this.offset = offset;
         this.totalTime = totalTime;
     }
 
@@ -28,15 +30,21 @@ public abstract class VolumeEffect implements Effect {
 
 
     public void update(float dt) {
-        if(MathUtils.isZero(elapsedTime)){
-            start();
-        }
-        elapsedTime += dt;
 
-        if(isDone()){
-            stop();
+        if(offset > 0) {
+            offset -= dt;
         } else {
-            volumeFunc(originalVolume, totalTime, elapsedTime);
+
+            if(MathUtils.isZero(elapsedTime)){
+                start();
+            }
+            elapsedTime += dt;
+
+            if(isDone()){
+                stop();
+            } else {
+                volumeFunc(originalVolume, totalTime, elapsedTime);
+            }
         }
     }
 
