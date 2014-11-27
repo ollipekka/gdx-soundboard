@@ -70,7 +70,10 @@ public class MusicEvent {
     }
 
     public void update(float dt){
-        position += dt;
+
+        if(music.isPlaying()) {
+            position += dt;
+        }
     }
 
     public void dispose() {

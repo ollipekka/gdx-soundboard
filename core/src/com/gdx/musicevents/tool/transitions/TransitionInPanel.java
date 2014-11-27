@@ -23,7 +23,12 @@ public class TransitionInPanel extends Table {
         this.add("Transition in").colspan(2).row();
         inTransitions = new List<EffectDecorator>(skin);
         this.add(new ScrollPane(inTransitions)).colspan(2).fill().expand().row();
-
+        inTransitions.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                remove.setDisabled(inTransitions.getItems().size == 0 && inTransitions.getSelectedIndex() != -1);
+            }
+        });
         add = new TextButton("Add", skin);
         add.addListener(new ChangeListener(){
             @Override
@@ -48,6 +53,9 @@ public class TransitionInPanel extends Table {
             }
         });
         this.add(remove).fillX().expandX();
+
+
+        remove.setDisabled(true);
     }
     public void setMusicEvent(MusicEvent musicEvent) {
         this.musicEvent = musicEvent;
