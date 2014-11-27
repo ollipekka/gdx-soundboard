@@ -20,6 +20,8 @@ public class AddTransitionInDialog extends Dialog {
     final MusicEvent musicEvent;
     final TransitionInPanel panel;
 
+    final Button add;
+
     public AddTransitionInDialog(final Skin skin, final TransitionInPanel panel, final MusicEventManager manager, final MusicEvent musicEvent) {
         super("Add transition", skin);
         this.musicEvent = musicEvent;
@@ -74,7 +76,10 @@ public class AddTransitionInDialog extends Dialog {
         getContentTable().add(effectPanel).minSize(400, 200);
 
 
-        button("Add", true);
+
+        add = new TextButton("Add", skin);
+        add.setDisabled(events.size == 0);
+        button(add, true);
         button("Cancel", false);
     }
 

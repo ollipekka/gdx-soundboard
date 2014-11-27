@@ -9,7 +9,6 @@ public class MatchPosition implements Effect {
     MusicEvent newEvent;
     MusicEvent oldEvent;
 
-    boolean started = false;
 
     public MatchPosition(){}
 
@@ -18,9 +17,16 @@ public class MatchPosition implements Effect {
         this.newEvent = newEvent;
         this.oldEvent = oldEvent;
 
-        started = true;
 
-        Gdx.app.log("MatchPosition", "Start");
+        newEvent.getMusic().play();
+        if (oldEvent != null) {
+            float position = oldEvent.getPosition();
+            Gdx.app.log("MatchPosition", "Set position:" + position);
+            newEvent.setPosition(position);
+        }
+
+        Gdx.app.log("MatchPosition", "New position:" + newEvent.getPosition());
+
     }
 
     @Override
@@ -30,16 +36,7 @@ public class MatchPosition implements Effect {
 
     @Override
     public void update(float dt) {
-        if(started) {
-            if (oldEvent != null) {
-                float position = oldEvent.getPosition();
-                Gdx.app.log("EventDetailsPanel", "Set position:" + position);
-                newEvent.setPosition(position);
-            }
-
-            newEvent.getMusic().play();
-            done = true;
-        }
+        done = true;
     }
 
     @Override

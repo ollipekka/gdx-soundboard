@@ -1,5 +1,6 @@
 package com.gdx.musicevents.tool;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,7 +26,8 @@ public class InfoPanel extends Table {
             nowPlaying.setText("Paused");
         } else {
 
-            String twoDecimalForm = twoDForm.format(musicEvent.getMusic().getPosition());
+            Gdx.app.log("InfoPanel", "what: " + musicEvent.getPosition() + " " + musicEvent.getMusic().getPosition());
+            String twoDecimalForm = twoDForm.format(musicEvent.getPosition());
 
             nowPlaying.setText("Now playing: " + musicEvent.toString() + " " + twoDecimalForm);
         }
