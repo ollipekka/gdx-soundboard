@@ -1,0 +1,37 @@
+{
+"events": [
+	{
+		"name": "AAAA",
+		"fileName": "music/TestLoop01.ogg",
+		"inTransitions": {
+			"BBBB": {
+				"class": "com.gdx.musicevents.FadeIn",
+				"totalTime": 1.5,
+				"offset": 1.1
+			}
+		},
+		"outTransitions": {
+			"BBBB": {
+				"class": "com.gdx.musicevents.FadeOut",
+				"totalTime": 1.4,
+				"offset": 0.90000004
+			}
+		}
+	},
+	{
+		"name": "BBBB",
+		"fileName": "music/TestLoop02.ogg",
+		"looping": true,
+		"inTransitions": {
+			"AAAA": {
+				"class": "com.gdx.musicevents.MatchPosition"
+			}
+		},
+		"outTransitions": {
+			"AAAA": {
+				"class": "com.gdx.musicevents.Stop"
+			}
+		}
+	}
+]
+}

@@ -6,11 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gdx.musicevents.MusicEvent;
 
-import java.text.DecimalFormat;
-
 public class InfoPanel extends Table {
 
-    DecimalFormat twoDForm = new DecimalFormat("###.##");
     private final Label nowPlaying;
     public InfoPanel(Skin skin) {
         super(skin);
@@ -27,7 +24,8 @@ public class InfoPanel extends Table {
         } else {
 
             Gdx.app.log("InfoPanel", "what: " + musicEvent.getPosition() + " " + musicEvent.getMusic().getPosition());
-            String twoDecimalForm = twoDForm.format(musicEvent.getPosition());
+            int intPosition = (int)(musicEvent.getPosition() * 100);
+            String twoDecimalForm = Float.toString(intPosition / 100.0f);
 
             nowPlaying.setText("Now playing: " + musicEvent.toString() + " " + twoDecimalForm);
         }

@@ -106,7 +106,7 @@ public class MusicEventManager {
     }
 
     public void save(String fileName){
-        FileHandle musicFile = new FileHandle(fileName);
+        FileHandle musicFile = Gdx.files.internal(fileName);
         Json json = new Json(JsonWriter.OutputType.json);
 
         Container container = new Container(getEvents());

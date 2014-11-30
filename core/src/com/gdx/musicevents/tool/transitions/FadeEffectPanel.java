@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import java.text.DecimalFormat;
-
 public class FadeEffectPanel extends Table {
 
     final Slider offset;
@@ -19,7 +17,7 @@ public class FadeEffectPanel extends Table {
 
         top().left();
 
-        final DecimalFormat twoDecimalFormat = new DecimalFormat("###.##");
+        //final DecimalFormat twoDecimalFormat = new DecimalFormat("###.##");
         final Label offsetLabel = new Label("", skin);
         this.add(offsetLabel).colspan(2).fillX().expandX().row();
 
@@ -30,7 +28,8 @@ public class FadeEffectPanel extends Table {
         offset.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                offsetLabel.setText("Offset " + twoDecimalFormat.format(offset.getValue()) + " sec.");
+                int offsetInt = (int)(offset.getValue() * 100);
+                offsetLabel.setText("Offset " + offsetInt / 100.0f + " sec.");
             }
         });
 
@@ -44,7 +43,8 @@ public class FadeEffectPanel extends Table {
         duration.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                durationLabel.setText("Duration " + twoDecimalFormat.format(duration.getValue()) + " sec.");
+                int offsetInt = (int)(offset.getValue() * 100);
+                durationLabel.setText("Duration " + offsetInt / 100.0f+ " sec.");
             }
         });
 

@@ -23,6 +23,7 @@ public class BrowseFilesDialog extends Dialog {
 
         FileHandle dir = Gdx.files.internal("music/");
 
+
         FileHandle[] files = dir.list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.matches(".*.(ogg|wav|mp3)");

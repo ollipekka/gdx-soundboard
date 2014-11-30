@@ -1,18 +1,27 @@
 gdx-soundboard
 ==============
 
-## Supports: ogg, wav and mp3.
-
-## Information
-libgdx soundboard for event based music.
+### Information
+Create event-based transitions for your libgdx games. Define your sound clips as events and then add transitions from and to other elements to them.
 
 Consists of:
-* A tool to create your events and transitions that exports json.
-* A library to play music based on transitions that imports json.
+- A library that imports and exports JSON.
+- A tool that lets you define events and transitions.
 
+### Supports: 
 
-Planned transitions:
-* Fade in / fade out
-* Match position (for looped sounds)
-* Conditional transitions.
+Standard libgdx formats: ogg, wav and mp3.
 
+Supported effects:
+- Fade in / out
+- Match position
+- Stop / Play (default)
+
+### Contribute
+
+Need an effect? Want to fix a bug? Report an issue or create a pull request!
+
+### ToDo
+* HTMl5 Demo
+* Framework neutral export
+* UI tweaks.
