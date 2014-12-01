@@ -1,7 +1,12 @@
 package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventListener;
@@ -11,7 +16,6 @@ import com.gdx.musicevents.tool.transitions.TransitionOutPanel;
 
 public class EventDetailsPanel extends Table {
 
-    private final Skin skin;
     private final Label eventInfo;
     private final CheckBox looping;
     /*
@@ -29,14 +33,6 @@ public class EventDetailsPanel extends Table {
 
     public EventDetailsPanel(Skin skin, final MusicEventTool planner) {
         super(skin);
-        this.skin = skin;
-        /*
-        Pixmap pm1 = new Pixmap(1, 1, Pixmap.Format.RGB565);
-        pm1.setColor(Color.DARK_GRAY);
-        pm1.fill();
-
-        setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(pm1))));*/
-
         final MusicEventManager manager = planner.eventManager;
 
         manager.addListener(new MusicEventListener() {

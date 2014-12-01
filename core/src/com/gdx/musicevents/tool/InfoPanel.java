@@ -23,7 +23,7 @@ public class InfoPanel extends Table {
             nowPlaying.setText("Paused");
         } else {
 
-            Gdx.app.log("InfoPanel", "what: " + musicEvent.getPosition() + " " + musicEvent.getMusic().getPosition());
+            //Gdx.app.log("InfoPanel", "what: " + musicEvent.getPosition() + " " + musicEvent.getMusic().getPosition());
             int intPosition = (int)(musicEvent.getPosition() * 100);
             String twoDecimalForm = Float.toString(intPosition / 100.0f);
 

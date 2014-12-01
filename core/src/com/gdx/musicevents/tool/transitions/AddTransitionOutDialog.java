@@ -1,10 +1,20 @@
 package com.gdx.musicevents.tool.transitions;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.*;
+import com.gdx.musicevents.Effect;
+import com.gdx.musicevents.FadeOut;
+import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.Stop;
 
 public class AddTransitionOutDialog extends Dialog {
 
@@ -14,7 +24,7 @@ public class AddTransitionOutDialog extends Dialog {
 
 
     final SelectBox<String> selectBox;
-    final Cell propertiesCell;
+    final Cell<? extends Actor> propertiesCell;
     final List<MusicEvent> availableEvents;
     final MusicEvent musicEvent;
     final TransitionOutPanel panel;
@@ -51,7 +61,7 @@ public class AddTransitionOutDialog extends Dialog {
 
         effectPanel.add(selectBox).fillX().expandX().row();
 
-        propertiesCell = effectPanel.add(new NoPropertiesPanel(skin)).fill().expand();
+        propertiesCell = effectPanel.add(new DefaultEndEffectPanel(skin)).fill().expand();
 
         selectBox.addListener(new ChangeListener() {
             @Override
@@ -59,10 +69,10 @@ public class AddTransitionOutDialog extends Dialog {
                 String selected = selectBox.getSelected();
 
                 if(selected.equals(DEFAULT)){
-                    propertiesCell.setActor(new NoPropertiesPanel(skin));
+                    propertiesCell.setActor(new DefaultEndEffectPanel(skin));
 
                 } else if(selected.equals(FADE_OUT)) {
-                    propertiesCell.setActor(new FadeEffectPanel(skin));
+                    propertiesCell.setActor(new FadeEffectPanel(skin, false));
                 }
             }
         });

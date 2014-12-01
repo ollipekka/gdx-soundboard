@@ -2,15 +2,17 @@ package com.gdx.musicevents;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public class MusicEventManager {
 
-
     private static class Container {
         Array<MusicEvent> events;
-
-        public Container(){}
+        @SuppressWarnings("unused")
+		public Container(){}
         private Container(Array<MusicEvent> events) {
             this.events = events;
         }
@@ -106,16 +108,13 @@ public class MusicEventManager {
     }
 
     public void save(String fileName){
-        FileHandle musicFile = Gdx.files.internal(fileName);
+        FileHandle musicFile = new FileHandle(fileName);
+
         Json json = new Json(JsonWriter.OutputType.json);
 
         Container container = new Container(getEvents());
-
-
-
+        
         musicFile.writeString(json.prettyPrint(container), false);
-
-
     }
 
     public void load(String fileName){

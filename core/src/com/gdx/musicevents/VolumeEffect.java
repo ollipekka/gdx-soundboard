@@ -2,16 +2,16 @@ package com.gdx.musicevents;
 
 import com.badlogic.gdx.math.MathUtils;
 
-public abstract class VolumeEffect implements Effect {
+public abstract class VolumeEffect extends AbstractEffect {
 
-
-    protected MusicEvent event;
     protected float originalVolume;
     protected final float totalTime;
     protected float elapsedTime = 0;
     protected float offset = 0;
     boolean started = false;
 
+    protected transient MusicEvent newEvent;
+    protected transient MusicEvent oldEvent;
 
     public VolumeEffect(float offset, float totalTime) {
         this.offset = offset;
@@ -20,14 +20,16 @@ public abstract class VolumeEffect implements Effect {
 
     @Override
     public void start(MusicEvent newEvent, MusicEvent oldEvent) {
-        this.event = newEvent;
-        this.originalVolume = event.getMusic().getVolume();
+        
+        this.newEvent = newEvent;
+        this.oldEvent = oldEvent;
+        
+        this.originalVolume = newEvent.getMusic().getVolume();
         this.elapsedTime = 0;
 
         started = true;
     }
 
-    public abstract void start();
 
 
     public void update(float dt) {
@@ -37,7 +39,7 @@ public abstract class VolumeEffect implements Effect {
         } else {
 
             if(MathUtils.isZero(elapsedTime)){
-                start();
+                super.start(newEvent, oldEvent);
             }
             elapsedTime += dt;
 

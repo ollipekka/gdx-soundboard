@@ -1,8 +1,16 @@
 package com.gdx.musicevents.tool;
 
+import java.text.Collator;
+import java.util.Comparator;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gdx.musicevents.MusicEvent;
@@ -19,6 +27,15 @@ public class EventListPanel extends Table {
 
     final TextButton remove;
 
+
+    Comparator<MusicEvent> comparator = new Comparator<MusicEvent>() {
+        @Override
+        public int compare(MusicEvent o1, MusicEvent o2) {
+
+            Collator comp = java.text.Collator.getInstance();
+            return comp.compare(o1.getName(), o2.getName());
+        }
+    };
 
     public EventListPanel(final Skin skin, final MusicEventTool planner) {
         super(skin);
@@ -37,13 +54,14 @@ public class EventListPanel extends Table {
             public void eventAdded(MusicEvent event) {;
                 eventList.getItems().add(event);
                 remove.setDisabled(eventList.getItems().size == 0);
+                eventList.getItems().sort(comparator);
             }
 
             @Override
             public void eventRemoved(MusicEvent event) {
                 eventList.getItems().removeValue(event, true);
                 remove.setDisabled(eventList.getItems().size == 0);
-
+                eventList.getItems().sort(comparator);;
             }
         });
 

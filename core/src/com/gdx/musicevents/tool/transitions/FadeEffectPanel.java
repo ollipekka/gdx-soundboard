@@ -4,18 +4,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class FadeEffectPanel extends Table {
+public class FadeEffectPanel extends DefaultStartEffectPanel {
 
     final Slider offset;
     final Slider duration;
 
-    public FadeEffectPanel(Skin skin) {
-        super(skin);
+    public FadeEffectPanel(Skin skin, boolean matchPositionEnabled) {
+        super(skin, matchPositionEnabled);
 
-        top().left();
 
         //final DecimalFormat twoDecimalFormat = new DecimalFormat("###.##");
         final Label offsetLabel = new Label("", skin);
@@ -43,8 +41,8 @@ public class FadeEffectPanel extends Table {
         duration.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                int offsetInt = (int)(offset.getValue() * 100);
-                durationLabel.setText("Duration " + offsetInt / 100.0f+ " sec.");
+                int durationInt = (int)(duration.getValue() * 100);
+                durationLabel.setText("Duration " + durationInt / 100.0f+ " sec.");
             }
         });
 

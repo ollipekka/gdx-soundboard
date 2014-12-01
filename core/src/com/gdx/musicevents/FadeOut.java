@@ -12,20 +12,17 @@ public class FadeOut extends VolumeEffect {
         super(offset, totalTime);
     }
 
-    @Override
-    public void start() {
-    }
 
     @Override
     public void stop() {
         Gdx.app.log("FadeOut", "Stop");
-        event.getMusic().stop();
-        event.getMusic().setVolume(originalVolume);
+        newEvent.getMusic().stop();
+        newEvent.getMusic().setVolume(originalVolume);
     }
 
 
     @Override
     protected void volumeFunc(float originalVolume, float totalTime, float elapsedTime) {
-        event.getMusic().setVolume(originalVolume * (totalTime - elapsedTime) / totalTime);
+        newEvent.getMusic().setVolume(originalVolume * (totalTime - elapsedTime) / totalTime);
     }
 }

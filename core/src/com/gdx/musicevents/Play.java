@@ -2,7 +2,7 @@ package com.gdx.musicevents;
 
 import com.badlogic.gdx.Gdx;
 
-public class Play implements Effect {
+public class Play extends AbstractEffect {
 
     public Play(){}
     @Override
@@ -13,7 +13,8 @@ public class Play implements Effect {
             message += " old " + oldEvent.getName();
         }
         Gdx.app.log("Play", message);
-        newEvent.getMusic().play();
+        
+        super.start(newEvent, oldEvent);
 
     }
 

@@ -1,6 +1,10 @@
 package com.gdx.musicevents.tool.transitions;
 
-import com.gdx.musicevents.*;
+import com.gdx.musicevents.Effect;
+import com.gdx.musicevents.FadeIn;
+import com.gdx.musicevents.FadeOut;
+import com.gdx.musicevents.Play;
+import com.gdx.musicevents.Stop;
 
 public class EffectDecorator {
     String name;
@@ -21,8 +25,6 @@ public class EffectDecorator {
             return "Play";
         } else if(effect instanceof Stop){
             return "Stop";
-        } else if(effect instanceof MatchPosition){
-            return "Match position";
         } else if(effect instanceof FadeOut){
             return "Fade out";
         } else if(effect instanceof FadeIn){

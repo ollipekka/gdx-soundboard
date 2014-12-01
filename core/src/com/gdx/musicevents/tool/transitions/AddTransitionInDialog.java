@@ -1,21 +1,33 @@
 package com.gdx.musicevents.tool.transitions;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.*;
+import com.gdx.musicevents.AbstractEffect;
+import com.gdx.musicevents.Effect;
+import com.gdx.musicevents.FadeIn;
+import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.Play;
 
 public class AddTransitionInDialog extends Dialog {
 
 
     private final static String DEFAULT = "Default";
-    private final static String MATCH_POSITION = "Match position";
     private final static String FADE_IN = "Fade in";
 
 
     final SelectBox<String> selectBox;
-    final Cell propertiesCell;
+    final Cell<? extends Actor> propertiesCell;
     final List<MusicEvent> availableEvents;
     final MusicEvent musicEvent;
     final TransitionInPanel panel;
@@ -50,11 +62,11 @@ public class AddTransitionInDialog extends Dialog {
         final Table effectPanel = new Table(skin);
         effectPanel.top().left();
         selectBox = new SelectBox<String>(skin);
-        selectBox.setItems(DEFAULT, FADE_IN, MATCH_POSITION);
+        selectBox.setItems(DEFAULT, FADE_IN);
 
         effectPanel.add(selectBox).fillX().expandX().row();
 
-        propertiesCell = effectPanel.add(new NoPropertiesPanel(skin)).fill().expand();
+        propertiesCell = effectPanel.add(new DefaultStartEffectPanel(skin, false)).fill().expand();
 
         selectBox.addListener(new ChangeListener() {
             @Override
@@ -62,13 +74,11 @@ public class AddTransitionInDialog extends Dialog {
                 String selected = selectBox.getSelected();
 
                 if(selected.equals(DEFAULT)){
-                    propertiesCell.setActor(new NoPropertiesPanel(skin));
+                    propertiesCell.setActor(new DefaultStartEffectPanel(skin, true));
 
                 } else if(selected.equals(FADE_IN)) {
-                    propertiesCell.setActor(new FadeEffectPanel(skin));
+                    propertiesCell.setActor(new FadeEffectPanel(skin, true));
 
-                } else if(selected.equals(MATCH_POSITION)){
-                    propertiesCell.setActor(new NoPropertiesPanel(skin));
                 }
             }
         });
@@ -91,15 +101,16 @@ public class AddTransitionInDialog extends Dialog {
             String eventName = availableEvents.getSelected().getName();
             String effectName = selectBox.getSelected();
 
-            Effect effect = null;
-            if(effectName.equals(MATCH_POSITION)){
-                effect = new MatchPosition();
-            } else if(effectName.equals(DEFAULT)){
+            AbstractEffect effect = null;
+            if(effectName.equals(DEFAULT)){
+                DefaultStartEffectPanel startEffectPanel = (DefaultStartEffectPanel) propertiesCell.getActor();
                 effect = new Play();
+                effect.setMatchPosition(startEffectPanel.matchPosition.isChecked());
             } else if(effectName.equals(FADE_IN)){
                 FadeEffectPanel fadeEffectPanel = (FadeEffectPanel) propertiesCell.getActor();
 
                 effect = new FadeIn(fadeEffectPanel.offset.getValue(), fadeEffectPanel.duration.getValue());
+                effect.setMatchPosition(fadeEffectPanel.matchPosition.isChecked());
             }
 
             musicEvent.addInTransition(eventName, effect);
