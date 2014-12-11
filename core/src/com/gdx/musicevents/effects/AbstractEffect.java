@@ -1,6 +1,7 @@
-package com.gdx.musicevents;
+package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.Gdx;
+import com.gdx.musicevents.MusicEvent;
 
 public abstract class AbstractEffect implements Effect {
 

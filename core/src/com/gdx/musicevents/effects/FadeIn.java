@@ -1,4 +1,5 @@
-package com.gdx.musicevents;
+package com.gdx.musicevents.effects;
+
 
 public class FadeIn extends VolumeEffect {
 

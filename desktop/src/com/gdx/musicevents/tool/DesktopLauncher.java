@@ -1,8 +1,7 @@
-package com.musicevents.desktop;
+package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.gdx.musicevents.tool.MusicEventTool;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

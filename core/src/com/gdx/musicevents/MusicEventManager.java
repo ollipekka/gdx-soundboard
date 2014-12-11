@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.gdx.musicevents.effects.Effect;
 
 public class MusicEventManager {
 

@@ -1,4 +1,6 @@
-package com.gdx.musicevents;
+package com.gdx.musicevents.effects;
+
+import com.gdx.musicevents.MusicEvent;
 
 public interface Effect {
     public void start(MusicEvent newEvent, MusicEvent oldEvent);

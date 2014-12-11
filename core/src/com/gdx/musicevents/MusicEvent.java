@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.gdx.musicevents.effects.Effect;
+import com.gdx.musicevents.effects.Play;
+import com.gdx.musicevents.effects.Stop;
 
 public class MusicEvent {
     private final String name;
