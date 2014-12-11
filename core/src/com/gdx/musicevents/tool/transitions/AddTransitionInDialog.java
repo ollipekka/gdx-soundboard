@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.musicevents.AbstractEffect;
-import com.gdx.musicevents.Effect;
 import com.gdx.musicevents.FadeIn;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
