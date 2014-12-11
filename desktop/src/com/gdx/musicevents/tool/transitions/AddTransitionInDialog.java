@@ -12,11 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.AbstractEffect;
-import com.gdx.musicevents.FadeIn;
+import com.gdx.musicevents.effects.AbstractEffect;
+import com.gdx.musicevents.effects.FadeIn;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.Play;
+import com.gdx.musicevents.effects.Play;
 
 public class AddTransitionInDialog extends Dialog {
 

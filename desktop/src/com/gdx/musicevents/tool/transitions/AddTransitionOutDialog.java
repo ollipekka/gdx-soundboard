@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.Effect;
-import com.gdx.musicevents.FadeOut;
+import com.gdx.musicevents.effects.Effect;
+import com.gdx.musicevents.effects.FadeOut;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.Stop;
+import com.gdx.musicevents.effects.Stop;
 
 public class AddTransitionOutDialog extends Dialog {
 

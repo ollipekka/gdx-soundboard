@@ -1,10 +1,10 @@
 package com.gdx.musicevents.tool.transitions;
 
-import com.gdx.musicevents.Effect;
-import com.gdx.musicevents.FadeIn;
-import com.gdx.musicevents.FadeOut;
-import com.gdx.musicevents.Play;
-import com.gdx.musicevents.Stop;
+import com.gdx.musicevents.effects.Effect;
+import com.gdx.musicevents.effects.FadeIn;
+import com.gdx.musicevents.effects.FadeOut;
+import com.gdx.musicevents.effects.Play;
+import com.gdx.musicevents.effects.Stop;
 
 public class EffectDecorator {
     String name;

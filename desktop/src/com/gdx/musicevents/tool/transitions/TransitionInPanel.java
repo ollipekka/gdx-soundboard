@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.gdx.musicevents.Effect;
+import com.gdx.musicevents.effects.Effect;
 import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
 
