@@ -1,8 +1,9 @@
 gdx-soundboard
 ==============
 
-### The Problem
 ![Screenshot](http://i.imgur.com/TD3zVSR.png)
+
+### The Problem
 
 gdx-soundboard addresses the problem where audio-engineers want to describe events and event transitions without touching code. gdx-soundboard solves with easy-to-use GUI and the ability to export json.
 
@@ -19,8 +20,9 @@ Standard libgdx formats: ogg, wav and mp3.
 
 Supported effects:
 - Fade in / out
-- Match position
 - Stop / Play
+
+Match position to seamlessly transition between tracks.
 
 ### Contribute
 
