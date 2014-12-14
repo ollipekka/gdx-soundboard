@@ -13,9 +13,6 @@ gdx-soundboard addresses the problem where audio-engineers want to describe even
     * You import the json in your game using the library.
     * You fire events and the music automatically transitions using the defined transitions.
 
-### Information
-Create event-based transitions for your libgdx games. Define your sound clips as events and then add transitions from and to other elements to them.
-
 ### Supports:
 
 Standard libgdx formats: ogg, wav and mp3.
