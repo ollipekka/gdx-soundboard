@@ -153,6 +153,16 @@ public class MusicEvent {
     public void init(){
         this.fileHandle = Gdx.files.internal(this.fileName);
         this.music = Gdx.audio.newMusic(this.fileHandle);
+        music.setOnCompletionListener(new Music.OnCompletionListener() {
+            @Override
+            public void onCompletion(Music music) {
+                Gdx.app.log("SoundBoard", "Event complete " + name);
+                position = 0;
+                if(looping){
+                    music.play();
+                }
+            }
+        });
     }
 
 }

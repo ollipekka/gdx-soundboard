@@ -16,7 +16,6 @@ public class MusicEventTool implements ApplicationListener {
 
     MusicEvent shownMusicEvent;
 
-
     Skin skin;
 
     private Stage stage;
@@ -82,6 +81,7 @@ public class MusicEventTool implements ApplicationListener {
 
         infoPanel.show(eventManager.getCurrentEvent());
 
+        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();

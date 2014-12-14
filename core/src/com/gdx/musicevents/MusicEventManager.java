@@ -10,6 +10,9 @@ import com.gdx.musicevents.effects.Effect;
 
 public class MusicEventManager {
 
+    /**
+     * Container for serialization purposes.
+     */
     private static class Container {
         Array<MusicEvent> events;
         @SuppressWarnings("unused")
@@ -19,16 +22,39 @@ public class MusicEventManager {
         }
     }
 
+    /**
+     * The events that the manager is able to respond to.
+     */
     private final ObjectMap<String, MusicEvent> events = new ObjectMap<String, MusicEvent>();
 
+    /**
+     * The current event.
+     */
     private MusicEvent currentEvent;
 
+    /**
+     * Listeners in the event tool.
+     */
     private final Array<MusicEventListener> listeners = new Array<MusicEventListener>();
 
-
+    /**
+     * The transitions in progress.
+     */
     private final Array<Effect> transitions = new Array<Effect>();
 
+    /**
+     * Play the event using an enum.
+     * 
+     * @param eventName
+     */
+    public void play(Enum<?> eventName){
+        play(eventName.name());
+    }
 
+    /**
+     * Play an event.
+     * @param eventName The name of the event.
+     */
     public void play(String eventName){
         MusicEvent nextEvent = events.get(eventName);
         if(nextEvent != null){
@@ -45,18 +71,20 @@ public class MusicEventManager {
     }
 
 
-    public void handleTransition(MusicEvent currentEvent, MusicEvent oldEvent){
+    private void handleTransition(MusicEvent currentEvent, MusicEvent oldEvent){
         transitions.add(currentEvent.startTransition(oldEvent));
         if(oldEvent != null) {
             transitions.add(oldEvent.endTransition(currentEvent));
         }
     }
 
-    public void play(Enum<?> eventName){
-        play(eventName.name());
-    }
 
 
+    /**
+     * 
+     * Update the music event manager.
+     * @param dt The raw un-interpolated un-averaged delta time.
+     */
     public void update(float dt){
 
         for(int i = transitions.size - 1; i >= 0 ; i--){
@@ -73,6 +101,10 @@ public class MusicEventManager {
         }
     }
 
+    /**
+     * Add an event.
+     * @param event The event object.
+     */
     public void add(MusicEvent event){
         this.events.put(event.getName(), event);
         for(int i = 0; i < listeners.size; i++){
@@ -82,9 +114,17 @@ public class MusicEventManager {
 
     }
 
+    /**
+     * Remove an event.
+     * @param event The event object.
+     */
     public void remove(MusicEvent event){
         remove(event.getName());
     }
+    /**
+     * Remove an event.
+     * @param eventName The name of the event.
+     */
     public void remove(String eventName){
         MusicEvent event = this.events.remove(eventName);
         if(event != null) {
@@ -108,6 +148,10 @@ public class MusicEventManager {
 
     }
 
+    /**
+     * Save to a file.
+     * @param fileName The path to the file.
+     */
     public void save(String fileName){
         FileHandle musicFile = new FileHandle(fileName);
 
@@ -118,8 +162,12 @@ public class MusicEventManager {
         musicFile.writeString(json.prettyPrint(container), false);
     }
 
+    /**
+     * Load a save file.
+     * @param fileName The path to the file.
+     */
     public void load(String fileName){
-
+        this.clear();
         Json json = new Json(JsonWriter.OutputType.json);
 
         FileHandle musicFile = Gdx.files.internal(fileName);
@@ -129,22 +177,31 @@ public class MusicEventManager {
             event.init();
             add(event);
         }
-
-
     }
 
+    /**
+     * Access the current event.
+     * @return The event that is playing.
+     */
     public MusicEvent getCurrentEvent() {
         return currentEvent;
     }
 
+    /**
+     * Stop playing the current event.
+     */
     public void stop() {
         if(this.currentEvent != null){
             currentEvent.getMusic().stop();
         }
     }
 
+    /**
+     * Clear the manager. Removes all events.
+     */
     public void clear() {
-        for(MusicEvent event : events.values()){
+        Array<MusicEvent> eventArray = events.values().toArray();
+        for(MusicEvent event : eventArray){
             event.dispose();
             for (int i = 0; i < listeners.size; i++) {
                 MusicEventListener observer = listeners.get(i);
@@ -155,46 +212,29 @@ public class MusicEventManager {
         events.clear();
     }
 
+    /**
+     * Add observer to the manager.
+     * @param listener
+     */
     public void addListener(MusicEventListener listener){
         this.listeners.add(listener);
     }
 
+    /**
+     * Remove observer from the manager.
+     * @param listener
+     */
     public void removeListener(MusicEventListener listener){
         this.listeners.removeValue(listener, true);
     }
 
 
+    /**
+     * Access all events in the system.
+     * @return Copy of all events in the system.
+     */
     public Array<MusicEvent> getEvents(){
         return events.values().toArray();
     }
 
-
-
-/*
-
-    public void createSerializer(){
-        Json json = new Json();
-        json.setSerializer(MusicEvent.class, new Json.Serializer<MusicEvent>() {
-            public void write (Json json, MusicEvent event, Class knownType) {
-                json.writeObjectStart();
-                json.writeValue("name", event.getName());
-                json.writeObjectEnd();
-            }
-
-            public MusicEvent read (Json json, JsonValue jsonData, Class type) {
-
-                String name = jsonData.child.name();
-
-                MusicEvent event = new MusicEvent(name, );
-                event.setName(jsonData.child().name());
-                event.setNumber(jsonData.child().asString());
-                return number;
-            }
-        });
-        json.setElementType(Person.class, "numbers", PhoneNumber.class);
-        String text = json.prettyPrint(person);
-        System.out.println(text);
-        Person person2 = json.fromJson(Person.class, text);
-    }
-*/
 }

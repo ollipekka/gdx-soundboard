@@ -1,35 +1,82 @@
 {
 "events": [
 	{
-		"name": "AAAA",
-		"fileName": "music/TestLoop01.ogg",
+		"name": "rising",
+		"fileName": "music/001b rising.ogg",
+		"looping": true,
 		"inTransitions": {
-			"BBBB": {
-				"class": "com.gdx.musicevents.FadeIn",
-				"totalTime": 1.5,
-				"offset": 1.1
+			"action": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"matchPosition": true,
+				"totalTime": 2
+			},
+			"calm": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"totalTime": 2
 			}
 		},
 		"outTransitions": {
-			"BBBB": {
-				"class": "com.gdx.musicevents.FadeOut",
-				"totalTime": 1.4,
-				"offset": 0.90000004
+			"action": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 2
+			},
+			"calm": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 2
 			}
 		}
 	},
 	{
-		"name": "BBBB",
-		"fileName": "music/TestLoop02.ogg",
+		"name": "action",
+		"fileName": "music/001c action.ogg",
 		"looping": true,
 		"inTransitions": {
-			"AAAA": {
-				"class": "com.gdx.musicevents.MatchPosition"
+			"rising": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"matchPosition": true,
+				"totalTime": 2
+			},
+			"calm": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"matchPosition": true,
+				"totalTime": 2
 			}
 		},
 		"outTransitions": {
-			"AAAA": {
-				"class": "com.gdx.musicevents.Stop"
+			"rising": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 2
+			},
+			"calm": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 2
+			}
+		}
+	},
+	{
+		"name": "calm",
+		"fileName": "music/001a calm.ogg",
+		"looping": true,
+		"inTransitions": {
+			"rising": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"matchPosition": true,
+				"totalTime": 2
+			},
+			"action": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"matchPosition": true,
+				"totalTime": 2
+			}
+		},
+		"outTransitions": {
+			"rising": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 2
+			},
+			"action": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 2
 			}
 		}
 	}
