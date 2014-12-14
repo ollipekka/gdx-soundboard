@@ -5,7 +5,7 @@ gdx-soundboard
 
 ### The Problem
 
-gdx-soundboard addresses the problem where audio-engineers want to describe events and event transitions without touching code. gdx-soundboard solves with easy-to-use GUI and the ability to export json.
+This tool aims to improve the workflow between game programmer and the audio engineer. gdx-soundboard addresses the problem where audio-engineers want to describe events and event transitions without touching code. gdx-soundboard solves with easy-to-use GUI and the ability to export json.
 
 ## The Workflow
     * Your audio guy creates music tracks.
@@ -27,6 +27,9 @@ Match position to seamlessly transition between tracks.
 ### Contribute
 
 Need an effect? Want to fix a bug? Want to change the format? Pull requests and issues are welcome.
+
+### ToDo
+- Refactor MusicEvent to MusicState which can hold multiple tracks.
 
 ### Credits
 
