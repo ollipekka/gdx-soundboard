@@ -1,27 +1,27 @@
 gdx-soundboard
 ==============
 
+### Problem?
+![Image of gdx-soundboard](http://imgur.com/TD3zVSR)
+
+Has your audio guy ever talked to you about transitions between music tracks? gdx-soundboard solves this problem and enables soon-to-be-audio engineers to create transitions between tracks without single line of code.
+
 ### Information
 Create event-based transitions for your libgdx games. Define your sound clips as events and then add transitions from and to other elements to them.
 
-Consists of:
-- A library that imports and exports JSON.
-- A tool that lets you define events and transitions.
-
-### Supports: 
+### Supports:
 
 Standard libgdx formats: ogg, wav and mp3.
 
 Supported effects:
 - Fade in / out
 - Match position
-- Stop / Play (default)
+- Stop / Play
 
 ### Contribute
 
-Need an effect? Want to fix a bug? Report an issue or create a pull request!
+Need an effect? Want to fix a bug? Want to change the format? Pull requests and issues are welcome.
 
-### ToDo
-* HTMl5 Demo
-* Framework neutral export
-* UI tweaks.
+### Credits
+
+The example audio tracks were created by @Sweeppah (https://twitter.com/Sweeppah)
