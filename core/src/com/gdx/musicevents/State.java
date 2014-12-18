@@ -30,19 +30,20 @@ public class State implements OnCompletionListener{
     }
     
     public void addTrack(Track track){
-        this.tracks.add(track);
+        track.init(this);
+        this.getTracks().add(track);
     }
     
     public void removeTrack(Track track){
-        this.tracks.removeValue(track, true);
+        this.getTracks().removeValue(track, true);
     }
 
     @Override
     public void onCompletion(Music music) {
-        if(looping){
+        if(isLooping()){
             Track currentTrack = null;
-            if(tracks.size > 1) {
-                currentTrackIndex = MathUtils.random(tracks.size - 1);
+            if(getTracks().size > 1) {
+                currentTrackIndex = MathUtils.random(getTracks().size - 1);
                 currentTrack = getCurrentTrack();
             } else {
                 currentTrack = getCurrentTrack();
@@ -56,7 +57,14 @@ public class State implements OnCompletionListener{
         }
     }
     
-    public void enter(State previousState) {
+    public void init() {
+        for(int i = 0; i < getTracks().size; i++){
+            Track track = getTracks().get(i);
+            track.init(this);
+        }
+    }
+    
+    public Effect enter(State previousState) {
 
         Effect effect = enterTransitions.get(previousState.getName());
 
@@ -66,9 +74,12 @@ public class State implements OnCompletionListener{
 
         effect.start(this, previousState);
         
+        
+        return effect;
+        
     }
     
-    public void exit(State nextState) {
+    public Effect exit(State nextState) {
         Effect effect = exitTransitions.get(nextState.getName());
 
         if(effect == null){
@@ -76,6 +87,7 @@ public class State implements OnCompletionListener{
         }
 
         effect.start(this, nextState);
+        return effect;
     }
     
     public void update(float dt) {
@@ -92,8 +104,60 @@ public class State implements OnCompletionListener{
         Track currentTrack = getCurrentTrack();
         currentTrack.stop();
     }
+    
+    public void dispose() {
+        for(int i = 0; i < getTracks().size; i++) {
+            Track track = getTracks().get(i);
+            track.dispose();
+        }
+        
+        Track currentTrack = getCurrentTrack();
+        currentTrack.stop();
+    }
 
-    private Track getCurrentTrack(){
-        return tracks.get(currentTrackIndex);
+    public ObjectMap<String, Effect> getEnterTransitions() {
+        return enterTransitions;
+    }
+
+    public ObjectMap<String, Effect> getExitTransitions() {
+        return exitTransitions;
+    }
+
+    public void addEnterTransition(String eventName, Effect effect) {
+        this.enterTransitions.put(eventName, effect);
+    }
+
+    public void removeEnterTransition(String name) {
+        this.enterTransitions.remove(name);
+
+    }
+    public void addExitTransition(String eventName, Effect effect) {
+        this.exitTransitions.put(eventName, effect);
+    }
+
+    public void removeExitTransition(String name) {
+        this.exitTransitions.remove(name);
+
+    }
+    
+    public Track getCurrentTrack(){
+        return getTracks().get(currentTrackIndex);
+    }
+
+    public boolean isLooping() {
+        return looping;
+    }
+
+    public void setLooping(boolean looping) {
+        this.looping = looping;
+    }
+    
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public Array<Track> getTracks() {
+        return tracks;
     }
 }

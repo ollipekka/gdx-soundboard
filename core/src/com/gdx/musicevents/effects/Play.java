@@ -1,7 +1,6 @@
 package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.Gdx;
-import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.State;
 
 public class Play extends AbstractEffect {

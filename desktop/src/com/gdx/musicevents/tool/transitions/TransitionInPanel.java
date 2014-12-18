@@ -11,11 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.Effect;
-import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.State;
 
 public class TransitionInPanel extends Table {
-    MusicEvent musicEvent;
+    State musicEvent;
     List<EffectDecorator> inTransitions;
 
     final Button add;
@@ -52,7 +52,7 @@ public class TransitionInPanel extends Table {
             public void changed(ChangeEvent event, Actor actor) {
                 EffectDecorator decorator = inTransitions.getSelected();
 
-                musicEvent.removeInTransition(decorator.name);
+                musicEvent.removeEnterTransition(decorator.name);
 
                 setMusicEvent(musicEvent);
             }
@@ -62,12 +62,12 @@ public class TransitionInPanel extends Table {
 
         remove.setDisabled(true);
     }
-    public void setMusicEvent(MusicEvent musicEvent) {
+    public void setMusicEvent(State musicEvent) {
         this.musicEvent = musicEvent;
 
         inTransitions.getItems().clear();
 
-        ObjectMap<String, Effect> effects = musicEvent.getInTransitions();
+        ObjectMap<String, Effect> effects = musicEvent.getEnterTransitions();
 
         for(ObjectMap.Entry<String, Effect> entry : effects){
             inTransitions.getItems().add(new EffectDecorator(entry.key, entry.value));

@@ -8,13 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.State;
+import com.gdx.musicevents.effects.Effect;
 
 public class MusicEventTool implements ApplicationListener {
 
-    MusicEvent shownMusicEvent;
+    State shownState;
 
     Skin skin;
 
@@ -110,9 +112,8 @@ public class MusicEventTool implements ApplicationListener {
         return stage;
     }
 
-    public void showEvent(MusicEvent musicEvent) {
-        this.shownMusicEvent = musicEvent;
+    public void showEvent(State musicEvent) {
+        this.shownState = musicEvent;
         eventDetailsPanel.show(musicEvent);
     }
-
 }

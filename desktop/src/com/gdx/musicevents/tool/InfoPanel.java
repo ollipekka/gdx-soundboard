@@ -3,7 +3,8 @@ package com.gdx.musicevents.tool;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.State;
+import com.gdx.musicevents.Track;
 
 public class InfoPanel extends Table {
 
@@ -17,11 +18,12 @@ public class InfoPanel extends Table {
     }
 
 
-    public void show(MusicEvent musicEvent){
+    public void show(State musicEvent){
         if(musicEvent == null){
             nowPlaying.setText("Paused");
         } else {
-            int intPosition = (int)(musicEvent.getPosition() * 100);
+            Track track = musicEvent.getCurrentTrack();
+            int intPosition = (int)(track.getPosition() * 100);
             String twoDecimalForm = Float.toString(intPosition / 100.0f);
 
             nowPlaying.setText("Now playing: " + musicEvent.toString() + " " + twoDecimalForm);

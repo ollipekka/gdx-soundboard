@@ -2,6 +2,6 @@ package com.gdx.musicevents;
 
 public interface MusicEventListener {
 
-    public void eventAdded(MusicEvent event);
-    public void eventRemoved(MusicEvent event);
+    public void eventAdded(State state);
+    public void eventRemoved(State state);
 }

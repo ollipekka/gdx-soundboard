@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.musicevents.effects.Effect;
 import com.gdx.musicevents.effects.FadeOut;
-import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.State;
 import com.gdx.musicevents.effects.Stop;
 
 public class AddTransitionOutDialog extends Dialog {
@@ -25,25 +25,25 @@ public class AddTransitionOutDialog extends Dialog {
 
     final SelectBox<String> selectBox;
     final Cell<? extends Actor> propertiesCell;
-    final List<MusicEvent> availableEvents;
-    final MusicEvent musicEvent;
+    final List<State> availableEvents;
+    final State musicEvent;
     final TransitionOutPanel panel;
 
-    public AddTransitionOutDialog(final Skin skin, final TransitionOutPanel panel, final MusicEventManager manager, final MusicEvent musicEvent) {
+    public AddTransitionOutDialog(final Skin skin, final TransitionOutPanel panel, final MusicEventManager manager, final State musicEvent) {
         super("Add transition", skin);
         this.musicEvent = musicEvent;
         this.panel = panel;
-        availableEvents = new List<MusicEvent>(skin);
+        availableEvents = new List<State>(skin);
 
-        Array<MusicEvent> events = manager.getEvents();
+        Array<State> events = manager.getEvents();
         events.removeValue(musicEvent, true);
 
-        Array<String> usedEventNames = musicEvent.getOutTransitions().keys().toArray();
+        Array<String> usedEventNames = musicEvent.getExitTransitions().keys().toArray();
 
         for(int i = 0; i < usedEventNames.size; i++){
             String usedEventName = usedEventNames.get(i);
             for(int j = 0; j < events.size; j++){
-                MusicEvent event = events.get(j);
+                State event = events.get(j);
                 if(event.getName().equals(usedEventName)) {
                     events.removeIndex(j);
                     break;
@@ -101,7 +101,7 @@ public class AddTransitionOutDialog extends Dialog {
                 effect = new FadeOut(fadeEffectPanel.offset.getValue(), fadeEffectPanel.duration.getValue());
             }
 
-            musicEvent.addOutTransition(eventName, effect);
+            musicEvent.addExitTransition(eventName, effect);
             panel.setMusicEvent(musicEvent);
 
         }

@@ -14,19 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 public class BrowseFilesDialog extends Dialog {
 
     private final List<FileHandle> dirList;
-    private final AddEventDialog parentDialog;
-
-    public BrowseFilesDialog(Skin skin, final AddEventDialog parentDialog) {
+    public BrowseFilesDialog(Skin skin) {
         super("Browse file", skin);
-
-        this.parentDialog = parentDialog;
 
         Table content = this.getContentTable();
 
         dirList = new List<FileHandle>(skin);
 
         FileHandle dir = Gdx.files.internal("music/");
-
 
         FileHandle[] files = dir.list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
@@ -42,17 +37,9 @@ public class BrowseFilesDialog extends Dialog {
 
         button("Ok", true);
         button("Cancel", false);
-
-
     }
-
-
-    @Override
-    protected void result(Object object) {
-        boolean result = (Boolean)object;
-
-        if(result && dirList.getSelectedIndex() > -1){
-            parentDialog.setClipFile(dirList.getSelected());
-        }
+    
+    public String getSelectedPath(){
+        return dirList.getSelected().path();
     }
 }

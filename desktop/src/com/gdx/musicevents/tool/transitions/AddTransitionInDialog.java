@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.musicevents.effects.AbstractEffect;
 import com.gdx.musicevents.effects.FadeIn;
-import com.gdx.musicevents.MusicEvent;
 import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.State;
 import com.gdx.musicevents.effects.Play;
 
 public class AddTransitionInDialog extends Dialog {
@@ -27,27 +27,27 @@ public class AddTransitionInDialog extends Dialog {
 
     final SelectBox<String> selectBox;
     final Cell<? extends Actor> propertiesCell;
-    final List<MusicEvent> availableEvents;
-    final MusicEvent musicEvent;
+    final List<State> availableEvents;
+    final State musicEvent;
     final TransitionInPanel panel;
 
     final Button add;
 
-    public AddTransitionInDialog(final Skin skin, final TransitionInPanel panel, final MusicEventManager manager, final MusicEvent musicEvent) {
+    public AddTransitionInDialog(final Skin skin, final TransitionInPanel panel, final MusicEventManager manager, final State musicEvent) {
         super("Add transition", skin);
         this.musicEvent = musicEvent;
         this.panel = panel;
-        availableEvents = new List<MusicEvent>(skin);
+        availableEvents = new List<State>(skin);
 
-        Array<MusicEvent> events = manager.getEvents();
+        Array<State> events = manager.getEvents();
         events.removeValue(musicEvent, true);
 
-        Array<String> usedEventNames = musicEvent.getInTransitions().keys().toArray();
+        Array<String> usedEventNames = musicEvent.getEnterTransitions().keys().toArray();
 
         for(int i = 0; i < usedEventNames.size; i++){
             String usedEventName = usedEventNames.get(i);
             for(int j = 0; j < events.size; j++){
-                MusicEvent event = events.get(j);
+                State event = events.get(j);
                 if(event.getName().equals(usedEventName)) {
                     events.removeIndex(j);
                     break;
@@ -112,7 +112,7 @@ public class AddTransitionInDialog extends Dialog {
                 effect.setMatchPosition(fadeEffectPanel.matchPosition.isChecked());
             }
 
-            musicEvent.addInTransition(eventName, effect);
+            musicEvent.addExitTransition(eventName, effect);
             panel.setMusicEvent(musicEvent);
 
         }

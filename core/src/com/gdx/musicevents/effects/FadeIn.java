@@ -14,7 +14,7 @@ public class FadeIn extends VolumeEffect {
 
     @Override
     protected void volumeFunc(float originalVolume, float totalTime, float elapsedTime) {
-        newEvent.getMusic().setVolume(originalVolume * (elapsedTime) / totalTime);
+        newEvent.getCurrentTrack().setVolume(originalVolume * (elapsedTime) / totalTime);
     }
     @Override
     public void stop() {

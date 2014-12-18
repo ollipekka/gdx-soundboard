@@ -14,23 +14,23 @@ public class MusicEventManager {
      * Container for serialization purposes.
      */
     private static class Container {
-        Array<MusicEvent> events;
+        Array<State> states;
         @SuppressWarnings("unused")
 		public Container(){}
-        private Container(Array<MusicEvent> events) {
-            this.events = events;
+        private Container(Array<State> states) {
+            this.states = states;
         }
     }
 
     /**
      * The events that the manager is able to respond to.
      */
-    private final ObjectMap<String, MusicEvent> events = new ObjectMap<String, MusicEvent>();
+    private final ObjectMap<String, State> states = new ObjectMap<String, State>();
 
     /**
      * The current event.
      */
-    private MusicEvent currentEvent;
+    private State currentState;
 
     /**
      * Listeners in the event tool.
@@ -56,25 +56,25 @@ public class MusicEventManager {
      * @param eventName The name of the event.
      */
     public void play(String eventName){
-        MusicEvent nextEvent = events.get(eventName);
-        if(nextEvent != null){
+        State nextState = states.get(eventName);
+        if(nextState != null){
 
-            if(currentEvent != nextEvent) {
-                MusicEvent oldEvent = currentEvent;
-                currentEvent = nextEvent;
+            if(currentState != nextState) {
+                State oldState = currentState;
+                currentState = nextState;
 
-                handleTransition(currentEvent, oldEvent);
+                handleTransition(nextState, oldState);
             } else {
-                currentEvent.getMusic().play();
+                currentState.play();
             }
         }
     }
 
 
-    private void handleTransition(MusicEvent currentEvent, MusicEvent oldEvent){
-        transitions.add(currentEvent.startTransition(oldEvent));
-        if(oldEvent != null) {
-            transitions.add(oldEvent.endTransition(currentEvent));
+    private void handleTransition(State nextState, State previousState){
+        transitions.add(nextState.enter(previousState));
+        if(previousState != null) {
+            transitions.add(previousState.exit(nextState));
         }
     }
 
@@ -96,48 +96,48 @@ public class MusicEventManager {
             }
         }
 
-        if(currentEvent != null){
-            currentEvent.update(dt);
+        if(currentState != null){
+            currentState.update(dt);
         }
     }
 
     /**
-     * Add an event.
-     * @param event The event object.
+     * Add a state.
+     * @param state The state object.
      */
-    public void add(MusicEvent event){
-        this.events.put(event.getName(), event);
+    public void add(State state){
+        this.states.put(state.getName(), state);
         for(int i = 0; i < listeners.size; i++){
             MusicEventListener observer = listeners.get(i);
-            observer.eventAdded(event);
+            observer.eventAdded(state);
         }
 
     }
 
     /**
      * Remove an event.
-     * @param event The event object.
+     * @param state The state object.
      */
-    public void remove(MusicEvent event){
-        remove(event.getName());
+    public void remove(State state){
+        remove(state.getName());
     }
     /**
      * Remove an event.
-     * @param eventName The name of the event.
+     * @param stateName The name of the event.
      */
-    public void remove(String eventName){
-        MusicEvent event = this.events.remove(eventName);
+    public void remove(String stateName){
+        State event = this.states.remove(stateName);
         if(event != null) {
 
-            for(ObjectMap.Entry<String, MusicEvent> entry : this.events){
-                entry.value.removeInTransition(eventName);
-                entry.value.removeOutTransition(eventName);
+            for(ObjectMap.Entry<String, State> entry : this.states){
+                entry.value.removeEnterTransition(stateName);
+                entry.value.removeExitTransition(stateName);
             }
 
             event.dispose();
 
-            if(currentEvent == event){
-                currentEvent = null;
+            if(currentState == event){
+                currentState = null;
             }
             for (int i = 0; i < listeners.size; i++) {
                 MusicEventListener observer = listeners.get(i);
@@ -157,7 +157,7 @@ public class MusicEventManager {
 
         Json json = new Json(JsonWriter.OutputType.json);
 
-        Container container = new Container(getEvents());
+        Container container = new Container(states.values().toArray());
         
         musicFile.writeString(json.prettyPrint(container), false);
     }
@@ -172,10 +172,10 @@ public class MusicEventManager {
 
         FileHandle musicFile = Gdx.files.internal(fileName);
         Container container = json.fromJson(Container.class, musicFile.readString());
-        for(int i = 0; i < container.events.size; i++){
-            MusicEvent event = container.events.get(i);
-            event.init();
-            add(event);
+        for(int i = 0; i < container.states.size; i++){
+            State state = container.states.get(i);
+            state.init();
+            add(state);
         }
     }
 
@@ -183,16 +183,16 @@ public class MusicEventManager {
      * Access the current event.
      * @return The event that is playing.
      */
-    public MusicEvent getCurrentEvent() {
-        return currentEvent;
+    public State getCurrentEvent() {
+        return currentState;
     }
 
     /**
      * Stop playing the current event.
      */
     public void stop() {
-        if(this.currentEvent != null){
-            currentEvent.getMusic().stop();
+        if(this.currentState != null){
+            currentState.stop();
         }
     }
 
@@ -200,16 +200,15 @@ public class MusicEventManager {
      * Clear the manager. Removes all events.
      */
     public void clear() {
-        Array<MusicEvent> eventArray = events.values().toArray();
-        for(MusicEvent event : eventArray){
-            event.dispose();
+        Array<State> stateArray = states.values().toArray();
+        for(State state : stateArray){
+            state.dispose();
             for (int i = 0; i < listeners.size; i++) {
                 MusicEventListener observer = listeners.get(i);
-                observer.eventRemoved(event);
+                observer.eventRemoved(state);
             }
-
         }
-        events.clear();
+        states.clear();
     }
 
     /**
@@ -233,8 +232,8 @@ public class MusicEventManager {
      * Access all events in the system.
      * @return Copy of all events in the system.
      */
-    public Array<MusicEvent> getEvents(){
-        return events.values().toArray();
+    public Array<State> getEvents(){
+        return states.values().toArray();
     }
 
 }

@@ -5,20 +5,18 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 
 public class Track {
-    private final String name;
     private final String fileName;
     
     private transient FileHandle fileHandle;
     private transient Music music;
     private transient float position = 0;
     
-    public Track(){
-        name = null;
+    public Track() {
         fileName = null;
     }
-    public Track(final String name) {
-        this.name = name;
-        this.fileName = fileHandle.path();
+    
+    public Track(String fileName){
+        this.fileName = fileName;
     }
 
     public void init(State state) {
@@ -44,12 +42,32 @@ public class Track {
     public void stop() {
         music.stop();
     }
-    public String getName() {
-        return name;
-    }
     
     public float getPosition() {
         return position;
+    }
+    
+    public void setPosition(float position){
+        this.position = position;
+        this.music.setPosition(position);
+    }
+    
+    public void dispose() {
+        music.dispose();
+        
+    }
+    
+    public float getVolume() {
+        return music.getVolume();
+    }
+    
+    public void setVolume(float volume){
+        music.setVolume(volume);
+    }
+    
+    @Override
+    public String toString() {
+        return fileName;
     }
 
 }
