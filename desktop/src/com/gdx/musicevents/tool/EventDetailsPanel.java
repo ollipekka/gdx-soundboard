@@ -81,12 +81,12 @@ public class EventDetailsPanel extends Table {
                 manager.play(displayedMusicEvent.getName());
             }
         });
-        infoPanel.add(play).colspan(3).pad(5).center();
+        infoPanel.add(play).pad(5).center();
 
-        this.add(infoPanel).colspan(3).fillX().expandX().row();
+        this.add(infoPanel).fillX().expandX();
 
         trackListPanel = new TrackListPanel(skin, planner.getStage());
-        this.add(trackListPanel).fill().expand();
+        this.add(trackListPanel).fill().expand().row();
         
         transitionInPanel = new TransitionInPanel(skin, planner.getStage(), planner.eventManager);
         this.add(transitionInPanel).fill().expand();

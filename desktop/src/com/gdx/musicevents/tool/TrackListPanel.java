@@ -51,7 +51,7 @@ public class TrackListPanel extends Table {
         this.add(tracksLabel).colspan(2).row();
 
         trackList = new List<Track>(skin);
-        this.add(new ScrollPane(trackList)).fillY().expandY().colspan(2).row();
+        this.add(new ScrollPane(trackList)).fill().expand().colspan(2).row();
         
         addTrack = new TextButton("Add", skin);
         addTrack.addListener(new ChangeListener() {

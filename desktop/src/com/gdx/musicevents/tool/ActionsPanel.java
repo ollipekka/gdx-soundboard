@@ -40,19 +40,19 @@ public class ActionsPanel extends Table {
             }
         });
 
-
+        /*
         Button stop = new TextButton("Stop", skin);
         stop.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 manager.stop();
             }
-        });
+        });*/
 
         this.defaults().expandX().fillX();
         this.add(save);
         this.add(load);
         this.add(clear);
-        this.add(stop);
+        //this.add(stop);
     }
 }

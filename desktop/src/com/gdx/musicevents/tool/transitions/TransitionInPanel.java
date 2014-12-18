@@ -3,6 +3,7 @@ package com.gdx.musicevents.tool.transitions;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,7 +26,10 @@ public class TransitionInPanel extends Table {
         super(skin);
 
         this.top().left();
-        this.add("Transition in").colspan(2).row();
+        this.defaults().top().left();
+
+        final Label enterLabel = new Label("Enter", skin);
+        this.add(enterLabel).colspan(2).row();
         inTransitions = new List<EffectDecorator>(skin);
         this.add(new ScrollPane(inTransitions)).colspan(2).fill().expand().row();
         inTransitions.addListener(new ChangeListener() {

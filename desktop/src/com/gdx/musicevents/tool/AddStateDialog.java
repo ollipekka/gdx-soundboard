@@ -2,9 +2,11 @@ package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.State;
 
@@ -25,9 +27,16 @@ public class AddStateDialog extends Dialog {
 
 
         Table content = this.getContentTable();
+        Label label = new Label("Event name", skin);
+        label.setAlignment(Align.left);
+        content.add(label).left().fillX().expandX().row();
 
-        eventName = Scene2dUtils.addTextField("Event name", content, skin);
+        eventName = new TextField("", skin);
+        content.add(eventName).right().row().fillX().expandX();
 
+        Table buttons = this.getButtonTable();
+        buttons.defaults().fillX().expandX();
+        
         this.button("Ok", true);
         this.button("Cancel", false);
     }

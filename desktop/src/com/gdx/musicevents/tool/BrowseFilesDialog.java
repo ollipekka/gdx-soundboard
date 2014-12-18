@@ -35,6 +35,9 @@ public class BrowseFilesDialog extends Dialog {
 
         content.add(scrollPane).maxSize(300, 500).fill().expandX();
 
+        Table buttons = getButtonTable();
+        buttons.defaults().fillX().expandX();
+        
         button("Ok", true);
         button("Cancel", false);
     }
