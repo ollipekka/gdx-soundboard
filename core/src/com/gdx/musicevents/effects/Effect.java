@@ -1,9 +1,9 @@
 package com.gdx.musicevents.effects;
 
-import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.State;
 
 public interface Effect {
-    public void start(MusicEvent newEvent, MusicEvent oldEvent);
+    public void start(State nextState, State previousState);
     public void stop();
     public void update(float dt);
 

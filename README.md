@@ -28,8 +28,9 @@ Match position to seamlessly transition between tracks.
 
 Need an effect? Want to fix a bug? Want to change the format? Pull requests and issues are welcome.
 
-### ToDo
+### ToDo v0.2
 - Refactor MusicEvent to MusicState which can hold multiple tracks.
+
 
 ### Credits
 

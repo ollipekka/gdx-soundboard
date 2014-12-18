@@ -98,7 +98,7 @@ public class MusicEvent {
             effect = new Stop();
         }
 
-        effect.start(this, event);
+        //effect.start(this, event);
         return effect;
 
     }
@@ -117,7 +117,7 @@ public class MusicEvent {
             }
         }
 
-        effect.start(this, event);
+        //effect.start(this, event);
 
         return effect;
 

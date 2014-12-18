@@ -2,6 +2,7 @@ package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.State;
 
 public abstract class VolumeEffect extends AbstractEffect {
 
@@ -20,7 +21,7 @@ public abstract class VolumeEffect extends AbstractEffect {
     }
 
     @Override
-    public void start(MusicEvent newEvent, MusicEvent oldEvent) {
+    public void start(State nextState, State previousState) {
         
         this.newEvent = newEvent;
         this.oldEvent = oldEvent;
@@ -39,9 +40,10 @@ public abstract class VolumeEffect extends AbstractEffect {
             offset -= dt;
         } else {
 
+            /*
             if(MathUtils.isZero(elapsedTime)){
                 super.start(newEvent, oldEvent);
-            }
+            }*/
             elapsedTime += dt;
 
             if(isDone()){

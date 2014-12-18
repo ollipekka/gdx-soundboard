@@ -2,20 +2,21 @@ package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.Gdx;
 import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.State;
 
 public class Play extends AbstractEffect {
 
     public Play(){}
     @Override
-    public void start(MusicEvent newEvent, MusicEvent oldEvent) {
-        String message = "Start new: " + newEvent.getName();
+    public void start(State nextState, State previousState) {
+        String message = "Start new: " + nextState.getName();
 
-        if(oldEvent != null){
-            message += " old " + oldEvent.getName();
+        if(previousState != null){
+            message += " old " + previousState.getName();
         }
         Gdx.app.log("Play", message);
         
-        super.start(newEvent, oldEvent);
+        super.start(nextState, previousState);
 
     }
 

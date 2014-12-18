@@ -2,23 +2,26 @@ package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.Gdx;
 import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.State;
 
 public abstract class AbstractEffect implements Effect {
 
     private boolean matchPosition = false;
     
     @Override
-    public void start(MusicEvent newEvent, MusicEvent oldEvent) {
-        newEvent.getMusic().play();
+    public void start(State nextState, State previousState) {
+        
+        /*
+        nextState.play();
         if(matchPosition){
-            if (oldEvent != null) {
-                float position = oldEvent.getPosition();
+            if (previousState != null) {
+                float position = previousState.getPosition();
                 Gdx.app.log("MatchPosition", "Set position:" + position);
-                newEvent.setPosition(position);
+                previousState.setPosition(position);
             }
         }
 
-        Gdx.app.log("MatchPosition", "New position:" + newEvent.getPosition());
+        Gdx.app.log("MatchPosition", "New position:" + newEvent.getPosition());*/
     }
 
     public boolean isMatchPosition() {

@@ -2,21 +2,22 @@ package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.Gdx;
 import com.gdx.musicevents.MusicEvent;
+import com.gdx.musicevents.State;
 
 public class Stop implements Effect {
 
     public Stop(){}
 
     @Override
-    public void start(MusicEvent newEvent, MusicEvent oldEvent) {
+    public void start(State nextState, State previousState) {
 
-        String message = "Stop new: " + newEvent.getName();
+        String message = "Stop new: " + nextState.getName();
 
-        if(oldEvent != null){
-            message += " old " + oldEvent.getName();
+        if(previousState != null){
+            message += " old " + previousState.getName();
         }
         Gdx.app.log("Stop", message);
-        newEvent.getMusic().stop();
+        nextState.stop();
     }
 
     @Override
