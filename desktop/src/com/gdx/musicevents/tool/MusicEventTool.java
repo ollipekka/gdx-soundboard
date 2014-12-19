@@ -25,7 +25,7 @@ public class MusicEventTool implements ApplicationListener {
 
     private boolean debug = false;
 
-    InfoPanel infoPanel;
+    StateInfoPanel infoPanel;
 
     EventListPanel eventListPanel;
     EventDetailsPanel eventDetailsPanel;
@@ -55,7 +55,7 @@ public class MusicEventTool implements ApplicationListener {
         content.setFillParent(true);
         content.defaults().top().left();
 
-        infoPanel = new InfoPanel(skin);
+        infoPanel = new StateInfoPanel(skin);
 
         content.add(infoPanel).colspan(2).center().fillX().expandX().row();
 

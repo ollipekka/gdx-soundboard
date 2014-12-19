@@ -1,5 +1,10 @@
 package com.gdx.musicevents.tool.transitions;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -10,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.Effect;
 import com.gdx.musicevents.MusicEventManager;
@@ -24,7 +30,11 @@ public class TransitionInPanel extends Table {
 
     public TransitionInPanel(final Skin skin, final Stage stage, final MusicEventManager manager) {
         super(skin);
-
+        Pixmap pm1 = new Pixmap(1, 1, Format.RGB565);
+        pm1.setColor(Color.DARK_GRAY);
+        pm1.fill();
+        this.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(pm1))));
+        
         this.top().left();
         this.defaults().top().left();
 

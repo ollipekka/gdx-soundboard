@@ -43,20 +43,20 @@ public class MusicEventManager {
     private final Array<Effect> transitions = new Array<Effect>();
 
     /**
-     * Play the event using an enum.
+     * Play the state using an enum.
      * 
-     * @param eventName
+     * @param stateName
      */
-    public void play(Enum<?> eventName){
-        play(eventName.name());
+    public void play(Enum<?> stateName) {
+        play(stateName.name());
     }
 
-    /**
-     * Play an event.
-     * @param eventName The name of the event.
-     */
-    public void play(String eventName){
-        State nextState = states.get(eventName);
+    public void play(String stateName) {
+        State nextState = states.get(stateName);
+        play(nextState);
+    }
+    
+    public void play(State nextState){
         if(nextState != null){
 
             if(currentState != nextState) {
@@ -106,6 +106,7 @@ public class MusicEventManager {
      * @param state The state object.
      */
     public void add(State state){
+        state.init(this);
         this.states.put(state.getName(), state);
         for(int i = 0; i < listeners.size; i++){
             MusicEventListener observer = listeners.get(i);
@@ -174,7 +175,6 @@ public class MusicEventManager {
         Container container = json.fromJson(Container.class, musicFile.readString());
         for(int i = 0; i < container.states.size; i++){
             State state = container.states.get(i);
-            state.init();
             add(state);
         }
     }

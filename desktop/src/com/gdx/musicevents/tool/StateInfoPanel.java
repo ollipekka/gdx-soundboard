@@ -6,10 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gdx.musicevents.State;
 import com.gdx.musicevents.Track;
 
-public class InfoPanel extends Table {
+public class StateInfoPanel extends Table {
 
     private final Label nowPlaying;
-    public InfoPanel(Skin skin) {
+    public StateInfoPanel(Skin skin) {
         super(skin);
 
         nowPlaying = new Label("Now Playing", skin);

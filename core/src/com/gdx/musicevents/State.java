@@ -3,9 +3,11 @@ package com.gdx.musicevents;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.tools.flame.EventManager;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.Effect;
+import com.gdx.musicevents.effects.Play;
 import com.gdx.musicevents.effects.Stop;
 
 public class State implements OnCompletionListener{
@@ -19,6 +21,7 @@ public class State implements OnCompletionListener{
     
     private boolean looping = false;
     
+    private transient MusicEventManager manager;
     private transient int currentTrackIndex;
     
     public State(String name) {
@@ -51,13 +54,17 @@ public class State implements OnCompletionListener{
             }
             currentTrack.play();
         } else {
-            currentTrackIndex += 1;
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
             Track currentTrack = getCurrentTrack();
-            currentTrack.play();
+            if(currentTrack != null){
+                currentTrack.play();
+            }
+            
         }
     }
     
-    public void init() {
+    public void init(MusicEventManager manager) {
+        this.manager = manager;
         for(int i = 0; i < getTracks().size; i++){
             Track track = getTracks().get(i);
             track.init(this);
@@ -65,11 +72,14 @@ public class State implements OnCompletionListener{
     }
     
     public Effect enter(State previousState) {
-
-        Effect effect = enterTransitions.get(previousState.getName());
+        
+        Effect effect = null;
+        if(previousState != null){
+            effect = enterTransitions.get(previousState.getName());
+        }
 
         if(effect == null){
-            effect = new Stop();
+            effect = new Play();
         }
 
         effect.start(this, previousState);
@@ -96,8 +106,13 @@ public class State implements OnCompletionListener{
     }
     
     public void play() {
-        Track currentTrack = getCurrentTrack();
-        currentTrack.play();
+        State currentState = manager.getCurrentEvent();
+        if(currentState != this) {
+            manager.play(this.name);
+        } else {
+            Track currentTrack = getCurrentTrack();
+            currentTrack.play();
+        }
     }
     
     public void stop() {
@@ -140,7 +155,11 @@ public class State implements OnCompletionListener{
 
     }
     
-    public Track getCurrentTrack(){
+    public Track getCurrentTrack() {
+        if(currentTrackIndex < 0 || currentTrackIndex >= tracks.size){
+            return null;
+        }
+        
         return getTracks().get(currentTrackIndex);
     }
 

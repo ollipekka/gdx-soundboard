@@ -10,8 +10,9 @@ public abstract class AbstractEffect implements Effect {
     @Override
     public void start(State nextState, State previousState) {
         
-        /*
+        
         nextState.play();
+        /*
         if(matchPosition){
             if (previousState != null) {
                 float position = previousState.getPosition();
