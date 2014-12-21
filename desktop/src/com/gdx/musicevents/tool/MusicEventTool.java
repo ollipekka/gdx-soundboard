@@ -8,11 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.State;
-import com.gdx.musicevents.effects.Effect;
 
 public class MusicEventTool implements ApplicationListener {
 
@@ -25,48 +23,40 @@ public class MusicEventTool implements ApplicationListener {
 
     private boolean debug = false;
 
-    StateInfoPanel infoPanel;
-
-    EventListPanel eventListPanel;
+    StateInfoPanel stateInfoPanel;
+    StateListPanel stateListPanel;
     EventDetailsPanel eventDetailsPanel;
 
-
-    MusicEventManager eventManager = new MusicEventManager();
-
+    private final MusicEventManager eventManager = new MusicEventManager();
 
     public MusicEventTool() {
     }
 
     @Override
     public void create() {
-        skin = new Skin(Gdx.files.classpath("uiskin.json"));
-
-        TextButton.TextButtonStyle buttonStyle = skin.get(TextButton.TextButtonStyle.class);
-        buttonStyle.disabled = skin.newDrawable("default-round", Color.DARK_GRAY);
-        buttonStyle.disabledFontColor = Color.GRAY;
-
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         stage = new Stage(new ScreenViewport());
 
         content = new Table(skin);
-        content.pad(10);
 
         stage.addActor(content);
         content.setFillParent(true);
         content.defaults().top().left();
 
-        infoPanel = new StateInfoPanel(skin);
+        stateListPanel = new StateListPanel(skin, this);
+        content.add(stateListPanel).minWidth(200).expandY().fillY();
 
-        content.add(infoPanel).colspan(2).center().fillX().expandX().row();
-
-        Table actionsPanel = new ActionsPanel(skin, eventManager);
-        content.add(actionsPanel).colspan(2).expandX().fillX().row();
-
-        eventListPanel = new EventListPanel(skin, this);
-        content.add(eventListPanel).minWidth(240).expandY().fillY();
-
+        Table main = new Table(skin);
         eventDetailsPanel = new EventDetailsPanel(skin, this);
-        content.add(eventDetailsPanel).minWidth(540).fill().expand();
+        main.add(eventDetailsPanel).fill().expand().row();
+        
+        stateInfoPanel = new StateInfoPanel(skin, stage, getEventManager());
+        main.add(stateInfoPanel).bottom().fillX().expandX();
+        
+        content.add(main).fill().expand().minWidth(580);
+        
+             
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -79,11 +69,9 @@ public class MusicEventTool implements ApplicationListener {
     @Override
     public void render() {
 
-        eventManager.update(Gdx.graphics.getRawDeltaTime());
+        getEventManager().update(Gdx.graphics.getRawDeltaTime());
 
-        infoPanel.show(eventManager.getCurrentEvent());
-
-        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+        Gdx.gl.glClearColor(0.35f, 0.35f, 0.45f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -114,6 +102,11 @@ public class MusicEventTool implements ApplicationListener {
 
     public void showEvent(State musicEvent) {
         this.shownState = musicEvent;
+        stateInfoPanel.show(musicEvent);
         eventDetailsPanel.show(musicEvent);
+    }
+
+    public MusicEventManager getEventManager() {
+        return eventManager;
     }
 }

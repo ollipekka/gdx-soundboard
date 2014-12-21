@@ -81,7 +81,6 @@ public class MusicEventManager {
 
 
     /**
-     * 
      * Update the music event manager.
      * @param dt The raw un-interpolated un-averaged delta time.
      */
@@ -145,8 +144,6 @@ public class MusicEventManager {
                 observer.eventRemoved(event);
             }
         }
-
-
     }
 
     /**
@@ -183,7 +180,7 @@ public class MusicEventManager {
      * Access the current event.
      * @return The event that is playing.
      */
-    public State getCurrentEvent() {
+    public State getCurrentState() {
         return currentState;
     }
 

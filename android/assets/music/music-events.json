@@ -1,84 +1,23 @@
 {
-"events": [
+"states": [
 	{
-		"name": "rising",
-		"fileName": "music/001b rising.ogg",
-		"looping": true,
-		"inTransitions": {
-			"action": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"matchPosition": true,
-				"totalTime": 2
+		"name": "AAA",
+		"tracks": [
+			{
+				"fileName": "music/TestLoop02.ogg"
 			},
-			"calm": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"totalTime": 2
+			{
+				"fileName": "music/TestLoop02.ogg"
 			}
-		},
-		"outTransitions": {
-			"action": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 2
-			},
-			"calm": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 2
-			}
-		}
+		],
+		"enterTransitions": {},
+		"exitTransitions": {}
 	},
 	{
-		"name": "action",
-		"fileName": "music/001c action.ogg",
-		"looping": true,
-		"inTransitions": {
-			"rising": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"matchPosition": true,
-				"totalTime": 2
-			},
-			"calm": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"matchPosition": true,
-				"totalTime": 2
-			}
-		},
-		"outTransitions": {
-			"rising": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 2
-			},
-			"calm": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 2
-			}
-		}
-	},
-	{
-		"name": "calm",
-		"fileName": "music/001a calm.ogg",
-		"looping": true,
-		"inTransitions": {
-			"rising": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"matchPosition": true,
-				"totalTime": 2
-			},
-			"action": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"matchPosition": true,
-				"totalTime": 2
-			}
-		},
-		"outTransitions": {
-			"rising": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 2
-			},
-			"action": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 2
-			}
-		}
+		"name": "BBB",
+		"tracks": [],
+		"enterTransitions": {},
+		"exitTransitions": {}
 	}
 ]
 }

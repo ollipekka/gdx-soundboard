@@ -10,8 +10,8 @@ public abstract class VolumeEffect extends AbstractEffect {
     protected float offset = 0;
     boolean started = false;
 
-    protected transient State newEvent;
-    protected transient State oldEvent;
+    protected transient State nextState;
+    protected transient State previousState;
 
     public VolumeEffect(float offset, float totalTime) {
         this.offset = offset;
@@ -21,10 +21,10 @@ public abstract class VolumeEffect extends AbstractEffect {
     @Override
     public void start(State nextState, State previousState) {
         
-        this.newEvent = newEvent;
-        this.oldEvent = oldEvent;
+        this.nextState = nextState;
+        this.previousState = previousState;
         
-        this.originalVolume = newEvent.getCurrentTrack().getVolume();
+        this.originalVolume = nextState.getCurrentTrack().getVolume();
         this.elapsedTime = 0;
 
         started = true;
@@ -38,10 +38,6 @@ public abstract class VolumeEffect extends AbstractEffect {
             offset -= dt;
         } else {
 
-            /*
-            if(MathUtils.isZero(elapsedTime)){
-                super.start(newEvent, oldEvent);
-            }*/
             elapsedTime += dt;
 
             if(isDone()){

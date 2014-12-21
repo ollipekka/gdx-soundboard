@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.Effect;
+import com.gdx.musicevents.tool.EventDetailsPanel;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.State;
 
@@ -28,13 +29,11 @@ public class TransitionInPanel extends Table {
     final Button add;
     final Button remove;
 
-    public TransitionInPanel(final Skin skin, final Stage stage, final MusicEventManager manager) {
+    public TransitionInPanel(final Skin skin, final Stage stage, final MusicEventManager manager, EventDetailsPanel eventDetailsPanel) {
         super(skin);
-        Pixmap pm1 = new Pixmap(1, 1, Format.RGB565);
-        pm1.setColor(Color.DARK_GRAY);
-        pm1.fill();
-        this.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(pm1))));
-        
+
+        setBackground(skin.getDrawable("panel-background"));
+
         this.top().left();
         this.defaults().top().left();
 

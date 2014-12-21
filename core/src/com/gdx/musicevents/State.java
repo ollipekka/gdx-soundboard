@@ -19,10 +19,8 @@ public class State implements OnCompletionListener{
     private final ObjectMap<String, Effect> enterTransitions = new ObjectMap<String, Effect>();
     private final ObjectMap<String, Effect> exitTransitions = new ObjectMap<String, Effect>();
     
-    private boolean looping = false;
-    
     private transient MusicEventManager manager;
-    private transient int currentTrackIndex;
+    private transient int currentTrackIndex = -1;
     
     public State(String name) {
         this.name = name;
@@ -43,23 +41,10 @@ public class State implements OnCompletionListener{
 
     @Override
     public void onCompletion(Music music) {
-        if(isLooping()){
-            Track currentTrack = null;
-            if(getTracks().size > 1) {
-                currentTrackIndex = MathUtils.random(getTracks().size - 1);
-                currentTrack = getCurrentTrack();
-            } else {
-                currentTrack = getCurrentTrack();
-                currentTrack.reset();
-            }
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
+        Track currentTrack = getCurrentTrack();
+        if(currentTrack != null){
             currentTrack.play();
-        } else {
-            currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
-            Track currentTrack = getCurrentTrack();
-            if(currentTrack != null){
-                currentTrack.play();
-            }
-            
         }
     }
     
@@ -102,22 +87,36 @@ public class State implements OnCompletionListener{
     
     public void update(float dt) {
         Track currentTrack = getCurrentTrack();
-        currentTrack.update(dt);
-    }
-    
-    public void play() {
-        State currentState = manager.getCurrentEvent();
-        if(currentState != this) {
-            manager.play(this.name);
-        } else {
-            Track currentTrack = getCurrentTrack();
-            currentTrack.play();
+        if(currentTrack != null){
+            currentTrack.update(dt);
         }
     }
     
+    public void play() {
+        State currentState = manager.getCurrentState();
+        if(currentState != this) {
+            manager.play(this.name);
+        } else {
+            currentTrackIndex = 0;
+            Track currentTrack = getCurrentTrack();
+            if(currentTrack != null){
+                currentTrack.play();
+            }
+        }
+    }
+    
+    public boolean isPlaying(){
+        Track currentTrack = this.getCurrentTrack();
+        
+        return currentTrack != null;
+    }
     public void stop() {
         Track currentTrack = getCurrentTrack();
-        currentTrack.stop();
+        if(currentTrack != null){
+            currentTrack.stop();
+        }
+        
+        this.currentTrackIndex = -1;
     }
     
     public void dispose() {
@@ -127,7 +126,9 @@ public class State implements OnCompletionListener{
         }
         
         Track currentTrack = getCurrentTrack();
-        currentTrack.stop();
+        if(currentTrack != null) {
+            currentTrack.stop();
+        }
     }
 
     public ObjectMap<String, Effect> getEnterTransitions() {
@@ -161,14 +162,6 @@ public class State implements OnCompletionListener{
         }
         
         return getTracks().get(currentTrackIndex);
-    }
-
-    public boolean isLooping() {
-        return looping;
-    }
-
-    public void setLooping(boolean looping) {
-        this.looping = looping;
     }
     
     @Override

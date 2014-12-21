@@ -17,7 +17,7 @@ import com.gdx.musicevents.MusicEventListener;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.State;
 
-public class EventListPanel extends Table {
+public class StateListPanel extends Table {
 
     final Skin skin;
 
@@ -26,6 +26,8 @@ public class EventListPanel extends Table {
     final List<State> eventList;
 
     final TextButton remove;
+    
+    final Table content;
 
 
     Comparator<State> comparator = new Comparator<State>() {
@@ -37,16 +39,20 @@ public class EventListPanel extends Table {
         }
     };
 
-    public EventListPanel(final Skin skin, final MusicEventTool planner) {
+    public StateListPanel(final Skin skin, final MusicEventTool planner) {
         super(skin);
-
+        
+        this.pad(2);
+        
         this.skin = skin;
         this.planner = planner;
-        this.manager = planner.eventManager;
+        this.manager = planner.getEventManager();
 
-        this.defaults().fillX().expandX();
+        content = new Table();
+        content.setBackground(skin.getDrawable("panel-background"));
+        content.defaults().top().left().fillX().expandX();
 
-        this.add(new Label("Events", skin)).colspan(2).row();
+        content.add(new Label("Events", skin)).colspan(2).row();
 
         manager.addListener(new MusicEventListener(){
 
@@ -77,7 +83,7 @@ public class EventListPanel extends Table {
             }
         });
 
-        this.add(eventList).fillY().expandY().colspan(2).row();
+        content.add(eventList).fillY().expandY().colspan(2).row();
         TextButton add = new TextButton("Add", skin);
 
         add.addListener(new ClickListener(){
@@ -90,7 +96,7 @@ public class EventListPanel extends Table {
             }
         });
 
-        this.add(add);
+        content.add(add);
         remove = new TextButton("Remove", skin);
         remove.addListener(new ChangeListener(){
             @Override
@@ -99,9 +105,11 @@ public class EventListPanel extends Table {
             }
         });
 
-        this.add(remove);
+        content.add(remove);
 
         remove.setDisabled(eventList.getItems().size == 0);
+        
+        this.add(content).fill().expand();
 
 
     }

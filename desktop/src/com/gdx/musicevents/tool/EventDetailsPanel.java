@@ -1,6 +1,5 @@
 package com.gdx.musicevents.tool;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gdx.musicevents.MusicEventListener;
@@ -13,7 +12,6 @@ public class EventDetailsPanel extends Table {
 
     State displayedState;
 
-    final TrackInfoPanel trackInfoPanel;
     final TrackListPanel trackListPanel;
     final TransitionInPanel transitionInPanel;
     final TransitionOutPanel transitionOutPanel;
@@ -21,8 +19,9 @@ public class EventDetailsPanel extends Table {
 
     public EventDetailsPanel(Skin skin, final MusicEventTool planner) {
         super(skin);
-        final MusicEventManager manager = planner.eventManager;
+        final MusicEventManager manager = planner.getEventManager();
 
+        
         manager.addListener(new MusicEventListener() {
             @Override
             public void eventAdded(State event) {
@@ -41,18 +40,17 @@ public class EventDetailsPanel extends Table {
             }
         });
 
+        this.pad(2);
         this.defaults().top().left();
         
-        trackInfoPanel = new TrackInfoPanel(skin);
-        this.add(trackInfoPanel).fill().expand();
-
-        trackListPanel = new TrackListPanel(skin, planner.getStage());
-        this.add(trackListPanel).fill().expand().row();
+        trackListPanel = new TrackListPanel(skin, planner.getStage(), this);
+        this.add(trackListPanel).fill().expand().colspan(2).row();
+        this.add().pad(1).fillX().expandX().row();
         
-        transitionInPanel = new TransitionInPanel(skin, planner.getStage(), planner.eventManager);
+        transitionInPanel = new TransitionInPanel(skin, planner.getStage(), planner.getEventManager(), this);
         this.add(transitionInPanel).fill().expand();
 
-        transitionOutPanel = new TransitionOutPanel(skin, planner.getStage(), planner.eventManager);
+        transitionOutPanel = new TransitionOutPanel(skin, planner.getStage(), planner.getEventManager(), this);
         this.add(transitionOutPanel).fill().expand();
 
 /*
@@ -114,7 +112,6 @@ public class EventDetailsPanel extends Table {
         this.setVisible(true);
         this.displayedState = musicEvent;
 
-        this.trackInfoPanel.show(displayedState);
         this.trackListPanel.show(displayedState);
         this.transitionInPanel.setMusicEvent(displayedState);
         this.transitionOutPanel.setMusicEvent(displayedState);

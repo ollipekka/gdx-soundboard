@@ -41,8 +41,10 @@ public class TrackListPanel extends Table {
 
     private List<Track> trackList;
     
-    public TrackListPanel(final Skin skin, final Stage stage) {
+    public TrackListPanel(final Skin skin, final Stage stage, final EventDetailsPanel eventDetailsPanel) {
         super(skin);
+
+        setBackground(skin.getDrawable("panel-background"));
         
         this.top().left();
         this.defaults().top().left();
@@ -69,8 +71,7 @@ public class TrackListPanel extends Table {
                         } else {
                             cancel();
                         }
-
-                        updateTrackList(trackList, state);
+                        eventDetailsPanel.show(state);
                     };
                 };
                 
@@ -92,8 +93,8 @@ public class TrackListPanel extends Table {
                 
                 Track track = trackList.getSelected();
                 state.removeTrack(track);
-                updateTrackList(trackList, state);
-                enableDisable(trackList, addTrack, removeTrack);
+                eventDetailsPanel.show(state);
+                
                 removeTrack.setChecked(false);
             }
         });

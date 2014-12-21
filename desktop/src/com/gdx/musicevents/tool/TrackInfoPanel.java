@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.gdx.musicevents.State;
+import com.gdx.musicevents.Track;
 
 public class TrackInfoPanel extends Table {
 
@@ -18,7 +20,7 @@ public class TrackInfoPanel extends Table {
     
     private State state;
 
-    public TrackInfoPanel(Skin skin) {
+    public TrackInfoPanel(Skin skin, EventDetailsPanel eventDetailsPanel) {
         
         this.top().left();
         this.defaults().top().left();
@@ -44,11 +46,17 @@ public class TrackInfoPanel extends Table {
         });
         
         this.add(stop).fillX().expandX();
+        
+        play.setDisabled(true);
+        stop.setDisabled(true);
     }
 
     public void show(State state) {
         this.state = state;
-        this.looping.setChecked(state.isLooping());
+        
+        Array<Track> tracks = state.getTracks();
+        stop.setDisabled(tracks.size == 0);
+        play.setDisabled(tracks.size == 0);
     }
 
 }
