@@ -112,7 +112,7 @@ public class AddTransitionInDialog extends Dialog {
                 effect.setMatchPosition(fadeEffectPanel.matchPosition.isChecked());
             }
 
-            musicEvent.addExitTransition(eventName, effect);
+            musicEvent.addEnterTransition(eventName, effect);
             panel.setMusicEvent(musicEvent);
 
         }

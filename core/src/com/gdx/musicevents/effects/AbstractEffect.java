@@ -11,7 +11,7 @@ public abstract class AbstractEffect implements Effect {
     public void start(State nextState, State previousState) {
         
         
-        nextState.play();
+        nextState.playTrack();
         /*
         if(matchPosition){
             if (previousState != null) {

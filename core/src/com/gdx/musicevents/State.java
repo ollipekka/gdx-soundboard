@@ -22,6 +22,9 @@ public class State implements OnCompletionListener{
     private transient MusicEventManager manager;
     private transient int currentTrackIndex = -1;
     
+    
+    private transient float volume = 1;
+    
     public State(String name) {
         this.name = name;
     }
@@ -93,15 +96,21 @@ public class State implements OnCompletionListener{
     }
     
     public void play() {
+        currentTrackIndex = 0;
         State currentState = manager.getCurrentState();
         if(currentState != this) {
             manager.play(this.name);
         } else {
-            currentTrackIndex = 0;
-            Track currentTrack = getCurrentTrack();
-            if(currentTrack != null){
-                currentTrack.play();
-            }
+            playTrack();
+        }
+    }
+    
+
+    public void playTrack() {
+        Track currentTrack = getCurrentTrack();
+        if(currentTrack != null){
+            currentTrack.setVolume(this.volume);
+            currentTrack.play();
         }
     }
     
@@ -172,4 +181,17 @@ public class State implements OnCompletionListener{
     public Array<Track> getTracks() {
         return tracks;
     }
+
+    public float getVolume() {
+        return volume;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
+        Track track = this.getCurrentTrack();
+        if(track != null){
+            track.setVolume(volume);
+        }
+    }
+
 }

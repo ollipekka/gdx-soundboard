@@ -14,11 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.State;
 import com.gdx.musicevents.Track;
+import com.gdx.musicevents.effects.Play;
 
 public class StateInfoPanel extends Table {
     private final Label nowPlaying;
     
     private State state;
+
+    private Button play;
+
+    private Button stop;
     public StateInfoPanel(final Skin skin, final Stage stage, final MusicEventManager manager) {
         super(skin);
 
@@ -27,7 +32,7 @@ public class StateInfoPanel extends Table {
         this.add(nowPlaying).left();
         this.add().expandX().fillX();
 
-        final Button play = new TextButton("Play", skin);
+        play = new TextButton("Play", skin);
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -36,7 +41,7 @@ public class StateInfoPanel extends Table {
         });
         this.add(play);
         
-        final Button stop = new TextButton("Stop", skin);
+        stop = new TextButton("Stop", skin);
         stop.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -64,6 +69,8 @@ public class StateInfoPanel extends Table {
         this.state = state;
         if(state == null || !state.isPlaying()){
             nowPlaying.setText("Paused");
+            play.setDisabled(false);
+            stop.setDisabled(true);
         }
     }
     
@@ -73,12 +80,16 @@ public class StateInfoPanel extends Table {
         
         if(state != null && state.isPlaying()){
 
+            play.setDisabled(true);
+            stop.setDisabled(false);
             Track track = state.getCurrentTrack();
             int intPosition = (int)(track.getPosition() * 100);
             String twoDecimalForm = Float.toString(intPosition / 100.0f);
 
-            nowPlaying.setText("Now playing: " + state.toString() + " " + twoDecimalForm);
+            nowPlaying.setText("Now playing: " + track.getFileName() + "@" + state.toString() + " " + twoDecimalForm);
         } else {
+            play.setDisabled(false);
+            stop.setDisabled(true);
             nowPlaying.setText("Paused");
         }
         

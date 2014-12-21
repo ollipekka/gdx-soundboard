@@ -24,8 +24,9 @@ public abstract class VolumeEffect extends AbstractEffect {
         this.nextState = nextState;
         this.previousState = previousState;
         
-        this.originalVolume = nextState.getCurrentTrack().getVolume();
+        this.originalVolume = nextState.getVolume();
         this.elapsedTime = 0;
+        nextState.playTrack();
 
         started = true;
     }
