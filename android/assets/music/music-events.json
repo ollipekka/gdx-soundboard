@@ -1,23 +1,48 @@
 {
 "states": [
 	{
-		"name": "AAA",
+		"name": "AAAA",
 		"tracks": [
 			{
-				"fileName": "music/TestLoop02.ogg"
-			},
+				"fileName": "music/TestLoop01.ogg"
+			}
+		],
+		"enterTransitions": {
+			"BBB": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"totalTime": 0.5,
+				"offset": 0.2
+			}
+		},
+		"exitTransitions": {
+			"BBB": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 0.5,
+				"offset": 0.2
+			}
+		}
+	},
+	{
+		"name": "BBB",
+		"tracks": [
 			{
 				"fileName": "music/TestLoop02.ogg"
 			}
 		],
-		"enterTransitions": {},
-		"exitTransitions": {}
-	},
-	{
-		"name": "BBB",
-		"tracks": [],
-		"enterTransitions": {},
-		"exitTransitions": {}
+		"enterTransitions": {
+			"AAAA": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"totalTime": 1,
+				"offset": 0.2
+			}
+		},
+		"exitTransitions": {
+			"AAAA": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 1,
+				"offset": 0.2
+			}
+		}
 	}
 ]
 }

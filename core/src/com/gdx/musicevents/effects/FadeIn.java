@@ -23,6 +23,7 @@ public class FadeIn extends VolumeEffect {
     @Override
     protected void volumeFunc(float originalVolume, float totalTime, float elapsedTime) {
         nextState.setVolume(originalVolume * (elapsedTime) / totalTime);
+        Gdx.app.log("FadeIn", "Volume: " + nextState.getVolume());
     }
     @Override
     public void stop() {

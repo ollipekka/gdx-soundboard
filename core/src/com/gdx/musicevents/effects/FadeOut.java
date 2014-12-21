@@ -29,6 +29,8 @@ public class FadeOut extends VolumeEffect {
 
     @Override
     protected void volumeFunc(float originalVolume, float totalTime, float elapsedTime) {
+        
         nextState.setVolume(originalVolume * (totalTime - elapsedTime) / totalTime);
+        Gdx.app.log("FadeOut", "Volume: " + nextState.getVolume());
     }
 }

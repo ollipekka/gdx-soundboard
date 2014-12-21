@@ -4,11 +4,12 @@ import com.gdx.musicevents.State;
 
 public abstract class VolumeEffect extends AbstractEffect {
 
-    protected float originalVolume;
+    protected transient float originalVolume;
     protected final float totalTime;
-    protected float elapsedTime = 0;
-    protected float offset = 0;
-    boolean started = false;
+    protected transient float elapsedTime = 0;
+    protected final float offset;
+    protected transient float elapsedOffset;
+    protected transient boolean started = false;
 
     protected transient State nextState;
     protected transient State previousState;
@@ -26,6 +27,7 @@ public abstract class VolumeEffect extends AbstractEffect {
         
         this.originalVolume = nextState.getVolume();
         this.elapsedTime = 0;
+        this.elapsedOffset = 0;
         nextState.playTrack();
 
         started = true;
@@ -35,8 +37,8 @@ public abstract class VolumeEffect extends AbstractEffect {
 
     public void update(float dt) {
 
-        if(offset > 0) {
-            offset -= dt;
+        if(elapsedOffset < offset) {
+            elapsedOffset += dt;
         } else {
 
             elapsedTime += dt;
