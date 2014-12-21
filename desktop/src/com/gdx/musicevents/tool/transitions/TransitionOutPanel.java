@@ -29,10 +29,10 @@ public class TransitionOutPanel extends Table {
         super(skin);
 
         setBackground(skin.getDrawable("panel-background"));
-        this.top().left();
+        this.top().left().pad(2);
         this.defaults().top().left();
-        final Label exitLabel = new Label("Exit", skin);
-        this.add(exitLabel).colspan(2).row();
+        final Label exitLabel = new Label("Exit", skin, "title");
+        this.add(exitLabel).fillX().expandX().colspan(2).row();
         outTransitions = new List<EffectDecorator>(skin);
         outTransitions.addListener(new ChangeListener() {
             @Override

@@ -47,10 +47,10 @@ public class TrackListPanel extends Table {
         setBackground(skin.getDrawable("panel-background"));
         
         this.top().left();
-        this.defaults().top().left();
+        this.defaults().top().left().pad(2);
         
-        final Label tracksLabel = new Label("Tracks", skin);
-        this.add(tracksLabel).colspan(2).row();
+        final Label tracksLabel = new Label("Tracks", skin, "title");
+        this.add(tracksLabel).fillX().expandX().colspan(2).row();
 
         trackList = new List<Track>(skin);
         this.add(new ScrollPane(trackList)).fill().expand().colspan(2).row();

@@ -50,9 +50,9 @@ public class StateListPanel extends Table {
 
         content = new Table();
         content.setBackground(skin.getDrawable("panel-background"));
-        content.defaults().top().left().fillX().expandX();
+        content.defaults().top().left().fillX().expandX().pad(2);
 
-        content.add(new Label("Events", skin)).colspan(2).row();
+        content.add(new Label("Events", skin, "title")).colspan(2).row();
 
         manager.addListener(new MusicEventListener(){
 

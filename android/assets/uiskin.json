@@ -5,11 +5,13 @@ com.badlogic.gdx.graphics.Color: {
 	white: { a: 1, b: 1, g: 1, r: 1 },
 	red: { a: 1, b: 0, g: 0, r: 1 },
 	black: { a: 1, b: 0, g: 0, r: 0 },
-    light-gray: { a: 1, b: 0.4, g: 0.4, r: 0.4 }
+    light-gray: { a: 1, b: 0.4, g: 0.4, r: 0.4 },
+    opaque-gray: { a: 1, b: 0.45, g: 0.35, r: 0.35 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	dialogDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.45 } },
 	panel-background: { name: white, color: { r: 0.4, g: 0.4, b: 0.5, a: 1 } },
+    title-background: { name: white, color: opaque-gray },
     default-round-gray: { name: default-round, color: light-gray }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
@@ -42,7 +44,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: { font: default-font, fontColor: white }
+	default: { font: default-font, fontColor: white },
+    title: { font: default-font, fontColor: white, background: title-background }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }

@@ -35,10 +35,10 @@ public class TransitionInPanel extends Table {
         setBackground(skin.getDrawable("panel-background"));
 
         this.top().left();
-        this.defaults().top().left();
+        this.defaults().top().left().pad(2);
 
-        final Label enterLabel = new Label("Enter", skin);
-        this.add(enterLabel).colspan(2).row();
+        final Label enterLabel = new Label("Enter", skin, "title");
+        this.add(enterLabel).fillX().expandX().colspan(2).row();
         inTransitions = new List<EffectDecorator>(skin);
         this.add(new ScrollPane(inTransitions)).colspan(2).fill().expand().row();
         inTransitions.addListener(new ChangeListener() {
