@@ -68,8 +68,6 @@ public class TrackListPanel extends Table {
                         boolean result = (Boolean)object;
                         if(result){
                             state.addTrack(new Track(this.getSelectedPath()));
-                        } else {
-                            cancel();
                         }
                         eventDetailsPanel.show(state);
                     };

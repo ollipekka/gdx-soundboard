@@ -1,21 +1,21 @@
 {
 "states": [
 	{
-		"name": "AAAA",
+		"name": "RISING",
 		"tracks": [
 			{
-				"fileName": "music/TestLoop01.ogg"
+				"fileName": "music/001b rising.ogg"
 			}
 		],
 		"enterTransitions": {
-			"BBB": {
+			"CALM": {
 				"class": "com.gdx.musicevents.effects.FadeIn",
 				"totalTime": 0.5,
 				"offset": 0.2
 			}
 		},
 		"exitTransitions": {
-			"BBB": {
+			"CALM": {
 				"class": "com.gdx.musicevents.effects.FadeOut",
 				"totalTime": 0.5,
 				"offset": 0.2
@@ -23,23 +23,45 @@
 		}
 	},
 	{
-		"name": "BBB",
+		"name": "COMBAT",
 		"tracks": [
 			{
-				"fileName": "music/TestLoop02.ogg"
+				"fileName": "music/001c action.ogg"
 			}
 		],
 		"enterTransitions": {
-			"AAAA": {
+			"RISING": {
 				"class": "com.gdx.musicevents.effects.FadeIn",
-				"totalTime": 1,
+				"totalTime": 0.5,
 				"offset": 0.2
 			}
 		},
 		"exitTransitions": {
-			"AAAA": {
+			"RISING": {
 				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 1,
+				"totalTime": 0.5,
+				"offset": 0.2
+			}
+		}
+	},
+	{
+		"name": "CALM",
+		"tracks": [
+			{
+				"fileName": "music/001a calm.ogg"
+			}
+		],
+		"enterTransitions": {
+			"RISING": {
+				"class": "com.gdx.musicevents.effects.FadeIn",
+				"totalTime": 0.5,
+				"offset": 0.2
+			}
+		},
+		"exitTransitions": {
+			"RISING": {
+				"class": "com.gdx.musicevents.effects.FadeOut",
+				"totalTime": 0.5,
 				"offset": 0.2
 			}
 		}

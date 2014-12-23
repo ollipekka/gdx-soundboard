@@ -25,6 +25,10 @@ public class State implements OnCompletionListener{
     
     private transient float volume = 1;
     
+    public State(){
+        this("");
+    }
+    
     public State(String name) {
         this.name = name;
     }

@@ -20,14 +20,14 @@ public class AddStateDialog extends Dialog {
 
     public AddStateDialog(final Stage stage, final Skin skin, final MusicEventManager eventManager) {
 
-        super("Add Event", skin);
+        super("Add State", skin);
         this.stage = stage;
         this.skin = skin;
         this.eventManager = eventManager;
 
 
         Table content = this.getContentTable();
-        Label label = new Label("Event name", skin);
+        Label label = new Label("State name", skin);
         label.setAlignment(Align.left);
         content.add(label).left().fillX().expandX().row();
 
