@@ -3,7 +3,10 @@ package com.gdx.musicevents.effects;
 import com.badlogic.gdx.Gdx;
 import com.gdx.musicevents.MusicState;
 
-
+/**
+ * Fade in effect gradually increases the volume of the state / track to audible
+ * level.
+ */
 public class FadeIn implements StartEffect {
     protected transient float originalVolume;
     protected final float totalTime;
@@ -19,6 +22,7 @@ public class FadeIn implements StartEffect {
         this(0, 0);
 
     }
+
     public FadeIn(float offset, float totalTime) {
         this.offset = offset;
         this.totalTime = totalTime;
@@ -26,11 +30,11 @@ public class FadeIn implements StartEffect {
 
     @Override
     public void startStart(MusicState nextState, MusicState previousState) {
-        Gdx.app.log("FadeIn", "Start " + nextState.toString());
-        
+        Gdx.app.debug("FadeIn", "Start " + nextState.toString());
+
         this.nextState = nextState;
         this.previousState = previousState;
-        
+
         this.originalVolume = nextState.getVolume();
         this.elapsedTime = 0;
         this.elapsedOffset = 0;
@@ -38,29 +42,31 @@ public class FadeIn implements StartEffect {
 
         started = true;
     }
-    
+
+    @Override
     public void update(float dt) {
 
-        if(elapsedOffset < offset) {
+        if (elapsedOffset < offset) {
             elapsedOffset += dt;
         } else {
             elapsedTime += dt;
 
-            if(isDone()){
+            if (isDone()) {
                 stopStart();
             } else {
                 nextState.setVolume(originalVolume * (elapsedTime) / totalTime);
-                Gdx.app.log("FadeIn", "Volume: " + nextState.getVolume());
+                Gdx.app.debug("FadeIn", "Volume: " + nextState.getVolume());
             }
         }
     }
-    
+
     @Override
     public void stopStart() {
-        Gdx.app.log("FadeIn", "Stop");
+        Gdx.app.debug("FadeIn", "Stop");
     }
-    
-    public boolean isDone(){
+
+    @Override
+    public boolean isDone() {
         return elapsedTime >= totalTime;
     }
 

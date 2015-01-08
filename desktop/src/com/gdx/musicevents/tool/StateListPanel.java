@@ -57,7 +57,7 @@ public class StateListPanel extends Table {
         manager.addListener(new MusicEventListener(){
 
             @Override
-            public void eventAdded(MusicState event) {
+            public void stateAdded(MusicState event) {
                 boolean wasEmpty = eventList.getItems().size == 0;
                 
                 eventList.getItems().add(event);
@@ -70,7 +70,7 @@ public class StateListPanel extends Table {
             }
 
             @Override
-            public void eventRemoved(MusicState event) {
+            public void stateRemoved(MusicState event) {
                 eventList.getItems().removeValue(event, true);
                 remove.setDisabled(eventList.getItems().size == 0);
                 eventList.getItems().sort(comparator);

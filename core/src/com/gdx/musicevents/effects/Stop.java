@@ -5,12 +5,13 @@ import com.gdx.musicevents.MusicState;
 
 public class Stop implements StopEffect {
 
-    public Stop(){}
+    public Stop() {
+    }
 
     @Override
     public void startStop(MusicState nextState, MusicState previousState) {
-        Gdx.app.log("Stop", "Stopped: " + nextState);
-        
+        Gdx.app.debug("Stop", "Stopped: " + nextState);
+
         nextState.stop();
     }
 
@@ -21,7 +22,6 @@ public class Stop implements StopEffect {
 
     @Override
     public void update(float dt) {
-
     }
 
     @Override

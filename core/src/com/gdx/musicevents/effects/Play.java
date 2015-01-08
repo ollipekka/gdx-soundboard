@@ -5,25 +5,23 @@ import com.gdx.musicevents.MusicState;
 
 public class Play implements StartEffect {
 
-    public Play(){}
-    
+    public Play() {
+    }
+
     @Override
     public void startStart(MusicState nextState, MusicState previousState) {
-        Gdx.app.log("Play", nextState.toString());
-        
-        
+        Gdx.app.debug("Play", nextState.toString());
+
         nextState.play();
         nextState.setVolume(1);
     }
 
     @Override
     public void stopStart() {
-
     }
 
     @Override
     public void update(float dt) {
-
     }
 
     @Override

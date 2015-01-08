@@ -19,7 +19,6 @@ public class MusicState implements OnCompletionListener{
     private final ObjectMap<String, StartEffect> enterTransitions = new ObjectMap<String, StartEffect>();
     private final ObjectMap<String, StopEffect> exitTransitions = new ObjectMap<String, StopEffect>();
     
-    private transient MusicEventManager manager;
     private transient int currentTrackIndex = -1;
     
     private transient float volume = 1;
@@ -55,8 +54,7 @@ public class MusicState implements OnCompletionListener{
         }
     }
     
-    public void init(MusicEventManager manager) {
-        this.manager = manager;
+    public void init() {
         for(int i = 0; i < getTracks().size; i++){
             Track track = getTracks().get(i);
             track.init(this);
@@ -75,10 +73,7 @@ public class MusicState implements OnCompletionListener{
         }
 
         effect.startStart(this, previousState);
-        
-        
         return effect;
-        
     }
     
     public Effect exit(MusicState nextState) {

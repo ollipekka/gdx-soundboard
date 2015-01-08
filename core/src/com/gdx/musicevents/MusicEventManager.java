@@ -15,8 +15,11 @@ public class MusicEventManager {
      */
     private static class Container {
         Array<MusicState> states;
+
         @SuppressWarnings("unused")
-		public Container(){}
+        public Container() {
+        }
+
         private Container(Array<MusicState> states) {
             this.states = states;
         }
@@ -52,129 +55,144 @@ public class MusicEventManager {
     }
 
     public void play(String stateName) {
-        MusicState nextState = states.get(stateName);
+        final MusicState nextState = states.get(stateName);
         play(nextState);
     }
-    
-    public void play(MusicState nextState){
+
+    public void play(MusicState nextState) {
         Gdx.app.log("MusicEventManager", "Play called next state " + nextState);
-        
-        if(currentState != null && !currentState.isPlaying()){
+
+        if (currentState != null && !currentState.isPlaying()) {
             currentState = null;
         }
-        
-        if(currentState != nextState){
-            MusicState oldState = currentState;
+
+        if (currentState != nextState) {
+            final MusicState oldState = currentState;
             currentState = nextState;
             handleTransition(currentState, oldState);
         }
     }
 
-    private void handleTransition(MusicState nextState, MusicState previousState){
+    private void handleTransition(MusicState nextState, MusicState previousState) {
         transitions.add(nextState.enter(previousState));
-        if(previousState != null) {
+        if (previousState != null) {
             transitions.add(previousState.exit(nextState));
         }
     }
 
     /**
      * Update the music event manager.
-     * @param dt The raw un-interpolated un-averaged delta time.
+     * 
+     * @param dt
+     *            The raw un-interpolated un-averaged delta time.
      */
-    public void update(float dt){
+    public void update(float dt) {
 
-        for(int i = transitions.size - 1; i >= 0 ; i--){
-            Effect effect = transitions.get(i);
+        for (int i = transitions.size - 1; i >= 0; i--) {
+            final Effect effect = transitions.get(i);
             effect.update(dt);
 
-            if(effect.isDone()){
+            if (effect.isDone()) {
                 transitions.removeIndex(i);
             }
         }
 
-        if(currentState != null){
+        if (currentState != null) {
             currentState.update(dt);
         }
     }
 
     /**
      * Add a state.
-     * @param state The state object.
+     * 
+     * @param state
+     *            The state object.
      */
-    public void add(MusicState state){
-        state.init(this);
+    public void add(MusicState state) {
+        state.init();
         this.states.put(state.getName(), state);
-        for(int i = 0; i < listeners.size; i++){
-            MusicEventListener observer = listeners.get(i);
-            observer.eventAdded(state);
+        for (int i = 0; i < listeners.size; i++) {
+            final MusicEventListener observer = listeners.get(i);
+            observer.stateAdded(state);
         }
 
     }
 
     /**
      * Remove an event.
-     * @param state The state object.
+     * 
+     * @param state
+     *            The state object.
      */
-    public void remove(MusicState state){
+    public void remove(MusicState state) {
         remove(state.getName());
     }
+
     /**
      * Remove an event.
-     * @param stateName The name of the event.
+     * 
+     * @param stateName
+     *            The name of the event.
      */
-    public void remove(String stateName){
-        MusicState event = this.states.remove(stateName);
-        if(event != null) {
+    public void remove(String stateName) {
+        final MusicState event = this.states.remove(stateName);
+        if (event != null) {
 
-            for(ObjectMap.Entry<String, MusicState> entry : this.states){
+            for (final ObjectMap.Entry<String, MusicState> entry : this.states) {
                 entry.value.removeEnterTransition(stateName);
                 entry.value.removeExitTransition(stateName);
             }
 
             event.dispose();
 
-            if(currentState == event){
+            if (currentState == event) {
                 currentState = null;
             }
             for (int i = 0; i < listeners.size; i++) {
-                MusicEventListener observer = listeners.get(i);
-                observer.eventRemoved(event);
+                final MusicEventListener observer = listeners.get(i);
+                observer.stateRemoved(event);
             }
         }
     }
 
     /**
      * Save to a file.
-     * @param fileName The path to the file.
+     * 
+     * @param fileName
+     *            The path to the file.
      */
-    public void save(String fileName){
-        FileHandle musicFile = new FileHandle(fileName);
+    public void save(String fileName) {
+        final FileHandle musicFile = new FileHandle(fileName);
 
-        Json json = new Json(JsonWriter.OutputType.json);
+        final Json json = new Json(JsonWriter.OutputType.json);
 
-        Container container = new Container(states.values().toArray());
-        
+        final Container container = new Container(states.values().toArray());
+
         musicFile.writeString(json.prettyPrint(container), false);
     }
 
     /**
      * Load a save file.
-     * @param fileName The path to the file.
+     * 
+     * @param fileName
+     *            The path to the file.
      */
-    public void load(String fileName){
+    public void load(String fileName) {
         this.clear();
-        Json json = new Json(JsonWriter.OutputType.json);
+        final Json json = new Json(JsonWriter.OutputType.json);
 
-        FileHandle musicFile = Gdx.files.internal(fileName);
-        Container container = json.fromJson(Container.class, musicFile.readString());
-        for(int i = 0; i < container.states.size; i++){
-            MusicState state = container.states.get(i);
+        final FileHandle musicFile = Gdx.files.internal(fileName);
+        final Container container = json.fromJson(Container.class,
+                musicFile.readString());
+        for (int i = 0; i < container.states.size; i++) {
+            final MusicState state = container.states.get(i);
             add(state);
         }
     }
 
     /**
      * Access the current state.
+     * 
      * @return The state that is playing.
      */
     public MusicState getCurrentState() {
@@ -183,10 +201,11 @@ public class MusicEventManager {
 
     /**
      * Set the current state.
+     * 
      * @param musicState
      */
     public void setCurrentState(MusicState musicState) {
-        MusicState oldState = currentState;
+        final MusicState oldState = currentState;
         this.currentState = musicState;
         this.handleTransition(this.currentState, oldState);
     }
@@ -195,7 +214,7 @@ public class MusicEventManager {
      * Stop playing the current event.
      */
     public void stop() {
-        if(this.currentState != null){
+        if (this.currentState != null) {
             currentState.stop();
         }
     }
@@ -204,12 +223,12 @@ public class MusicEventManager {
      * Clear the manager. Removes all events.
      */
     public void clear() {
-        Array<MusicState> stateArray = states.values().toArray();
-        for(MusicState state : stateArray){
+        final Array<MusicState> stateArray = states.values().toArray();
+        for (final MusicState state : stateArray) {
             state.dispose();
             for (int i = 0; i < listeners.size; i++) {
-                MusicEventListener observer = listeners.get(i);
-                observer.eventRemoved(state);
+                final MusicEventListener observer = listeners.get(i);
+                observer.stateRemoved(state);
             }
         }
         states.clear();
@@ -217,28 +236,29 @@ public class MusicEventManager {
 
     /**
      * Add observer to the manager.
+     * 
      * @param listener
      */
-    public void addListener(MusicEventListener listener){
+    public void addListener(MusicEventListener listener) {
         this.listeners.add(listener);
     }
 
     /**
      * Remove observer from the manager.
+     * 
      * @param listener
      */
-    public void removeListener(MusicEventListener listener){
+    public void removeListener(MusicEventListener listener) {
         this.listeners.removeValue(listener, true);
     }
 
-
     /**
      * Access all events in the system.
+     * 
      * @return Copy of all events in the system.
      */
-    public Array<MusicState> getEvents(){
+    public Array<MusicState> getEvents() {
         return states.values().toArray();
     }
-
 
 }

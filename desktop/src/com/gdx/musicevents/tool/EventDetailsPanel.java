@@ -24,13 +24,13 @@ public class EventDetailsPanel extends Table {
         
         manager.addListener(new MusicEventListener() {
             @Override
-            public void eventAdded(MusicState event) {
+            public void stateAdded(MusicState event) {
                 transitionInPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
                 transitionOutPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
             }
 
             @Override
-            public void eventRemoved(MusicState event) {
+            public void stateRemoved(MusicState event) {
 
                 transitionInPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
                 transitionOutPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
