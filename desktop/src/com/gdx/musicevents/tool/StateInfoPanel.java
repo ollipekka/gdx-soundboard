@@ -1,7 +1,6 @@
 package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,17 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.Track;
-import com.gdx.musicevents.effects.Play;
 
 public class StateInfoPanel extends Table {
     private final Label nowPlaying;
     
-    private State state;
+    private MusicState state;
 
     private Button play;
 
@@ -36,7 +32,7 @@ public class StateInfoPanel extends Table {
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                state.play();
+                manager.play(state);
             }
         });
         this.add(play);
@@ -65,7 +61,7 @@ public class StateInfoPanel extends Table {
         this.add(menu).right();
     }
     
-    public void show(State state){
+    public void show(MusicState state){
         this.state = state;
         if(state == null || !state.isPlaying()){
             nowPlaying.setText("Paused");

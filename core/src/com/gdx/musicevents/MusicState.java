@@ -2,34 +2,34 @@ package com.gdx.musicevents;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.tools.flame.EventManager;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.Effect;
 import com.gdx.musicevents.effects.Play;
+import com.gdx.musicevents.effects.StartEffect;
 import com.gdx.musicevents.effects.Stop;
+import com.gdx.musicevents.effects.StopEffect;
 
-public class State implements OnCompletionListener{
+public class MusicState implements OnCompletionListener{
 
     private final String name;
     
     private final Array<Track> tracks = new Array<Track>();
 
-    private final ObjectMap<String, Effect> enterTransitions = new ObjectMap<String, Effect>();
-    private final ObjectMap<String, Effect> exitTransitions = new ObjectMap<String, Effect>();
+    private final ObjectMap<String, StartEffect> enterTransitions = new ObjectMap<String, StartEffect>();
+    private final ObjectMap<String, StopEffect> exitTransitions = new ObjectMap<String, StopEffect>();
     
     private transient MusicEventManager manager;
     private transient int currentTrackIndex = -1;
     
-    
     private transient float volume = 1;
     
-    public State(){
+    
+    public MusicState(){
         this("");
     }
     
-    public State(String name) {
+    public MusicState(String name) {
         this.name = name;
     }
 
@@ -63,9 +63,9 @@ public class State implements OnCompletionListener{
         }
     }
     
-    public Effect enter(State previousState) {
+    public Effect enter(MusicState previousState) {
         
-        Effect effect = null;
+        StartEffect effect = null;
         if(previousState != null){
             effect = enterTransitions.get(previousState.getName());
         }
@@ -74,21 +74,21 @@ public class State implements OnCompletionListener{
             effect = new Play();
         }
 
-        effect.start(this, previousState);
+        effect.startStart(this, previousState);
         
         
         return effect;
         
     }
     
-    public Effect exit(State nextState) {
-        Effect effect = exitTransitions.get(nextState.getName());
+    public Effect exit(MusicState nextState) {
+        StopEffect effect = exitTransitions.get(nextState.getName());
 
         if(effect == null){
             effect = new Stop();
         }
 
-        effect.start(this, nextState);
+        effect.startStop(this, nextState);
         return effect;
     }
     
@@ -101,16 +101,10 @@ public class State implements OnCompletionListener{
     
     public void play() {
         currentTrackIndex = 0;
-        State currentState = manager.getCurrentState();
-        if(currentState != this) {
-            manager.play(this.name);
-        } else {
-            playTrack();
-        }
+        playTrack();
     }
     
-
-    public void playTrack() {
+    private void playTrack() {
         Track currentTrack = getCurrentTrack();
         if(currentTrack != null){
             currentTrack.setVolume(this.volume);
@@ -144,15 +138,15 @@ public class State implements OnCompletionListener{
         }
     }
 
-    public ObjectMap<String, Effect> getEnterTransitions() {
+    public ObjectMap<String, StartEffect> getEnterTransitions() {
         return enterTransitions;
     }
 
-    public ObjectMap<String, Effect> getExitTransitions() {
+    public ObjectMap<String, StopEffect> getExitTransitions() {
         return exitTransitions;
     }
 
-    public void addEnterTransition(String eventName, Effect effect) {
+    public void addEnterTransition(String eventName, StartEffect effect) {
         this.enterTransitions.put(eventName, effect);
     }
 
@@ -160,7 +154,7 @@ public class State implements OnCompletionListener{
         this.enterTransitions.remove(name);
 
     }
-    public void addExitTransition(String eventName, Effect effect) {
+    public void addExitTransition(String eventName, StopEffect effect) {
         this.exitTransitions.put(eventName, effect);
     }
 

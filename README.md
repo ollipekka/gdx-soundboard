@@ -28,8 +28,8 @@ Need an effect? Want to fix a bug? Want to change the format? Pull requests and 
 
 ### ToDo v0.3
 - Configure to remember song position when switching between states.
-- Configure loop songs vs iterating the lists.
-- Remove Match Position.
+- Configure loop songs vs iterating the lists. (Loops song if only item)
+- Remove Match Position. (Done)
 
 
 ### Credits

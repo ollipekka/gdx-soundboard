@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.Track;
 
 public class TrackInfoPanel extends Table {
@@ -18,7 +18,7 @@ public class TrackInfoPanel extends Table {
     
     private final CheckBox looping;
     
-    private State state;
+    private MusicState state;
 
     public TrackInfoPanel(Skin skin, EventDetailsPanel eventDetailsPanel) {
         
@@ -51,7 +51,7 @@ public class TrackInfoPanel extends Table {
         stop.setDisabled(true);
     }
 
-    public void show(State state) {
+    public void show(MusicState state) {
         this.state = state;
         
         Array<Track> tracks = state.getTracks();

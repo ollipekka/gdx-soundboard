@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -13,13 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class BrowseFilesDialog extends Dialog {
 
-    private final List<FileHandle> dirList;
+    private final List<FileHandle> fileList;
     public BrowseFilesDialog(Skin skin) {
         super("Browse file", skin);
 
         Table content = this.getContentTable();
 
-        dirList = new List<FileHandle>(skin);
+        fileList = new List<FileHandle>(skin);
 
         FileHandle dir = Gdx.files.internal("music/");
 
@@ -29,12 +30,11 @@ public class BrowseFilesDialog extends Dialog {
             }
         });
 
-        dirList.setItems(files);
-        ScrollPane scrollPane = new ScrollPane(dirList, skin);
-
+        fileList.setItems(files);
+        ScrollPane scrollPane = new ScrollPane(fileList, skin);
 
         content.add(scrollPane).maxSize(300, 500).fill().expandX();
-
+        
         Table buttons = getButtonTable();
         buttons.defaults().fillX().expandX();
         
@@ -43,6 +43,6 @@ public class BrowseFilesDialog extends Dialog {
     }
     
     public String getSelectedPath(){
-        return dirList.getSelected().path();
+        return fileList.getSelected().path();
     }
 }

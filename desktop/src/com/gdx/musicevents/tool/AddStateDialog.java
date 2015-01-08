@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 
 public class AddStateDialog extends Dialog {
     MusicEventManager eventManager;
@@ -46,7 +46,7 @@ public class AddStateDialog extends Dialog {
         boolean result = (Boolean)object;
 
         if(result) {
-            eventManager.add(new State(eventName.getText()));
+            eventManager.add(new MusicState(eventName.getText()));
         }
     }
 }

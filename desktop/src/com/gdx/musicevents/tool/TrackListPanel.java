@@ -4,8 +4,6 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,9 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.Track;
 
 public class TrackListPanel extends Table {
@@ -33,7 +29,7 @@ public class TrackListPanel extends Table {
         }
     };
     
-    private State state;
+    private MusicState state;
 
     private Button removeTrack;
 
@@ -107,7 +103,7 @@ public class TrackListPanel extends Table {
         });
     }
     
-    private void updateTrackList(List<Track> trackList, final State state) {
+    private void updateTrackList(List<Track> trackList, final MusicState state) {
         trackList.getItems().clear();
         trackList.setItems(state.getTracks());
         trackList.getItems().sort(comparator);
@@ -118,7 +114,7 @@ public class TrackListPanel extends Table {
         remove.setDisabled(trackList.getSelected() == null || trackList.getItems().size == 0);
     }
 
-    public void show(State state) {
+    public void show(MusicState state) {
         this.state = state;
         updateTrackList(trackList, state);
         enableDisable(trackList, addTrack, removeTrack);

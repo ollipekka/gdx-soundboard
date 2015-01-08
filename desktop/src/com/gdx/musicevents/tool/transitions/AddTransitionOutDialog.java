@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.musicevents.effects.Effect;
 import com.gdx.musicevents.effects.FadeOut;
+import com.gdx.musicevents.effects.StopEffect;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.effects.Stop;
 
 public class AddTransitionOutDialog extends Dialog {
@@ -25,17 +25,17 @@ public class AddTransitionOutDialog extends Dialog {
 
     final SelectBox<String> selectBox;
     final Cell<? extends Actor> propertiesCell;
-    final List<State> availableEvents;
-    final State musicEvent;
+    final List<MusicState> availableEvents;
+    final MusicState musicEvent;
     final TransitionOutPanel panel;
 
-    public AddTransitionOutDialog(final Skin skin, final TransitionOutPanel panel, final MusicEventManager manager, final State musicEvent) {
+    public AddTransitionOutDialog(final Skin skin, final TransitionOutPanel panel, final MusicEventManager manager, final MusicState musicEvent) {
         super("Add transition", skin);
         this.musicEvent = musicEvent;
         this.panel = panel;
-        availableEvents = new List<State>(skin);
+        availableEvents = new List<MusicState>(skin);
 
-        Array<State> events = manager.getEvents();
+        Array<MusicState> events = manager.getEvents();
         events.removeValue(musicEvent, true);
 
         Array<String> usedEventNames = musicEvent.getExitTransitions().keys().toArray();
@@ -43,7 +43,7 @@ public class AddTransitionOutDialog extends Dialog {
         for(int i = 0; i < usedEventNames.size; i++){
             String usedEventName = usedEventNames.get(i);
             for(int j = 0; j < events.size; j++){
-                State event = events.get(j);
+                MusicState event = events.get(j);
                 if(event.getName().equals(usedEventName)) {
                     events.removeIndex(j);
                     break;
@@ -72,7 +72,7 @@ public class AddTransitionOutDialog extends Dialog {
                     propertiesCell.setActor(new DefaultEndEffectPanel(skin));
 
                 } else if(selected.equals(FADE_OUT)) {
-                    propertiesCell.setActor(new FadeEffectPanel(skin, false));
+                    propertiesCell.setActor(new FadeEffectPanel(skin));
                 }
             }
         });
@@ -92,7 +92,7 @@ public class AddTransitionOutDialog extends Dialog {
             String eventName = availableEvents.getSelected().getName();
             String effectName = selectBox.getSelected();
 
-            Effect effect = null;
+            StopEffect effect = null;
             if(effectName.equals(DEFAULT)){
                 effect = new Stop();
             } else if(effectName.equals(FADE_OUT)){

@@ -11,8 +11,8 @@ public class FadeEffectPanel extends DefaultStartEffectPanel {
     final Slider offset;
     final Slider duration;
 
-    public FadeEffectPanel(Skin skin, boolean matchPositionEnabled) {
-        super(skin, matchPositionEnabled);
+    public FadeEffectPanel(Skin skin) {
+        super(skin);
 
 
         //final DecimalFormat twoDecimalFormat = new DecimalFormat("###.##");

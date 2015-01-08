@@ -1,32 +1,67 @@
 package com.gdx.musicevents.effects;
 
 import com.badlogic.gdx.Gdx;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 
 
-public class FadeIn extends VolumeEffect {
+public class FadeIn implements StartEffect {
+    protected transient float originalVolume;
+    protected final float totalTime;
+    protected transient float elapsedTime = 0;
+    protected final float offset;
+    protected transient float elapsedOffset;
+    protected transient boolean started = false;
+
+    protected transient MusicState nextState;
+    protected transient MusicState previousState;
 
     public FadeIn() {
-        super(0, 0);
+        this(0, 0);
 
     }
     public FadeIn(float offset, float totalTime) {
-        super(offset, totalTime);
+        this.offset = offset;
+        this.totalTime = totalTime;
     }
 
     @Override
-    public void start(State nextState, State previousState) {
-        Gdx.app.log("FadeIn", "Start");
-        super.start(nextState, previousState);
-    }
+    public void startStart(MusicState nextState, MusicState previousState) {
+        Gdx.app.log("FadeIn", "Start " + nextState.toString());
+        
+        this.nextState = nextState;
+        this.previousState = previousState;
+        
+        this.originalVolume = nextState.getVolume();
+        this.elapsedTime = 0;
+        this.elapsedOffset = 0;
+        nextState.play();
 
-    @Override
-    protected void volumeFunc(float originalVolume, float totalTime, float elapsedTime) {
-        nextState.setVolume(originalVolume * (elapsedTime) / totalTime);
-        Gdx.app.log("FadeIn", "Volume: " + nextState.getVolume());
+        started = true;
     }
+    
+    public void update(float dt) {
+
+        if(elapsedOffset < offset) {
+            elapsedOffset += dt;
+        } else {
+            elapsedTime += dt;
+
+            if(isDone()){
+                stopStart();
+            } else {
+                nextState.setVolume(originalVolume * (elapsedTime) / totalTime);
+                Gdx.app.log("FadeIn", "Volume: " + nextState.getVolume());
+            }
+        }
+    }
+    
     @Override
-    public void stop() {
+    public void stopStart() {
         Gdx.app.log("FadeIn", "Stop");
     }
+    
+    public boolean isDone(){
+        return elapsedTime >= totalTime;
+    }
+
 }

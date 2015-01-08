@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gdx.musicevents.MusicEventListener;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 
 public class StateListPanel extends Table {
 
@@ -23,16 +23,16 @@ public class StateListPanel extends Table {
 
     final MusicEventTool planner;
     final MusicEventManager manager;
-    final List<State> eventList;
+    final List<MusicState> eventList;
 
     final TextButton remove;
     
     final Table content;
 
 
-    Comparator<State> comparator = new Comparator<State>() {
+    Comparator<MusicState> comparator = new Comparator<MusicState>() {
         @Override
-        public int compare(State o1, State o2) {
+        public int compare(MusicState o1, MusicState o2) {
 
             Collator comp = java.text.Collator.getInstance();
             return comp.compare(o1.getName(), o2.getName());
@@ -57,26 +57,32 @@ public class StateListPanel extends Table {
         manager.addListener(new MusicEventListener(){
 
             @Override
-            public void eventAdded(State event) {;
+            public void eventAdded(MusicState event) {
+                boolean wasEmpty = eventList.getItems().size == 0;
+                
                 eventList.getItems().add(event);
                 remove.setDisabled(eventList.getItems().size == 0);
                 eventList.getItems().sort(comparator);
+                
+                if(wasEmpty){
+                    eventList.setSelectedIndex(0);
+                }
             }
 
             @Override
-            public void eventRemoved(State event) {
+            public void eventRemoved(MusicState event) {
                 eventList.getItems().removeValue(event, true);
                 remove.setDisabled(eventList.getItems().size == 0);
-                eventList.getItems().sort(comparator);;
+                eventList.getItems().sort(comparator);
             }
         });
 
-        eventList = new List<State>(skin);
+        eventList = new List<MusicState>(skin);
         eventList.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(eventList.getSelectedIndex() > -1){
-                    State selected = eventList.getSelected();
+                    MusicState selected = eventList.getSelected();
                     planner.showEvent(selected);
                 }
 

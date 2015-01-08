@@ -4,13 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gdx.musicevents.MusicEventListener;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.tool.transitions.TransitionInPanel;
 import com.gdx.musicevents.tool.transitions.TransitionOutPanel;
 
 public class EventDetailsPanel extends Table {
 
-    State displayedState;
+    MusicState displayedState;
 
     final TrackListPanel trackListPanel;
     final TransitionInPanel transitionInPanel;
@@ -24,13 +24,13 @@ public class EventDetailsPanel extends Table {
         
         manager.addListener(new MusicEventListener() {
             @Override
-            public void eventAdded(State event) {
+            public void eventAdded(MusicState event) {
                 transitionInPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
                 transitionOutPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
             }
 
             @Override
-            public void eventRemoved(State event) {
+            public void eventRemoved(MusicState event) {
 
                 transitionInPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
                 transitionOutPanel.getAddButton().setDisabled(manager.getEvents().size <= 1);
@@ -108,7 +108,7 @@ public class EventDetailsPanel extends Table {
     }
 
 
-    public void show(State musicEvent) {
+    public void show(MusicState musicEvent) {
         this.setVisible(true);
         this.displayedState = musicEvent;
 

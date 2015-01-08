@@ -1,10 +1,5 @@
 package com.gdx.musicevents.tool.transitions;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,15 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.gdx.musicevents.effects.Effect;
-import com.gdx.musicevents.tool.EventDetailsPanel;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
+import com.gdx.musicevents.effects.StartEffect;
+import com.gdx.musicevents.tool.EventDetailsPanel;
 
 public class TransitionInPanel extends Table {
-    State musicEvent;
+    MusicState musicEvent;
     List<EffectDecorator> inTransitions;
 
     final Button add;
@@ -75,14 +69,14 @@ public class TransitionInPanel extends Table {
 
         remove.setDisabled(true);
     }
-    public void setMusicEvent(State musicEvent) {
+    public void setMusicEvent(MusicState musicEvent) {
         this.musicEvent = musicEvent;
 
         inTransitions.getItems().clear();
 
-        ObjectMap<String, Effect> effects = musicEvent.getEnterTransitions();
+        ObjectMap<String, StartEffect> effects = musicEvent.getEnterTransitions();
 
-        for(ObjectMap.Entry<String, Effect> entry : effects){
+        for(ObjectMap.Entry<String, StartEffect> entry : effects){
             inTransitions.getItems().add(new EffectDecorator(entry.key, entry.value));
         }
         remove.setDisabled(effects.size == 0 || inTransitions.getSelected() == null);

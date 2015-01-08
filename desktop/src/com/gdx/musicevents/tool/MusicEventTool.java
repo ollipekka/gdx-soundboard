@@ -2,19 +2,17 @@ package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.State;
+import com.gdx.musicevents.MusicState;
 
 public class MusicEventTool implements ApplicationListener {
 
-    State shownState;
+    MusicState shownState;
 
     Skin skin;
 
@@ -100,7 +98,7 @@ public class MusicEventTool implements ApplicationListener {
         return stage;
     }
 
-    public void showEvent(State musicEvent) {
+    public void showEvent(MusicState musicEvent) {
         this.shownState = musicEvent;
         stateInfoPanel.show(musicEvent);
         eventDetailsPanel.show(musicEvent);

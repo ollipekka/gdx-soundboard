@@ -19,7 +19,7 @@ public class Track {
         this.fileName = fileName;
     }
 
-    public void init(State state) {
+    public void init(MusicState state) {
         this.fileHandle = Gdx.files.internal(this.getFileName());
         this.music = Gdx.audio.newMusic(this.fileHandle);
         this.music.setOnCompletionListener(state);
@@ -37,6 +37,10 @@ public class Track {
     
     public void play() {
         music.play();
+    }
+    
+    public void pause() {
+        music.pause();
     }
     
     public void stop() {
@@ -73,5 +77,4 @@ public class Track {
     public String getFileName() {
         return fileName;
     }
-
 }
