@@ -1,4 +1,4 @@
-gdx-soundboard v0.2
+gdx-soundboard v0.3
 ==============
 
 ![Screenshot](http://i.imgur.com/B28wFEg.png)
