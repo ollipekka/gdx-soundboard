@@ -1,7 +1,7 @@
 gdx-soundboard v0.2
 ==============
 
-![Screenshot](http://i.imgur.com/P0mkDiQ.png)
+![Screenshot](http://i.imgur.com/B28wFEg.png)
 
 ### The Problem
 
@@ -27,7 +27,8 @@ Supported effects:
 Need an effect? Want to fix a bug? Want to change the format? Pull requests and issues are welcome.
 
 ### ToDo v0.3
-- Configure to remember song position when switching between states.
+- Cleanup (done)
+- Configure to remember song position when switching between states. (done)
 - Configure loop songs vs iterating the lists. (Loops song if only item)
 - Remove Match Position. (Done)
 
