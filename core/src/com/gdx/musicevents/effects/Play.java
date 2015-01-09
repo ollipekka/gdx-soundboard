@@ -9,7 +9,7 @@ public class Play implements StartEffect {
     }
 
     @Override
-    public void startStart(MusicState nextState, MusicState previousState) {
+    public void beginStart(MusicState nextState, MusicState previousState) {
         Gdx.app.debug("Play", nextState.toString());
 
         nextState.play();
@@ -17,7 +17,7 @@ public class Play implements StartEffect {
     }
 
     @Override
-    public void stopStart() {
+    public void endStart() {
     }
 
     @Override

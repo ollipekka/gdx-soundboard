@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.StopEffect;
-import com.gdx.musicevents.tool.EventDetailsPanel;
+import com.gdx.musicevents.tool.MusicStatePanel;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.MusicState;
 
@@ -25,7 +25,7 @@ public class TransitionOutPanel extends Table {
     final Button add;
     final Button remove;
 
-    public TransitionOutPanel(final Skin skin, final Stage stage, final MusicEventManager manager, final EventDetailsPanel eventDetailsPanel) {
+    public TransitionOutPanel(final Skin skin, final Stage stage, final MusicEventManager manager, final MusicStatePanel eventDetailsPanel) {
         super(skin);
 
         setBackground(skin.getDrawable("panel-background"));
@@ -62,13 +62,13 @@ public class TransitionOutPanel extends Table {
 
                 musicEvent.removeExitTransition(decorator.name);
 
-                setMusicEvent(musicEvent);
+                setMusicState(musicEvent);
             }
         });
         remove.setDisabled(true);
         this.add(remove).fillX().expandX();
     }
-    public void setMusicEvent(MusicState musicEvent) {
+    public void setMusicState(MusicState musicEvent) {
         this.musicEvent = musicEvent;
 
         outTransitions.getItems().clear();

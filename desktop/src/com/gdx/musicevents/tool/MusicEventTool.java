@@ -23,7 +23,7 @@ public class MusicEventTool implements ApplicationListener {
 
     StateInfoPanel stateInfoPanel;
     StateListPanel stateListPanel;
-    EventDetailsPanel eventDetailsPanel;
+    MusicStatePanel eventDetailsPanel;
 
     private final MusicEventManager eventManager = new MusicEventManager();
 
@@ -46,7 +46,7 @@ public class MusicEventTool implements ApplicationListener {
         content.add(stateListPanel).minWidth(200).expandY().fillY();
 
         Table main = new Table(skin);
-        eventDetailsPanel = new EventDetailsPanel(skin, this);
+        eventDetailsPanel = new MusicStatePanel(skin, this);
         main.add(eventDetailsPanel).fill().expand().row();
         
         stateInfoPanel = new StateInfoPanel(skin, stage, getEventManager());

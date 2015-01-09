@@ -19,9 +19,13 @@ public class MusicState implements OnCompletionListener{
     private final ObjectMap<String, StartEffect> enterTransitions = new ObjectMap<String, StartEffect>();
     private final ObjectMap<String, StopEffect> exitTransitions = new ObjectMap<String, StopEffect>();
     
+    
+    private transient int oldTrackIndex = -1;
     private transient int currentTrackIndex = -1;
     
     private transient float volume = 1;
+    
+    private boolean resumeTrack = false;
     
     
     public MusicState(){
@@ -50,6 +54,7 @@ public class MusicState implements OnCompletionListener{
         currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
         Track currentTrack = getCurrentTrack();
         if(currentTrack != null){
+            currentTrack.reset();
             currentTrack.play();
         }
     }
@@ -72,7 +77,7 @@ public class MusicState implements OnCompletionListener{
             effect = new Play();
         }
 
-        effect.startStart(this, previousState);
+        effect.beginStart(this, previousState);
         return effect;
     }
     
@@ -83,7 +88,7 @@ public class MusicState implements OnCompletionListener{
             effect = new Stop();
         }
 
-        effect.startStop(this, nextState);
+        effect.beginStop(this, nextState);
         return effect;
     }
     
@@ -95,16 +100,37 @@ public class MusicState implements OnCompletionListener{
     }
     
     public void play() {
-        currentTrackIndex = 0;
-        playTrack();
+        
+        if(!resumeTrack){
+            currentTrackIndex = 0;
+            playTrack();
+        } else {
+            resumeTrack();
+        }
     }
     
     private void playTrack() {
         Track currentTrack = getCurrentTrack();
-        if(currentTrack != null){
+        if(currentTrack != null) {
             currentTrack.setVolume(this.volume);
             currentTrack.play();
         }
+    }
+    
+    private void resumeTrack() {
+        
+        if(oldTrackIndex == -1){
+            currentTrackIndex = 0;
+        } else {
+            currentTrackIndex = oldTrackIndex;
+        }
+        
+        Track currentTrack = getCurrentTrack();
+        if(currentTrack != null) {
+            currentTrack.play();
+            currentTrack.setPosition(currentTrack.getPosition());
+        }
+        
     }
     
     public boolean isPlaying(){
@@ -117,8 +143,8 @@ public class MusicState implements OnCompletionListener{
         if(currentTrack != null){
             currentTrack.stop();
         }
-        
-        this.currentTrackIndex = -1;
+        oldTrackIndex = currentTrackIndex;
+        currentTrackIndex = -1;
     }
     
     public void dispose() {
@@ -185,6 +211,14 @@ public class MusicState implements OnCompletionListener{
         if(track != null){
             track.setVolume(volume);
         }
+    }
+
+    public boolean isResumeTrack() {
+        return resumeTrack;
+    }
+
+    public void setResumeTrack(boolean resumeTrack) {
+        this.resumeTrack = resumeTrack;
     }
 
 }

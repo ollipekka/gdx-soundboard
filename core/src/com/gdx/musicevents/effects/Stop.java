@@ -9,14 +9,14 @@ public class Stop implements StopEffect {
     }
 
     @Override
-    public void startStop(MusicState nextState, MusicState previousState) {
+    public void beginStop(MusicState nextState, MusicState previousState) {
         Gdx.app.debug("Stop", "Stopped: " + nextState);
 
         nextState.stop();
     }
 
     @Override
-    public void stopStop() {
+    public void endStop() {
 
     }
 

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.effects.StartEffect;
-import com.gdx.musicevents.tool.EventDetailsPanel;
+import com.gdx.musicevents.tool.MusicStatePanel;
 
 public class TransitionInPanel extends Table {
     MusicState musicEvent;
@@ -23,7 +23,7 @@ public class TransitionInPanel extends Table {
     final Button add;
     final Button remove;
 
-    public TransitionInPanel(final Skin skin, final Stage stage, final MusicEventManager manager, EventDetailsPanel eventDetailsPanel) {
+    public TransitionInPanel(final Skin skin, final Stage stage, final MusicEventManager manager, MusicStatePanel eventDetailsPanel) {
         super(skin);
 
         setBackground(skin.getDrawable("panel-background"));
@@ -61,7 +61,7 @@ public class TransitionInPanel extends Table {
 
                 musicEvent.removeEnterTransition(decorator.name);
 
-                setMusicEvent(musicEvent);
+                setMusicState(musicEvent);
             }
         });
         this.add(remove).fillX().expandX();
@@ -69,7 +69,7 @@ public class TransitionInPanel extends Table {
 
         remove.setDisabled(true);
     }
-    public void setMusicEvent(MusicState musicEvent) {
+    public void setMusicState(MusicState musicEvent) {
         this.musicEvent = musicEvent;
 
         inTransitions.getItems().clear();

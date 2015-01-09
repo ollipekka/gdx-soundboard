@@ -29,7 +29,7 @@ public class FadeIn implements StartEffect {
     }
 
     @Override
-    public void startStart(MusicState nextState, MusicState previousState) {
+    public void beginStart(MusicState nextState, MusicState previousState) {
         Gdx.app.debug("FadeIn", "Start " + nextState.toString());
 
         this.nextState = nextState;
@@ -52,7 +52,7 @@ public class FadeIn implements StartEffect {
             elapsedTime += dt;
 
             if (isDone()) {
-                stopStart();
+                endStart();
             } else {
                 nextState.setVolume(originalVolume * (elapsedTime) / totalTime);
                 Gdx.app.debug("FadeIn", "Volume: " + nextState.getVolume());
@@ -61,7 +61,7 @@ public class FadeIn implements StartEffect {
     }
 
     @Override
-    public void stopStart() {
+    public void endStart() {
         Gdx.app.debug("FadeIn", "Stop");
     }
 

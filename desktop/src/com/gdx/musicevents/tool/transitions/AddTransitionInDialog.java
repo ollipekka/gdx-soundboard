@@ -106,7 +106,7 @@ public class AddTransitionInDialog extends Dialog {
             }
 
             musicEvent.addEnterTransition(eventName, effect);
-            panel.setMusicEvent(musicEvent);
+            panel.setMusicState(musicEvent);
         }
     }
 }

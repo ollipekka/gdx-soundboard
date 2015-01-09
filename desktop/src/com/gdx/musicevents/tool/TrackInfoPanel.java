@@ -20,7 +20,7 @@ public class TrackInfoPanel extends Table {
     
     private MusicState state;
 
-    public TrackInfoPanel(Skin skin, EventDetailsPanel eventDetailsPanel) {
+    public TrackInfoPanel(Skin skin, MusicStatePanel eventDetailsPanel) {
         
         this.top().left();
         this.defaults().top().left();

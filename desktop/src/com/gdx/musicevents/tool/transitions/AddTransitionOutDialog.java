@@ -102,7 +102,7 @@ public class AddTransitionOutDialog extends Dialog {
             }
 
             musicEvent.addExitTransition(eventName, effect);
-            panel.setMusicEvent(musicEvent);
+            panel.setMusicState(musicEvent);
 
         }
 

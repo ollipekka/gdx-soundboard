@@ -37,7 +37,7 @@ public class TrackListPanel extends Table {
 
     private List<Track> trackList;
     
-    public TrackListPanel(final Skin skin, final Stage stage, final EventDetailsPanel eventDetailsPanel) {
+    public TrackListPanel(final Skin skin, final Stage stage, final MusicStatePanel eventDetailsPanel) {
         super(skin);
 
         setBackground(skin.getDrawable("panel-background"));
@@ -114,10 +114,9 @@ public class TrackListPanel extends Table {
         remove.setDisabled(trackList.getSelected() == null || trackList.getItems().size == 0);
     }
 
-    public void show(MusicState state) {
+    public void setMusicState(MusicState state) {
         this.state = state;
         updateTrackList(trackList, state);
         enableDisable(trackList, addTrack, removeTrack);
-        
     }
 }
