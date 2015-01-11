@@ -51,7 +51,7 @@ public class StateInfoPanel extends Table {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(menu.isChecked()){
-                    MenuDialog menuDialog = new MenuDialog(skin, manager);
+                    MenuDialog menuDialog = new MenuDialog(skin, stage, manager);
                     menuDialog.show(stage);
                     menu.setChecked(false);
                 }

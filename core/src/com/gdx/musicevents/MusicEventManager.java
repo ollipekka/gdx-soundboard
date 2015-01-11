@@ -14,9 +14,10 @@ public class MusicEventManager {
      * Container for serialization purposes.
      */
     private static class Container {
+        
+        transient String basePath;
         Array<MusicState> states;
 
-        @SuppressWarnings("unused")
         public Container() {
         }
 
@@ -24,6 +25,8 @@ public class MusicEventManager {
             this.states = states;
         }
     }
+    
+    private Container container;
 
     /**
      * The events that the manager is able to respond to.
@@ -109,13 +112,12 @@ public class MusicEventManager {
      *            The state object.
      */
     public void add(MusicState state) {
-        state.init();
+        state.init(container.basePath);
         this.states.put(state.getName(), state);
         for (int i = 0; i < listeners.size; i++) {
             final MusicEventListener observer = listeners.get(i);
             observer.stateAdded(state);
         }
-
     }
 
     /**
@@ -156,19 +158,29 @@ public class MusicEventManager {
     }
 
     /**
+     * Create a new project.
+     * 
+     * @param handle The base path.
+     */
+    public void create(FileHandle handle){
+        this.clear();
+        container = new Container();
+        container.basePath = handle.path();
+    }
+    
+    /**
      * Save to a file.
      * 
      * @param fileName
      *            The path to the file.
      */
-    public void save(String fileName) {
-        final FileHandle musicFile = new FileHandle(fileName);
+    public void save(FileHandle file) {
 
         final Json json = new Json(JsonWriter.OutputType.json);
 
         final Container container = new Container(states.values().toArray());
 
-        musicFile.writeString(json.prettyPrint(container), false);
+        file.writeString(json.prettyPrint(container), false);
     }
 
     /**
@@ -177,13 +189,17 @@ public class MusicEventManager {
      * @param fileName
      *            The path to the file.
      */
-    public void load(String fileName) {
+    public void load(FileHandle file) {
         this.clear();
         final Json json = new Json(JsonWriter.OutputType.json);
 
-        final FileHandle musicFile = Gdx.files.internal(fileName);
-        final Container container = json.fromJson(Container.class,
-                musicFile.readString());
+        container = json.fromJson(Container.class,
+                file.readString());
+
+        String path = file.path();
+        int lastSlash = path.lastIndexOf("/");
+        container.basePath =  path.substring(0, lastSlash);
+        
         for (int i = 0; i < container.states.size; i++) {
             final MusicState state = container.states.get(i);
             add(state);
@@ -259,6 +275,10 @@ public class MusicEventManager {
      */
     public Array<MusicState> getEvents() {
         return states.values().toArray();
+    }
+
+    public String getBasePath() {
+        return container.basePath;
     }
 
 }

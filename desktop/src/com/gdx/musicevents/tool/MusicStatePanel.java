@@ -18,10 +18,13 @@ public class MusicStatePanel extends Table {
 
     private StatePropertiesPanel statePropertiesPanel;
 
+    private final MusicEventManager manager;
+
+    
 
     public MusicStatePanel(Skin skin, final MusicEventTool planner) {
         super(skin);
-        final MusicEventManager manager = planner.getEventManager();
+        manager = planner.getEventManager();
 
         
         manager.addListener(new MusicEventListener() {
@@ -79,5 +82,10 @@ public class MusicStatePanel extends Table {
         this.trackListPanel.setMusicState(displayedState);
         this.transitionInPanel.setMusicState(displayedState);
         this.transitionOutPanel.setMusicState(displayedState);
+    }
+
+
+    public MusicEventManager getManager() {
+        return manager;
     }
 }

@@ -54,9 +54,9 @@ public class MusicEventTool implements ApplicationListener {
         
         content.add(main).fill().expand().minWidth(580);
         
-             
 
         Gdx.input.setInputProcessor(stage);
+        new MenuDialog(skin, stage, eventManager).show(stage);
     }
 
     @Override

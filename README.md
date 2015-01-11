@@ -31,6 +31,8 @@ Need an effect? Want to fix a bug? Want to change the format? Pull requests and 
 - Configure to remember song position when switching between states. (done)
 - Configure loop songs vs iterating the lists. (Loops song if only item)
 - Remove Match Position. (Done)
+- Proper save and load dialogs.
+- Fix bugs with resume position.
 
 
 ### Credits

@@ -41,7 +41,6 @@ public class MusicState implements OnCompletionListener{
     }
     
     public void addTrack(Track track){
-        track.init(this);
         this.getTracks().add(track);
     }
     
@@ -59,10 +58,10 @@ public class MusicState implements OnCompletionListener{
         }
     }
     
-    public void init() {
+    public void init(String basePath) {
         for(int i = 0; i < getTracks().size; i++){
             Track track = getTracks().get(i);
-            track.init(this);
+            track.init(basePath, this);
         }
     }
     

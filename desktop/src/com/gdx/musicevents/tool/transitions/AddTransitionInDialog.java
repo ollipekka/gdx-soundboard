@@ -1,5 +1,6 @@
 package com.gdx.musicevents.tool.transitions;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
@@ -87,6 +88,10 @@ public class AddTransitionInDialog extends Dialog {
         add.setDisabled(events.size == 0);
         button(add, true);
         button("Cancel", false);
+        
+
+        key(Keys.ENTER, true);
+        key(Keys.ESCAPE, false);
     }
 
     @Override

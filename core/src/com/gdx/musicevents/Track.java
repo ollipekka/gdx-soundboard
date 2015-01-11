@@ -19,8 +19,8 @@ public class Track {
         this.fileName = fileName;
     }
 
-    public void init(MusicState state) {
-        this.fileHandle = Gdx.files.internal(this.getFileName());
+    public void init(String basePath, MusicState state) {
+        this.fileHandle = Gdx.files.internal(basePath + "/" + this.getFileName());
         this.music = Gdx.audio.newMusic(this.fileHandle);
         this.music.setOnCompletionListener(state);
     }

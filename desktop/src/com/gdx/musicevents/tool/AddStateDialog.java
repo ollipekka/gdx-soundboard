@@ -1,5 +1,6 @@
 package com.gdx.musicevents.tool;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -39,6 +40,10 @@ public class AddStateDialog extends Dialog {
         
         this.button("Ok", true);
         this.button("Cancel", false);
+        
+
+        key(Keys.ENTER, true);
+        key(Keys.ESCAPE, false);
     }
 
     @Override

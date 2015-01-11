@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -14,14 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 public class BrowseFilesDialog extends Dialog {
 
     private final List<FileHandle> fileList;
-    public BrowseFilesDialog(Skin skin) {
+    public BrowseFilesDialog(Skin skin, final String basePath) {
         super("Browse file", skin);
 
         Table content = this.getContentTable();
 
         fileList = new List<FileHandle>(skin);
 
-        FileHandle dir = Gdx.files.internal("music/");
+        FileHandle dir = Gdx.files.internal(basePath);
 
         FileHandle[] files = dir.list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
@@ -39,9 +40,12 @@ public class BrowseFilesDialog extends Dialog {
         
         button("Ok", true);
         button("Cancel", false);
+
+        key(Keys.ENTER, true);
+        key(Keys.ESCAPE, false);
     }
     
     public String getSelectedPath(){
-        return fileList.getSelected().path();
+        return fileList.getSelected().name();
     }
 }

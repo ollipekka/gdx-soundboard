@@ -59,11 +59,15 @@ public class TrackListPanel extends Table {
                     return;
                 }
                 
-                BrowseFilesDialog dialog = new BrowseFilesDialog(skin){
+                final String basePath = eventDetailsPanel.getManager().getBasePath();
+                
+                BrowseFilesDialog dialog = new BrowseFilesDialog(skin, basePath){
                     protected void result(Object object) {
                         boolean result = (Boolean)object;
                         if(result){
-                            state.addTrack(new Track(this.getSelectedPath()));
+                            Track track = new Track(this.getSelectedPath());
+                            track.init(basePath, state);
+                            state.addTrack(track);
                         }
                         eventDetailsPanel.show(state);
                     };

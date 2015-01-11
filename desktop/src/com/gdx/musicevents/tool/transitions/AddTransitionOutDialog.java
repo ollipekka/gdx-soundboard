@@ -1,5 +1,6 @@
 package com.gdx.musicevents.tool.transitions;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -82,6 +83,10 @@ public class AddTransitionOutDialog extends Dialog {
 
         button("Add", true);
         button("Cancel", false);
+
+
+        key(Keys.ENTER, true);
+        key(Keys.ESCAPE, false);
     }
 
     @Override
@@ -103,7 +108,6 @@ public class AddTransitionOutDialog extends Dialog {
 
             musicEvent.addExitTransition(eventName, effect);
             panel.setMusicState(musicEvent);
-
         }
 
     }
