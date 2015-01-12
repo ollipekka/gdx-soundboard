@@ -149,18 +149,25 @@ public class FileChooser extends Dialog {
             }
         });
     }
-
+/*
+    @Override
+    public float getPrefWidth() {
+        return 300;
+    }
+    @Override
+    public float getPrefHeight() {
+        return 350;
+    }*/
+    
     @Override
     public Dialog show(Stage stage, Action action) {
-
         Table content = getContentTable();
-
         content.add(dirLabel).top().left().expandX().fillX().row();
-        content.add(new ScrollPane(dirList, skin)).minSize(300, 200).fill().expand().row();
-        
+        content.add(new ScrollPane(dirList, skin)).height(300).fill().expand().row();
+
         if(fileNameEnabled){
-            content.add(fileNameLabel).fill().expand().row();
-            content.add(fileNameInput).fill().expand().row();
+            content.add(fileNameLabel).fillX().expandX().row();
+            content.add(fileNameInput).fillX().expandX().row();
         }
 
         if(newFolderEnabled){

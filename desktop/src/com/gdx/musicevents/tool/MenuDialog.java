@@ -38,6 +38,8 @@ public class MenuDialog extends Dialog {
                     public boolean result(boolean success, FileHandle result) {
                         if(success){
                             manager.create(result);
+
+                            hide();
                         }
                         return true;
                     }
@@ -52,7 +54,6 @@ public class MenuDialog extends Dialog {
                 newProject.setOkButtonText("Create");
                 newProject.show(stage);
                 
-                hide();
             }
         });
         
@@ -70,6 +71,7 @@ public class MenuDialog extends Dialog {
                             public boolean result(boolean success, FileHandle result) {
                                 if(success){
                                     manager.save(result);
+                                    hide();
                                 }
                                 return true;
                             }
@@ -90,6 +92,7 @@ public class MenuDialog extends Dialog {
                     public boolean result(boolean success, FileHandle result) {
                         if (success) {
                             manager.load(result);
+                            hide();
                         }
                         return true;
                     }
