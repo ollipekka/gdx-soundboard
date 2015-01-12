@@ -4,7 +4,7 @@
 		"name": "RISING",
 		"tracks": [
 			{
-				"fileName": "music/001b rising.ogg"
+				"fileName": "001b rising.ogg"
 			}
 		],
 		"enterTransitions": {
@@ -16,9 +16,7 @@
 		},
 		"exitTransitions": {
 			"CALM": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 0.5,
-				"offset": 0.2
+				"class": "com.gdx.musicevents.effects.Stop"
 			}
 		}
 	},
@@ -26,29 +24,17 @@
 		"name": "COMBAT",
 		"tracks": [
 			{
-				"fileName": "music/001c action.ogg"
+				"fileName": "001c action.ogg"
 			}
 		],
-		"enterTransitions": {
-			"RISING": {
-				"class": "com.gdx.musicevents.effects.FadeIn",
-				"totalTime": 0.5,
-				"offset": 0.2
-			}
-		},
-		"exitTransitions": {
-			"RISING": {
-				"class": "com.gdx.musicevents.effects.FadeOut",
-				"totalTime": 0.5,
-				"offset": 0.2
-			}
-		}
+		"enterTransitions": {},
+		"exitTransitions": {}
 	},
 	{
 		"name": "CALM",
 		"tracks": [
 			{
-				"fileName": "music/001a calm.ogg"
+				"fileName": "001a calm.ogg"
 			}
 		],
 		"enterTransitions": {

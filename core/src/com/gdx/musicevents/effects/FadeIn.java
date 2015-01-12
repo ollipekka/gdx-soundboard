@@ -38,6 +38,7 @@ public class FadeIn implements StartEffect {
         this.originalVolume = nextState.getVolume();
         this.elapsedTime = 0;
         this.elapsedOffset = 0;
+        nextState.setVolume(0);
         nextState.play();
 
         started = true;
@@ -55,7 +56,7 @@ public class FadeIn implements StartEffect {
                 endStart();
             } else {
                 nextState.setVolume(originalVolume * (elapsedTime) / totalTime);
-                Gdx.app.debug("FadeIn", "Volume: " + nextState.getVolume());
+                Gdx.app.log("FadeIn", "Volume: " + nextState.getVolume());
             }
         }
     }

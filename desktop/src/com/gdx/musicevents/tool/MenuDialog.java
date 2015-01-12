@@ -17,9 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gdx.musicevents.MusicEventManager;
-import com.gdx.musicevents.tool.file.LoadDialog;
-import com.gdx.musicevents.tool.file.SaveDialog;
-import com.gdx.musicevents.tool.file.SaveDialog.Type;
+import com.gdx.musicevents.tool.file.FileChooser;
 
 public class MenuDialog extends Dialog {
 
@@ -34,14 +32,17 @@ public class MenuDialog extends Dialog {
         newProject.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveDialog newProject = new SaveDialog("New project", skin,  Gdx.files.internal("./"), Type.PICK) {
-                    protected void result(Object object) {
-                        boolean success = (Boolean) object;
-                        if (success) {
-                            manager.create(getResult());
+                FileChooser newProject = FileChooser.createPickDialog("Create project", skin, Gdx.files.internal("./"),
+                        new FileChooser.FileChooserResult() {
+                    @Override
+                    public boolean result(boolean success, FileHandle result) {
+                        if(success){
+                            manager.create(result);
                         }
+                        return true;
                     }
-                };
+                });
+
                 newProject.setFilter(new FileFilter() {
                     @Override
                     public boolean accept(File file) {
@@ -62,15 +63,17 @@ public class MenuDialog extends Dialog {
         save.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SaveDialog save = new SaveDialog("Save project", skin,  Gdx.files.internal("./"), Type.SAVE) {
-                    protected void result(Object object) {
-                        boolean success = (Boolean) object;
-                        if (success) {
-                            manager.save(getResult());
-                        }
-                    }
-                };
-                save.setOkButtonText("Save");
+
+                FileChooser save = FileChooser.createSaveDialog("Save project", skin, Gdx.files.internal("./"),
+                        new FileChooser.FileChooserResult() {
+                            @Override
+                            public boolean result(boolean success, FileHandle result) {
+                                if(success){
+                                    manager.save(result);
+                                }
+                                return true;
+                            }
+                        });
                 save.show(stage);
             }
         });
@@ -81,15 +84,16 @@ public class MenuDialog extends Dialog {
         load.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                LoadDialog load = new LoadDialog("Load project", skin, Gdx.files.internal("./")) {
-                    protected void result(Object object) {
-                        boolean success = (Boolean) object;
+                FileChooser load = FileChooser.createLoadDialog("Load project", skin, Gdx.files.internal("./"), new FileChooser.FileChooserResult() {
+                    
+                    @Override
+                    public boolean result(boolean success, FileHandle result) {
                         if (success) {
                             manager.load(result);
                         }
-                    };
-                };
-
+                        return true;
+                    }
+                });
                 load.show(stage);
             }
         });
