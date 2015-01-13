@@ -28,7 +28,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class FileChooser extends Dialog {
 
-    public interface FileChooserResult {
+    public interface Result {
         public boolean result(boolean success, FileHandle result);
     }
 
@@ -158,6 +158,7 @@ public class FileChooser extends Dialog {
         return 350;
     }
     
+    
     @Override
     public Dialog show(Stage stage, Action action) {
         Table content = getContentTable();
@@ -220,7 +221,7 @@ public class FileChooser extends Dialog {
     }
 
     public static FileChooser createSaveDialog(String title, final Skin skin,
-            final FileHandle path, final FileChooserResult callback) {
+            final FileHandle path, final Result callback) {
         FileChooser save = new FileChooser(title, skin, path) {
             protected void result(Object object) {
                 boolean success = (Boolean) object;
@@ -236,7 +237,7 @@ public class FileChooser extends Dialog {
     }
 
     public static FileChooser createLoadDialog(String title, final Skin skin,
-            final FileHandle path, final FileChooserResult callback) {
+            final FileHandle path, final Result callback) {
         FileChooser load = new FileChooser(title, skin, path) {
             protected void result(Object object) {
                 boolean success = (Boolean) object;
@@ -249,7 +250,7 @@ public class FileChooser extends Dialog {
     }
 
     public static FileChooser createPickDialog(String title, final Skin skin,
-            final FileHandle path, final FileChooserResult callback) {
+            final FileHandle path, final Result callback) {
         FileChooser pick = new FileChooser(title, skin, path) {
             protected void result(Object object) {
                 boolean success = (Boolean) object;

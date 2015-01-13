@@ -27,55 +27,63 @@ public class MenuDialog extends Dialog {
 
         Table content = getContentTable();
         content.defaults().expandX().fillX().minWidth(175);
-        
+
         Button newProject = new TextButton("New", skin);
         newProject.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FileChooser newProject = FileChooser.createPickDialog("Create project", skin, Gdx.files.internal("./"),
-                        new FileChooser.FileChooserResult() {
-                    @Override
-                    public boolean result(boolean success, FileHandle result) {
-                        if(success){
-                            manager.create(result);
+                FileChooser newProject = FileChooser.createPickDialog(
+                        "Create project", skin, Gdx.files.internal("./"),
+                        new FileChooser.Result() {
+                            @Override
+                            public boolean result(boolean success,
+                                    FileHandle result) {
+                                if (success) {
+                                    manager.create(result);
 
-                            hide();
-                        }
-                        return true;
-                    }
-                });
+                                    hide();
+                                }
+                                return true;
+                            }
+                        });
 
                 newProject.setFilter(new FileFilter() {
                     @Override
                     public boolean accept(File file) {
                         return file.isDirectory();
                     }
-                } );
+                });
                 newProject.setOkButtonText("Create");
                 newProject.show(stage);
-                
+
             }
         });
-        
+
         content.add(newProject).row();
-        
+
+        final FileChooser.Result saveResult = new FileChooser.Result() {
+            @Override
+            public boolean result(boolean success, FileHandle result) {
+
+                if (success) {
+                    if (result.isDirectory() || result.path().contains(".json")) {
+                        return false;
+                    }
+
+                    manager.save(result);
+                    hide();
+                }
+                return true;
+            }
+        };
+
         /* Save button. */
         Button save = new TextButton("Save", skin);
         save.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
-                FileChooser save = FileChooser.createSaveDialog("Save project", skin, Gdx.files.internal("./"),
-                        new FileChooser.FileChooserResult() {
-                            @Override
-                            public boolean result(boolean success, FileHandle result) {
-                                if(success){
-                                    manager.save(result);
-                                    hide();
-                                }
-                                return true;
-                            }
-                        });
+                FileChooser save = FileChooser.createSaveDialog("Save project",
+                        skin, Gdx.files.internal("./"), saveResult);
                 save.show(stage);
             }
         });
@@ -86,17 +94,20 @@ public class MenuDialog extends Dialog {
         load.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FileChooser load = FileChooser.createLoadDialog("Load project", skin, Gdx.files.internal("./"), new FileChooser.FileChooserResult() {
-                    
-                    @Override
-                    public boolean result(boolean success, FileHandle result) {
-                        if (success) {
-                            manager.load(result);
-                            hide();
-                        }
-                        return true;
-                    }
-                });
+                FileChooser load = FileChooser.createLoadDialog("Load project",
+                        skin, Gdx.files.internal("./"),
+                        new FileChooser.Result() {
+
+                            @Override
+                            public boolean result(boolean success,
+                                    FileHandle result) {
+                                if (success) {
+                                    manager.load(result);
+                                    hide();
+                                }
+                                return true;
+                            }
+                        });
                 load.show(stage);
             }
         });
@@ -121,7 +132,6 @@ public class MenuDialog extends Dialog {
             }
         });
         content.add(cancel).row();
-        
 
         key(Keys.ESCAPE, true);
     }
