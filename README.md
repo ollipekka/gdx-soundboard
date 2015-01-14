@@ -31,13 +31,11 @@ Need an effect? Want to fix a bug? Want to change the format? Pull requests and 
 - Configure to remember song position when switching between states. (done)
 - Configure loop songs vs iterating the lists. (Loops song if only item)
 - Remove Match Position. (Done)
-- Proper save and load dialogs.
-- Fix bugs with resume position.
+- Proper save and load dialogs. (Done)
+- Fix bugs with resume position. (Done)
+- Test and release.
 
 
 ### Credits
 
 The example audio tracks were created by @Sweeppah (https://twitter.com/Sweeppah)
-
-
-http://forums.tigsource.com/index.php?topic=45088.0

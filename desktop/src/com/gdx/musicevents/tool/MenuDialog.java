@@ -67,7 +67,7 @@ public class MenuDialog extends Dialog {
                     public boolean result(boolean success, FileHandle result) {
 
                         if (success) {
-                            if (result.isDirectory() || result.path().contains(".json")) {
+                            if (result.isDirectory()) {
                                 return false;
                             }
 
