@@ -11,6 +11,8 @@ public class Track {
     private transient Music music;
     private transient float position = 0;
 
+    private transient MusicState state;
+    
     public Track() {
         fileName = null;
     }
@@ -20,6 +22,7 @@ public class Track {
     }
 
     public void init(String basePath, MusicState state) {
+        this.state = state;
         this.fileHandle = Gdx.files.internal(basePath + "/" + this.getFileName());
         this.music = Gdx.audio.newMusic(this.fileHandle);
         this.music.setOnCompletionListener(state);
@@ -34,17 +37,17 @@ public class Track {
     public void reset() {
         position = 0;
     }
-
+    
     public void play() {
         music.play();
     }
 
-    public void pause() {
-        music.pause();
-    }
-
     public void stop() {
-        music.stop();
+        if(state.isResumeTrack()){
+            music.pause();
+        } else {
+            music.stop();
+        }
     }
 
     public float getPosition() {

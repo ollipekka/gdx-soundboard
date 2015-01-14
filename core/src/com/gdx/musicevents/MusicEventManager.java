@@ -15,7 +15,7 @@ public class MusicEventManager {
      */
     private static class Container {
         
-        transient String basePath;
+        transient String basePath = "./";
         Array<MusicState> states;
 
         public Container() {
@@ -26,7 +26,7 @@ public class MusicEventManager {
         }
     }
     
-    private Container container;
+    private Container container = new Container();
 
     /**
      * The events that the manager is able to respond to.

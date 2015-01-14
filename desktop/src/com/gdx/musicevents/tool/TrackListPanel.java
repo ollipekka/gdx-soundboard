@@ -3,6 +3,8 @@ package com.gdx.musicevents.tool;
 import java.text.Collator;
 import java.util.Comparator;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.gdx.musicevents.MusicState;
 import com.gdx.musicevents.Track;
+import com.gdx.musicevents.tool.file.FileChooser;
+import com.gdx.musicevents.tool.file.FileChooser.ResultListener;
 
 public class TrackListPanel extends Table {
     
@@ -61,17 +65,21 @@ public class TrackListPanel extends Table {
                 
                 final String basePath = eventDetailsPanel.getManager().getBasePath();
                 
-                BrowseFilesDialog dialog = new BrowseFilesDialog(skin, basePath){
-                    protected void result(Object object) {
-                        boolean result = (Boolean)object;
-                        if(result){
-                            Track track = new Track(this.getSelectedPath());
+                FileChooser dialog = FileChooser.createPickDialog("Add track", skin, Gdx.files.internal(basePath));
+                dialog.setResultListener(new ResultListener() {
+                    @Override
+                    public boolean result(boolean success, FileHandle result) {
+                        if(success){
+                            Track track = new Track(result.name());
                             track.init(basePath, state);
                             state.addTrack(track);
                         }
                         eventDetailsPanel.show(state);
-                    };
-                };
+                        return true;
+                    }
+                });
+                dialog.disableDirectoryBrowsing();
+                dialog.setOkButtonText("Add");
                 
                 dialog.show(stage);
                 
