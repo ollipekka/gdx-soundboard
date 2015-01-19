@@ -12,6 +12,9 @@ public class StatePropertiesPanel extends Table {
 
     private final CheckBox resumeTrack;
     
+
+    private final CheckBox randomTrack;
+    
     private MusicState musicState;
     
     public StatePropertiesPanel(Skin skin) {
@@ -31,7 +34,17 @@ public class StatePropertiesPanel extends Table {
             }
         });
         
-        this.add(resumeTrack).left();
+        this.add(resumeTrack).left().row();
+        
+        randomTrack = new CheckBox("Randomize track", skin);
+        randomTrack.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                musicState.setRandomTrack(randomTrack.isChecked());
+            }
+        });
+        
+        this.add(randomTrack).left().row();
     }
 
     public MusicState getMusicState() {

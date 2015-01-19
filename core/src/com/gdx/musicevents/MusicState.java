@@ -2,6 +2,7 @@ package com.gdx.musicevents;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdx.musicevents.effects.Effect;
@@ -27,6 +28,8 @@ public class MusicState implements OnCompletionListener{
     
     private boolean resumeTrack = false;
     
+    private boolean randomTrack = false;
+    
     
     public MusicState(){
         this("");
@@ -50,7 +53,11 @@ public class MusicState implements OnCompletionListener{
 
     @Override
     public void onCompletion(Music music) {
-        currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
+        if(randomTrack) {
+            currentTrackIndex = MathUtils.random(0, tracks.size - 1);
+        } else {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
+        }
         Track currentTrack = getCurrentTrack();
         if(currentTrack != null){
             currentTrack.reset();
@@ -218,6 +225,14 @@ public class MusicState implements OnCompletionListener{
 
     public void setResumeTrack(boolean resumeTrack) {
         this.resumeTrack = resumeTrack;
+    }
+
+    public boolean isRandomTrack() {
+        return randomTrack;
+    }
+
+    public void setRandomTrack(boolean randomTrack) {
+        this.randomTrack = randomTrack;
     }
 
 }

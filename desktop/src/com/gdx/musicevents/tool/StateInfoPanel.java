@@ -86,7 +86,7 @@ public class StateInfoPanel extends Table {
             if(trackText.length() > 8){
                 trackText = trackText.substring(0, 14);
             }
-            nowPlaying.setText("Now playing: "  + state.toString() + "/" + trackText + "@" + twoDecimalForm);
+            nowPlaying.setText("Playing: "  + state.toString() + "/" + trackText + "@" + twoDecimalForm);
         } else {
             play.setDisabled(false);
             stop.setDisabled(true);
