@@ -1,5 +1,7 @@
 package com.gdx.musicevents.tool;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.text.Collator;
 import java.util.Comparator;
 
@@ -80,7 +82,13 @@ public class TrackListPanel extends Table {
                 });
                 dialog.disableDirectoryBrowsing();
                 dialog.setOkButtonText("Add");
-                
+                dialog.setFilter(new FileFilter() {
+                    @Override
+                    public boolean accept(File pathname) {
+                        String path = pathname.getPath();
+                        return path.matches(".*(?:ogg|mp3|wav)");
+                    }
+                });
                 dialog.show(stage);
                 
                 addTrack.setChecked(false);
