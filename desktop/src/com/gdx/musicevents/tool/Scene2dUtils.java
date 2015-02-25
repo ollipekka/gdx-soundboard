@@ -28,7 +28,7 @@ public class Scene2dUtils {
         parent.add(label).left();
 
         TextField info = new TextField("", skin);
-        parent.add(info).right().row().fillX().expandX();
+        parent.add(info).right().fillX().expandX().row();
 
         return info;
     }
@@ -37,7 +37,7 @@ public class Scene2dUtils {
     public static CheckBox addCheckBox(String labelText, Table parent, Skin skin){
 
         CheckBox info = new CheckBox(labelText, skin);
-        parent.add(info).right().row().fillX().expandX();
+        parent.add(info).right().fillX().expandX().row();
 
         return info;
     }

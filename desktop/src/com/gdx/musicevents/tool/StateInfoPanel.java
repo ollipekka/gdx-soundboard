@@ -83,9 +83,7 @@ public class StateInfoPanel extends Table {
             String twoDecimalForm = Float.toString(intPosition / 100.0f);
 
             String trackText = track.getFileName();
-            if(trackText.length() > 8){
-                trackText = trackText.substring(0, 14);
-            }
+            trackText = trackText.substring(0, Math.min(trackText.length(), 14));
             nowPlaying.setText("Playing: "  + state.toString() + "/" + trackText + "@" + twoDecimalForm);
         } else {
             play.setDisabled(false);

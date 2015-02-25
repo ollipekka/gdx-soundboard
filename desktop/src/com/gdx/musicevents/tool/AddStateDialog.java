@@ -33,7 +33,7 @@ public class AddStateDialog extends Dialog {
         content.add(label).left().fillX().expandX().row();
 
         eventName = new TextField("", skin);
-        content.add(eventName).right().row().fillX().expandX();
+        content.add(eventName).right().fillX().expandX().row();
 
         Table buttons = this.getButtonTable();
         buttons.defaults().fillX().expandX();
