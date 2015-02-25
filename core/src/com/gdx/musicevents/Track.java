@@ -32,6 +32,9 @@ public class Track {
         if (music.isPlaying()) {
             position += dt;
         }
+        
+        
+        
     }
 
     public void reset() {

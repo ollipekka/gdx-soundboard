@@ -27,12 +27,12 @@ public class FadeOut implements StopEffect {
     }
 
     @Override
-    public void beginStop(MusicState nextState, MusicState previousState) {
-        Gdx.app.debug("FadeOut", "Start " + nextState);
-
+    public void initialize(MusicState nextState, MusicState previousState) {
         this.nextState = nextState;
         this.previousState = previousState;
-
+    }
+    @Override
+    public void beginStop() {
         this.originalVolume = nextState.getVolume();
         this.elapsedTime = 0;
         this.elapsedOffset = 0;
@@ -68,4 +68,9 @@ public class FadeOut implements StopEffect {
         return elapsedTime >= totalTime;
     }
 
+    
+    @Override
+    public String toString() {
+        return "Fading out " + nextState;
+    }
 }

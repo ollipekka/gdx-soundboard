@@ -9,7 +9,8 @@ import com.gdx.musicevents.MusicState;
  */
 public interface StopEffect extends Effect {
 
-    public void beginStop(MusicState nextState, MusicState previousState);
+    public void initialize(MusicState nextState, MusicState previousState);
+    public void beginStop();
 
     public void endStop();
 }

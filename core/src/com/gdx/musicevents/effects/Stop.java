@@ -1,17 +1,20 @@
 package com.gdx.musicevents.effects;
 
-import com.badlogic.gdx.Gdx;
 import com.gdx.musicevents.MusicState;
 
 public class Stop implements StopEffect {
+    private MusicState nextState;
 
     public Stop() {
     }
 
     @Override
-    public void beginStop(MusicState nextState, MusicState previousState) {
-        Gdx.app.debug("Stop", "Stopped: " + nextState);
-
+    public void initialize(MusicState nextState, MusicState previousState) {
+        this.nextState = nextState;
+    }
+    
+    @Override
+    public void beginStop() {
         nextState.stop();
     }
 

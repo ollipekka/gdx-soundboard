@@ -1,5 +1,6 @@
 package com.gdx.musicevents;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.badlogic.gdx.math.MathUtils;
@@ -72,7 +73,7 @@ public class MusicState implements OnCompletionListener{
         }
     }
     
-    public Effect enter(MusicState previousState) {
+    public StartEffect enter(MusicState previousState) {
         
         StartEffect effect = null;
         if(previousState != null){
@@ -83,18 +84,18 @@ public class MusicState implements OnCompletionListener{
             effect = new Play();
         }
 
-        effect.beginStart(this, previousState);
+        effect.initialize(this, previousState);
         return effect;
     }
     
-    public Effect exit(MusicState nextState) {
+    public StopEffect exit(MusicState nextState) {
         StopEffect effect = exitTransitions.get(nextState.getName());
 
         if(effect == null){
             effect = new Stop();
         }
 
-        effect.beginStop(this, nextState);
+        effect.initialize(this, nextState);
         return effect;
     }
     

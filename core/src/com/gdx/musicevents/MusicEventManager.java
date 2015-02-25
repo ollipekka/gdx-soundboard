@@ -1,12 +1,12 @@
 package com.gdx.musicevents;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.gdx.musicevents.effects.Effect;
+import com.gdx.musicevents.effects.StartEffect;
+import com.gdx.musicevents.effects.StopEffect;
 
 public class MusicEventManager {
 
@@ -46,7 +46,13 @@ public class MusicEventManager {
     /**
      * The transitions in progress.
      */
-    private final Array<Effect> transitions = new Array<Effect>();
+    private final Array<StartEffect> startTransitions = new Array<StartEffect>();
+    
+    private StartEffect currentStartEffect;
+    
+
+    private final Array<StopEffect> endTransitions = new Array<StopEffect>();
+    private StopEffect currentEndEffect;
 
     /**
      * Play the state using an enum.
@@ -63,8 +69,6 @@ public class MusicEventManager {
     }
 
     public void play(MusicState nextState) {
-        Gdx.app.log("MusicEventManager", "Play called next state " + nextState);
-
         if (currentState != null && !currentState.isPlaying()) {
             currentState = null;
         }
@@ -77,9 +81,9 @@ public class MusicEventManager {
     }
 
     private void handleTransition(MusicState nextState, MusicState previousState) {
-        transitions.add(nextState.enter(previousState));
+        startTransitions.add(nextState.enter(previousState));
         if (previousState != null) {
-            transitions.add(previousState.exit(nextState));
+            endTransitions.add(previousState.exit(nextState));
         }
     }
 
@@ -90,16 +94,30 @@ public class MusicEventManager {
      *            The raw un-interpolated un-averaged delta time.
      */
     public void update(float dt) {
-
-        for (int i = transitions.size - 1; i >= 0; i--) {
-            final Effect effect = transitions.get(i);
-            effect.update(dt);
-
-            if (effect.isDone()) {
-                transitions.removeIndex(i);
+        if(currentStartEffect != null){
+            
+            currentStartEffect.update(dt);
+            if (currentStartEffect.isDone()) {
+                currentStartEffect = null;
             }
+        } else if(startTransitions.size > 0) {
+            currentStartEffect = startTransitions.first();
+            startTransitions.removeIndex(0);
+            currentStartEffect.beginStart();
         }
-
+        
+        if(currentEndEffect != null){
+            currentEndEffect.update(dt);
+            if (currentEndEffect.isDone()) {
+                currentEndEffect = null;
+            }
+        } else if(endTransitions.size > 0) {
+            currentEndEffect = endTransitions.first();
+            currentEndEffect.beginStop();
+            endTransitions.removeIndex(0);
+        }
+        
+        
         if (currentState != null) {
             currentState.update(dt);
         }

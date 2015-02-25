@@ -1,17 +1,17 @@
 package com.gdx.musicevents.effects;
 
-import com.badlogic.gdx.Gdx;
 import com.gdx.musicevents.MusicState;
 
 public class Play implements StartEffect {
 
+    
+    private MusicState nextState;
+    
     public Play() {
     }
 
     @Override
-    public void beginStart(MusicState nextState, MusicState previousState) {
-        Gdx.app.debug("Play", nextState.toString());
-
+    public void beginStart() {
         nextState.play();
         nextState.setVolume(1);
     }
@@ -27,5 +27,10 @@ public class Play implements StartEffect {
     @Override
     public boolean isDone() {
         return true;
+    }
+
+    @Override
+    public void initialize(MusicState nextState, MusicState previousState) {
+        this.nextState = nextState;
     }
 }
