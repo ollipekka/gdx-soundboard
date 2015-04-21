@@ -1,20 +1,17 @@
 package com.gdx.musicevents.tool;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.gdx.musicevents.MusicState;
+import com.gdx.musicevents.Track;
 
 public class StatePropertiesPanel extends Table {
 
     private final CheckBox resumeTrack;
-    
-
     private final CheckBox randomTrack;
-    
+    private final CheckBox loopTrack;
+
     private MusicState musicState;
     
     public StatePropertiesPanel(Skin skin) {
@@ -45,18 +42,29 @@ public class StatePropertiesPanel extends Table {
         });
         
         this.add(randomTrack).left().row();
+
+        loopTrack = new CheckBox("Loop track", skin);
+        loopTrack.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                musicState.setLoopTrack(loopTrack.isChecked());
+            }
+        });
+
+        this.add(loopTrack).left().row();
     }
 
     public MusicState getMusicState() {
         return musicState;
     }
 
+
+
     public void setMusicState(MusicState musicState) {
         this.musicState = musicState;
         resumeTrack.setChecked(musicState.isResumeTrack());
+        randomTrack.setChecked(musicState.isRandomTrack());
+        loopTrack.setChecked(musicState.isLoopTrack());
     }
-    
-    
-    
 
 }

@@ -30,6 +30,8 @@ public class MusicState implements OnCompletionListener{
     private boolean resumeTrack = false;
     
     private boolean randomTrack = false;
+
+    private boolean loopTrack = false;
     
     
     public MusicState(){
@@ -54,10 +56,12 @@ public class MusicState implements OnCompletionListener{
 
     @Override
     public void onCompletion(Music music) {
-        if(randomTrack) {
-            currentTrackIndex = MathUtils.random(0, tracks.size - 1);
-        } else {
-            currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
+        if (!loopTrack) {
+            if (randomTrack) {
+                currentTrackIndex = MathUtils.random(0, tracks.size - 1);
+            } else {
+                currentTrackIndex = (currentTrackIndex + 1) % tracks.size;
+            }
         }
         Track currentTrack = getCurrentTrack();
         if(currentTrack != null){
@@ -236,4 +240,11 @@ public class MusicState implements OnCompletionListener{
         this.randomTrack = randomTrack;
     }
 
+    public boolean isLoopTrack() {
+        return loopTrack;
+    }
+
+    public void setLoopTrack(boolean loopTrack) {
+        this.loopTrack = loopTrack;
+    }
 }
