@@ -1,7 +1,7 @@
 gdx-soundboard v0.3
 ==============
 
-![Screenshot](http://i.imgur.com/B28wFEg.png)
+![Screenshot](http://i.imgur.com/BeU0no9.png)
 
 ### The Problem
 
@@ -18,7 +18,7 @@ This tool aims to improve the workflow between game programmer and the audio eng
 
 Standard libgdx formats: ogg, wav and mp3.
 
-Supported effects:
+Supported controls:
 - Fade in / out
 - Stop / Play
 
