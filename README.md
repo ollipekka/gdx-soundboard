@@ -1,4 +1,7 @@
-gdx-soundboard v0.3
+
+![Screenshot](http://i.imgur.com/VbqriF5.png)
+
+Version 0.3
 ==============
 
 ![Screenshot](http://i.imgur.com/BeU0no9.png)
