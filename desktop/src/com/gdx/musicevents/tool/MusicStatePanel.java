@@ -1,10 +1,13 @@
 package com.gdx.musicevents.tool;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gdx.musicevents.MusicEventListener;
 import com.gdx.musicevents.MusicEventManager;
 import com.gdx.musicevents.MusicState;
+import com.gdx.musicevents.Track;
 import com.gdx.musicevents.tool.transitions.TransitionInPanel;
 import com.gdx.musicevents.tool.transitions.TransitionOutPanel;
 
@@ -72,6 +75,7 @@ public class MusicStatePanel extends Table {
         this.setVisible(false);
 
     }
+
 
 
     public void show(MusicState musicState) {

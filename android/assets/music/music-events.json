@@ -18,7 +18,8 @@
 			"CALM": {
 				"class": "com.gdx.musicevents.effects.Stop"
 			}
-		}
+		},
+		"loopTrack": true
 	},
 	{
 		"name": "COMBAT",
@@ -28,7 +29,8 @@
 			}
 		],
 		"enterTransitions": {},
-		"exitTransitions": {}
+		"exitTransitions": {},
+		"randomTrack": true
 	},
 	{
 		"name": "CALM",
@@ -50,7 +52,9 @@
 				"totalTime": 0.5,
 				"offset": 0.2
 			}
-		}
+		},
+		"resumeTrack": true,
+		"loopTrack": true
 	}
 ]
 }

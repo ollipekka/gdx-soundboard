@@ -3,8 +3,8 @@ apply plugin: "java"
 sourceCompatibility = 1.6
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.mainClassName = "com.musicevents.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../core/assets");
+project.ext.mainClassName = "com.gdx.musicevents.tool.DesktopLauncher"
+project.ext.assetsDir = new File("../android/assets");
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
