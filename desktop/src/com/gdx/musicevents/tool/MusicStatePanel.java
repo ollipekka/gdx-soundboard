@@ -46,6 +46,11 @@ public class MusicStatePanel extends Table {
                     MusicStatePanel.this.setVisible(false);
                 }
             }
+
+            @Override
+            public void stateChanged(MusicState nextState, MusicState previewsState) {
+
+            }
         });
 
         this.pad(2);

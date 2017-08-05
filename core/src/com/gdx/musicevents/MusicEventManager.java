@@ -85,6 +85,11 @@ public class MusicEventManager {
         if (previousState != null) {
             endTransitions.add(previousState.exit(nextState));
         }
+
+        for (int i = 0; i < listeners.size; i++) {
+            final MusicEventListener observer = listeners.get(i);
+            observer.stateChanged(nextState, previousState);
+        }
     }
 
     /**

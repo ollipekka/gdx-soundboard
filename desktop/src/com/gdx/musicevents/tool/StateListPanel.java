@@ -75,6 +75,11 @@ public class StateListPanel extends Table {
                 remove.setDisabled(eventList.getItems().size == 0);
                 eventList.getItems().sort(comparator);
             }
+
+            @Override
+            public void stateChanged(MusicState nextState, MusicState previewsState) {
+
+            }
         });
 
         eventList = new List<MusicState>(skin);
