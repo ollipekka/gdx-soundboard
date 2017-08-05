@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.gdx.musicevents.MusicEventListener;
 import com.gdx.musicevents.MusicEventManager;
+import com.gdx.musicevents.MusicState;
 
 public class UsageExample extends ApplicationAdapter {
     
@@ -68,6 +70,29 @@ public class UsageExample extends ApplicationAdapter {
         dialog.show(stage);
         
         eventManager.load(Gdx.files.internal("music/music-events.json"));
+
+        eventManager.addListener(new MusicEventListener() {
+            @Override
+            public void stateAdded(MusicState state) {
+
+            }
+
+            @Override
+            public void stateRemoved(MusicState state) {
+
+            }
+
+            @Override
+            public void stateChanged(MusicState nextState, MusicState previewsState) {
+                if(nextState != null) {
+                    Gdx.app.log("stateChanged:next", nextState.getName());
+                }
+
+                if(previewsState != null) {
+                    Gdx.app.log("stateChanged:previews", previewsState.getName());
+                }
+            }
+        });
     }
     
     
